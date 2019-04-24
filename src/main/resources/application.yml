@@ -1,0 +1,3 @@
+server:
+  # Usa la variable de entorno $PORT. Si no existe dicha variable usa el puerto 8080
+  port: ${PORT:8080}
