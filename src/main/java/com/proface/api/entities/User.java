@@ -28,12 +28,6 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "has_email_alert")
-    private boolean hasEmailAlert;
-
-    @Column(name = "has_app_alert")
-    private boolean hasAppAlert;
-
     @ManyToMany( fetch = FetchType.EAGER,
         cascade = {
             CascadeType.MERGE
@@ -82,22 +76,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public boolean isHasEmailAlert() {
-        return hasEmailAlert;
-    }
-
-    public void setHasEmailAlert(boolean hasEmailAlert) {
-        this.hasEmailAlert = hasEmailAlert;
-    }
-
-    public boolean isHasAppAlert() {
-        return hasAppAlert;
-    }
-
-    public void setHasAppAlert(boolean hasAppAlert) {
-        this.hasAppAlert = hasAppAlert;
     }
 
     public String getEmail() {
