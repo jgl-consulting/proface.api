@@ -1,21 +1,24 @@
-# Getting Started
+# Proface Rest Api
 
-### Reference Documentation
-For further reference, please consider the following sections:
+## IMPORTANTE
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+En esta versión se esta usando Lombok, por lo cual es necesario
+instalar en el Eclipse/Spring Tool Suite esta libreria.
 
-### Guides
-The following guides illustrate how to use some features concretely:
+Para ello se tiene que hacer los siguiente:
 
-* [Accessing JPA Data with REST](https://spring.io/guides/gs/accessing-data-rest/)
-* [Accessing Neo4j Data with REST](https://spring.io/guides/gs/accessing-neo4j-data-rest/)
-* [Accessing MongoDB Data with REST](https://spring.io/guides/gs/accessing-mongodb-data-rest/)
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-* [Handling Form Submission](https://spring.io/guides/gs/handling-form-submission/)
-* [Validating Form Input](https://spring.io/guides/gs/validating-form-input/)
+1. Buscar la carpeta de donde se encuentra Lombok(Al usar maven se almacena en la siguiente ruta del usuario de nuestra máquina)
+
+```
+'~/.m2/repository/org/projectlombok/lombok/<version>'
+```
+2. Buscar el JAR de Lombok y ejecutar como administrador lo siguiente:
+```sh
+	java -jar lombok-<version>.jar
+```
+
+3. Seguir los pasos del instalador
+
+Para más info pueden consultar el siguiente post de Stack Overflow
+[Link al pregunta](https://stackoverflow.com/questions/11803948/lombok-is-not-generating-getter-and-setter)
 
