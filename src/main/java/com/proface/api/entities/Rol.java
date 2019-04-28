@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name= "app_role")
 @Data
 @NoArgsConstructor
-public class Role {
+public class Rol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,6 @@ public class Role {
             },
             mappedBy = "roles"
     )
-    private List<User> users;
+    private List<Usuario> users;
 
 }

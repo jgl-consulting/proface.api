@@ -1,19 +1,26 @@
 package com.proface.api.entities;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import java.util.List;
 
 @Entity
 @Table(name= "app_user")
 @Data
 @NoArgsConstructor
-public class User {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +33,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
     private String password;
 
@@ -44,6 +51,6 @@ public class User {
         joinColumns = { @JoinColumn(name="user_id") },
         inverseJoinColumns = { @JoinColumn(name="role_id")}
     )
-    private List<Role> roles;
+    private List<Rol> roles;
 
 }
