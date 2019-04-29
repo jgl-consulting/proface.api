@@ -24,18 +24,12 @@ public class ProveedorService implements IProveedorService {
 
 	@Override
 	public void save(ProveedorModel proveedor) {
-		proveedorRepository
-		.save(ProveedorMapper
-				.INSTANCE
-				.convertToEntity(proveedor));
+		proveedorRepository.save(ProveedorMapper.INSTANCE.convertToEntity(proveedor));
 	}
 
 	@Override
 	public void delete(ProveedorModel proveedor) {
-		proveedorRepository
-		.delete(ProveedorMapper
-				.INSTANCE
-				.convertToEntity(proveedor));
+		proveedorRepository.delete(ProveedorMapper.INSTANCE.convertToEntity(proveedor));
 	}
 	
 }

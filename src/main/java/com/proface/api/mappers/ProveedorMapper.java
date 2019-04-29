@@ -9,7 +9,7 @@ import com.proface.api.models.ProveedorModel;
 @Mapper
 public interface ProveedorMapper extends IAbstractMapper<ProveedorModel, Proveedor> {
 
-	static ProveedorMapper INSTANCE = Mappers.getMapper(ProveedorMapper.class);
+	ProveedorMapper INSTANCE = Mappers.getMapper(ProveedorMapper.class);
 
 	ProveedorModel convertToModel(Proveedor entity);
 
