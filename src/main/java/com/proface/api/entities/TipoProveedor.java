@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
 import lombok.Data;
@@ -33,7 +32,6 @@ public class TipoProveedor {
 	
 	@Projection(types = { TipoProveedor.class }) 
 	public interface TipoProveedorView {
-		@Value("#{target.idTipoProveedor}")
 		Integer getIdTipoProveedor();
 	    String getDescripcion();
 	    String getTipoMoneda();

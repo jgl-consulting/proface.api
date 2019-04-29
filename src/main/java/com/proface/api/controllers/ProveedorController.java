@@ -11,7 +11,7 @@ import com.proface.api.models.ProveedorModel;
 import com.proface.api.services.IProveedorService;
 
 @RestController
-@RequestMapping("api/proveedor")
+@RequestMapping("api2/proveedor")
 public class ProveedorController {
 
 	@Autowired
