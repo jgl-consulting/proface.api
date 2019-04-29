@@ -9,11 +9,18 @@ import org.springframework.security.access.annotation.Secured;
 
 import com.proface.api.entities.Usuario;
 
+import java.util.Optional;
+
 @Secured("ADMIN")
 @RepositoryRestResource(path = "usuarios", collectionResourceRel = "usuarios")
 public interface UsuarioRepository extends PagingAndSortingRepository<Usuario,Long>{
 
     Page<Usuario> findAllByUsernameContains(Pageable pageable, @Param("username") String username);
+
+    boolean existsByUsername(String username);
+
+    Optional<Usuario> findUserByUsername(String username);
+
 }
 
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -47,12 +48,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private CorsFilter corsFilter;
 
+    @Autowired
+    private TokenEnhancer tokenEnhancer;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
         configurer.inMemory()
                 .withClient(clientId)
-                .secret(clientSecret)
-                .authorizedGrantTypes(grantType, grantType)
+                .secret(passwordEncoder.encode(clientSecret))
+                .authorizedGrantTypes(grantType)
                 .scopes(scopeRead, scopeWrite)
                 .resourceIds(resourceIds);
     }
@@ -61,7 +68,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
 
-        enhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter));
+        enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
 
         endpoints.accessTokenConverter(accessTokenConverter)
                 .tokenEnhancer(enhancerChain)
@@ -73,10 +80,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         oauthServer.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
                 .addTokenEndpointAuthenticationFilter(corsFilter);
-    }
-
-    @Bean
-    public TokenEnhancer tokenEnhancer() {
-        return new CustomTokenEnhancer();
     }
 }

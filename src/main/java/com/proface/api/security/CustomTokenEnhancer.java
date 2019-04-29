@@ -1,27 +1,20 @@
 package com.proface.api.security;
 
-import com.proface.api.entities.Usuario;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomTokenEnhancer implements TokenEnhancer {
+public class CustomTokenEnhancer extends JwtAccessTokenConverter {
     @Override
-    public OAuth2AccessToken enhance(
-            OAuth2AccessToken accessToken,
-            OAuth2Authentication authentication) {
-        Usuario userDetails = (Usuario) authentication.getPrincipal();
+    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 
-        Map<String, Object> additionalInfo = new HashMap<>();
-        additionalInfo.put("firstName", userDetails.getFirstName());
-        additionalInfo.put("lastName", userDetails.getLastName());
+        DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);
 
-        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(
-                additionalInfo);
-        return accessToken;
+        return super.enhance(customAccessToken, authentication);
     }
 }
