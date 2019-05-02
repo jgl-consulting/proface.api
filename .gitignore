@@ -22,6 +22,6 @@
 /.nb-gradle/
 
 ### VS Code ###
-/.vscode
+/.vscode/
 
-/target
+/target/
