@@ -34,29 +34,29 @@ public class Proveedor {
 	
 	@JoinColumn(name = "id_tipo_proveedor", referencedColumnName = "id_tipo_proveedor")
 	@ManyToOne
-	private TipoProveedor idTipoProveedor;
+	private TipoProveedor tipoProveedor;
 	
 	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
-	private Contacto idContacto;
+	private Contacto contacto;
 	
 	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
-	private Cuenta idCuenta;
+	private Cuenta cuenta;
 	
 	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
-	private Direccion idDireccion;
+	private Direccion direccion;
 	
 	@Projection(types = { Proveedor.class }) 
 	public interface ProveedorView {
 		@Value("#{target.idProveedor}")
 	    String getIdProveedor();
 	    String getNombre();
-		@Value("#{target.getIdTipoProveedor().getDescripcion()}")
+		@Value("#{target.getTipoProveedor().getDescripcion()}")
 		String getTipoProveedor();
-		@Value("#{target.getIdContacto()}")
+		@Value("#{target.getContacto()}")
 		Contacto getContacto();
-		@Value("#{target.getIdCuenta()}")
+		@Value("#{target.getCuenta()}")
 		Cuenta getCuenta();
-		@Value("#{target.getIdDireccion()}")
+		@Value("#{target.getDireccion()}")
 		Direccion getDireccion();
 	}
 }
