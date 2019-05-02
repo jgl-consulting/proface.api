@@ -2,9 +2,11 @@ package com.proface.api.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -27,18 +29,34 @@ public class Proveedor {
 	@Column(name = "id_proveedor")
 	private String idProveedor;
 	
-	@Column(name = "nombre")
+	@Column
 	private String nombre;
 	
 	@JoinColumn(name = "id_tipo_proveedor", referencedColumnName = "id_tipo_proveedor")
 	@ManyToOne
-	private TipoProveedor idTipoProveedor;
+	private TipoProveedor tipoProveedor;
+	
+	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
+	private Contacto contacto;
+	
+	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
+	private Cuenta cuenta;
+	
+	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
+	private Direccion direccion;
 	
 	@Projection(types = { Proveedor.class }) 
 	public interface ProveedorView {
-		@Value("#{target.idTipoProveedor}")
-		Integer getIdTipoProveedor();
+		@Value("#{target.idProveedor}")
 	    String getIdProveedor();
 	    String getNombre();
+		@Value("#{target.getTipoProveedor().getDescripcion()}")
+		String getTipoProveedor();
+		@Value("#{target.getContacto()}")
+		Contacto getContacto();
+		@Value("#{target.getCuenta()}")
+		Cuenta getCuenta();
+		@Value("#{target.getDireccion()}")
+		Direccion getDireccion();
 	}
 }

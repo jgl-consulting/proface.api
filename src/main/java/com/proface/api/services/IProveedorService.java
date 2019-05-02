@@ -2,14 +2,14 @@ package com.proface.api.services;
 
 import java.util.List;
 
-import com.proface.api.models.ProveedorModel;
+import com.proface.api.entities.Proveedor;
 
 public interface IProveedorService {
 
-	List<ProveedorModel> findAll();
+	List<Proveedor> findAll();
 	
-	void save(ProveedorModel proveedor);
+	void save(Proveedor proveedor);
 	
-	void delete(ProveedorModel proveedor);
+	void delete(Proveedor proveedor);
 	
 }

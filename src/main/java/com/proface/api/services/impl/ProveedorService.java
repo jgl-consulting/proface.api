@@ -1,13 +1,13 @@
 package com.proface.api.services.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.proface.api.mappers.ProveedorMapper;
-import com.proface.api.models.ProveedorModel;
+import com.proface.api.entities.Proveedor;
+import com.proface.api.repositories.ContactoRepository;
 import com.proface.api.repositories.ProveedorRepository;
 import com.proface.api.services.IProveedorService;
 
@@ -17,25 +17,25 @@ public class ProveedorService implements IProveedorService {
 	@Autowired
 	private ProveedorRepository proveedorRepository;
 	
+	@Autowired
+	private ContactoRepository contactoRepository;
+	
+	
+	
 	@Override
-	public List<ProveedorModel> findAll() {
+	public List<Proveedor> findAll() {
 		return null;
 	}
 
 	@Override
-	public void save(ProveedorModel proveedor) {
-		proveedorRepository
-		.save(ProveedorMapper
-				.INSTANCE
-				.convertToEntity(proveedor));
+	@Transactional
+	public void save(Proveedor proveedor) {
+		proveedorRepository.save(proveedor);
 	}
 
 	@Override
-	public void delete(ProveedorModel proveedor) {
-		proveedorRepository
-		.delete(ProveedorMapper
-				.INSTANCE
-				.convertToEntity(proveedor));
+	public void delete(Proveedor proveedor) {
+		proveedorRepository.delete(proveedor);
 	}
 	
 }

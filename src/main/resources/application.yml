@@ -2,6 +2,9 @@ server:
   # Usa la variable de entorno $PORT. Si no existe dicha variable usa el puerto 8080
   port: ${PORT:8080}
 spring:
+  data:
+    rest:
+      basePath: /api
   datasource:
     # jdbc:mysql://localhost:3306/proface?serverTimezone=UTC&allowPublicKeyRetrieval=true
     url: ${PROFACE_DATABASE_URL}
@@ -16,7 +19,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
-
 security:
   signing-key: ${PROFACE_SIGNING_KEY}
   security-realm: ${PROFACE_SECURITY_REALM}
