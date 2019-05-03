@@ -13,12 +13,13 @@ spring:
     hikari:
       maximum-pool-size: 5
   jpa:
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: true
 security:
   signing-key: ${PROFACE_SIGNING_KEY}
   security-realm: ${PROFACE_SECURITY_REALM}

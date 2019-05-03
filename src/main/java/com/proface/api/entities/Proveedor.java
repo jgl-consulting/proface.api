@@ -1,5 +1,6 @@
 package com.proface.api.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +37,7 @@ public class Proveedor {
 	@ManyToOne
 	private TipoProveedor tipoProveedor;
 	
-	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "idProveedor", fetch = FetchType.LAZY)
 	private Contacto contacto;
 	
 	@OneToOne(mappedBy = "idProveedor", fetch = FetchType.LAZY)
