@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ContactoModel {
-	private String idContacto;
 	private String nombre;
 	private String apellido;
 	private String telefono;

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class TipoProveedorModel {
-	private int idTipoProveedor;
+	private Integer idTipoProveedor;
 	private String descripcion;
 	private String tipoMoneda;
 

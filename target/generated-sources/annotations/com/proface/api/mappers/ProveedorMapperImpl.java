@@ -11,12 +11,14 @@ import com.proface.api.models.DireccionModel;
 import com.proface.api.models.ProveedorModel;
 import com.proface.api.models.TipoProveedorModel;
 import javax.annotation.Generated;
+import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2019-05-01T21:23:11-0500",
-    comments = "version: 1.2.0.Final, compiler: javac, environment: Java 1.8.0_191 (Oracle Corporation)"
+    date = "2019-05-03T08:31:18-0500",
+    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_172 (Oracle Corporation)"
 )
+@Component
 public class ProveedorMapperImpl implements ProveedorMapper {
 
     @Override
@@ -62,9 +64,7 @@ public class ProveedorMapperImpl implements ProveedorMapper {
 
         TipoProveedorModel tipoProveedorModel = new TipoProveedorModel();
 
-        if ( tipoProveedor.getIdTipoProveedor() != null ) {
-            tipoProveedorModel.setIdTipoProveedor( tipoProveedor.getIdTipoProveedor() );
-        }
+        tipoProveedorModel.setIdTipoProveedor( tipoProveedor.getIdTipoProveedor() );
         tipoProveedorModel.setDescripcion( tipoProveedor.getDescripcion() );
         tipoProveedorModel.setTipoMoneda( tipoProveedor.getTipoMoneda() );
 
@@ -78,7 +78,6 @@ public class ProveedorMapperImpl implements ProveedorMapper {
 
         ContactoModel contactoModel = new ContactoModel();
 
-        contactoModel.setIdContacto( contacto.getIdContacto() );
         contactoModel.setNombre( contacto.getNombre() );
         contactoModel.setApellido( contacto.getApellido() );
         contactoModel.setTelefono( contacto.getTelefono() );
@@ -106,7 +105,6 @@ public class ProveedorMapperImpl implements ProveedorMapper {
 
         DireccionModel direccionModel = new DireccionModel();
 
-        direccionModel.setIdDireccion( direccion.getIdDireccion() );
         direccionModel.setNombreCalle( direccion.getNombreCalle() );
         direccionModel.setCiudad( direccion.getCiudad() );
 
@@ -134,7 +132,6 @@ public class ProveedorMapperImpl implements ProveedorMapper {
 
         Contacto contacto = new Contacto();
 
-        contacto.setIdContacto( contactoModel.getIdContacto() );
         contacto.setNombre( contactoModel.getNombre() );
         contacto.setApellido( contactoModel.getApellido() );
         contacto.setTelefono( contactoModel.getTelefono() );
@@ -162,7 +159,6 @@ public class ProveedorMapperImpl implements ProveedorMapper {
 
         Direccion direccion = new Direccion();
 
-        direccion.setIdDireccion( direccionModel.getIdDireccion() );
         direccion.setNombreCalle( direccionModel.getNombreCalle() );
         direccion.setCiudad( direccionModel.getCiudad() );
 

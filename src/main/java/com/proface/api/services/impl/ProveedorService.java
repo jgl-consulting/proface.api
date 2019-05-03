@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proface.api.entities.Proveedor;
-import com.proface.api.repositories.ContactoRepository;
 import com.proface.api.repositories.ProveedorRepository;
 import com.proface.api.services.IProveedorService;
 
@@ -16,11 +15,6 @@ public class ProveedorService implements IProveedorService {
 
 	@Autowired
 	private ProveedorRepository proveedorRepository;
-	
-	@Autowired
-	private ContactoRepository contactoRepository;
-	
-	
 	
 	@Override
 	public List<Proveedor> findAll() {
