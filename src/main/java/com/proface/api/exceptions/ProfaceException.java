@@ -23,7 +23,7 @@ public class ProfaceException {
 	
 	@Data
 	@RequiredArgsConstructor
-	public class ProfaceSingleException {
+	class ProfaceSingleException {
 		
 		@NonNull
 		private String errorMessage;

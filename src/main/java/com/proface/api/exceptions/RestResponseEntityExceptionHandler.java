@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.proface.api.exceptions.ProfaceException.ProfaceSingleException;
-
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -27,7 +25,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		ProfaceException error = new ProfaceException();
 		error.setCode(ProfaceExceptionCode.ARGUMENT_NOT_VALID);
 		error.setMessage("Argumentos no válidos.");
-		List<ProfaceSingleException> errors = new ArrayList<>();
+		List<ProfaceException.ProfaceSingleException> errors = new ArrayList<>();
 		ex.getBindingResult().getAllErrors().forEach(e -> {
 			String errorMessage = e.getDefaultMessage();
 			String stackTrace = e.toString();
@@ -36,5 +34,4 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		error.setErrors(errors);
 		return error;
 	}
-	
 }
