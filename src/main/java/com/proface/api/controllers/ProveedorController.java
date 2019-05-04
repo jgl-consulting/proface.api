@@ -1,6 +1,6 @@
 package com.proface.api.controllers;
 
-import java.util.List;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class ProveedorController {
 	private IProveedorService proveedorService;	
 
 	@PostMapping
-	public ResponseEntity<?> saveProveedor(@RequestBody ProveedorModel proveedorModel) {
+	public ResponseEntity<?> saveProveedor(@Valid @RequestBody ProveedorModel proveedorModel) {
 		Proveedor proveedor = ProveedorMapper.INSTANCE.convertToEntity(proveedorModel);
 		proveedorService.save(proveedor);
 		return ResponseEntity.ok(proveedor);
