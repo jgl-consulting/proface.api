@@ -7,7 +7,7 @@ instalar en el Eclipse/Spring Tool Suite esta libreria.
 
 Para ello se tiene que hacer los siguiente:
 
-1. Buscar la carpeta de donde se encuentra Lombok(Al usar maven se almacena en la siguiente ruta del usuario de nuestra máquina)
+1. Buscar la carpeta de donde se encuentra Lombok(Al usar maven se almacena en la siguiente ruta del user de nuestra máquina)
 
 ```
 '~/.m2/repository/org/projectlombok/lombok/<version>'

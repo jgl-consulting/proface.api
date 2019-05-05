@@ -1,7 +1,7 @@
 package com.proface.api.services.impl;
 
-import com.proface.api.entities.Usuario;
-import com.proface.api.repositories.UsuarioRepository;
+import com.proface.api.entities.User;
+import com.proface.api.repositories.UserRepository;
 import com.proface.api.security.ProfaceUser;
 import com.proface.api.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +20,28 @@ import java.util.Optional;
 public class UsuarioService implements IUserService, UserDetailsService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository userRepository;
 
     @Override
     public boolean existsByUsername(String username) {
-        return usuarioRepository.existsByUsername(username);
+        return userRepository.existsByUsername(username);
     }
 
     @Override
-    public Optional<Usuario> findByUsername(String username) {
-        return  usuarioRepository.findUserByUsername(username);
+    public Optional<User> findByUsername(String username) {
+        return  userRepository.findUserByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario user = usuarioRepository.findUserByUsername(username)
+        User user = userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format("The username %s doesn't exist", username)
                 ));
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         });
 
         UserDetails userDetails = new ProfaceUser(

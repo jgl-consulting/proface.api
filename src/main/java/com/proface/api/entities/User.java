@@ -17,15 +17,15 @@ import javax.persistence.CascadeType;
 import java.util.List;
 
 @Entity
-@Table(name= "app_user")
+@Table(name= "user")
 @Data
 @NoArgsConstructor
-public class Usuario {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private long userId;
+    @Column(name = "id")
+    private long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -47,10 +47,10 @@ public class Usuario {
     	fetch = FetchType.EAGER,
         cascade = { CascadeType.MERGE }
     )
-    @JoinTable(name="app_user_role",
+    @JoinTable(name="user_role",
         joinColumns = { @JoinColumn(name="user_id") },
         inverseJoinColumns = { @JoinColumn(name="role_id")}
     )
-    private List<Rol> roles;
+    private List<Role> roles;
 
 }

@@ -39,20 +39,20 @@ CREATE TABLE tipo_proveedor(
     primary key (id_tipo_proveedor)
 );
 
-CREATE TABLE proveedor (
+CREATE TABLE supplier (
 	id_proveedor VARCHAR(4) not null,
     nombre VARCHAR(255) not null,
     id_tipo_proveedor INT(1) null,
     primary key (id_proveedor)
 );
 
-ALTER TABLE proveedor
+ALTER TABLE supplier
 	ADD FOREIGN KEY (id_tipo_proveedor)
     REFERENCES tipo_proveedor (id_tipo_proveedor)
     ON DELETE SET NULL
     ON UPDATE CASCADE;
 
-CREATE TABLE contacto (
+CREATE TABLE supplierContact (
 	id_contacto VARCHAR(4) not null,
     nombre VARCHAR(255) not null,
     apellido VARCHAR(255) not null,    
@@ -61,21 +61,21 @@ CREATE TABLE contacto (
     primary key (id_contacto)
 );
     
-ALTER TABLE contacto
+ALTER TABLE supplierContact
 	ADD FOREIGN KEY (id_contacto)
-    REFERENCES proveedor (id_proveedor)
+    REFERENCES supplier (id_proveedor)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
-CREATE TABLE cuenta (
+CREATE TABLE supplierAccount (
 	nro_cuenta VARCHAR(100) not null,
     id_proveedor VARCHAR(4) not null,
     primary key (nro_cuenta)
 );
 
-ALTER TABLE cuenta
+ALTER TABLE supplierAccount
 	ADD FOREIGN KEY (id_proveedor)
-    REFERENCES proveedor (id_proveedor)
+    REFERENCES supplier (id_proveedor)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
@@ -88,7 +88,7 @@ CREATE TABLE direccion (
 
 ALTER TABLE direccion
 	ADD FOREIGN KEY (id_direccion)
-    REFERENCES proveedor (id_proveedor)
+    REFERENCES supplier (id_proveedor)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
@@ -97,10 +97,10 @@ select * from app_user;
 select * from app_user_role;
 
 insert into app_role (role_id, role_name, description) 
-values (1, 'ADMIN', 'Usuario administrador'),
-(2, 'COMPRAS', 'Usuario de compras'), 
-(3, 'VENTAS', 'Usuario de ventas'),
-(4, 'ALMACEN', 'Usuario de almacen')
+values (1, 'ADMIN', 'User administrador'),
+(2, 'COMPRAS', 'User de compras'),
+(3, 'VENTAS', 'User de ventas'),
+(4, 'ALMACEN', 'User de almacen')
 
 insert into app_user_role (user_id,role_id)
 values (1, 1), (2, 1), (3, 1)

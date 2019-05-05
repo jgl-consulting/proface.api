@@ -16,28 +16,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name= "app_role")
+@Table(name= "role")
 @Data
 @NoArgsConstructor
-public class Rol {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
-    private long roleId;
+    @Column(name = "id")
+    private long id;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "role_name")
-    private String roleName;
+    @Column(name = "name")
+    private String name;
 
     @ManyToMany( fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.MERGE
-            },
+            cascade = { CascadeType.MERGE },
             mappedBy = "roles"
     )
-    private List<Usuario> users;
+    private List<User> users;
 
 }

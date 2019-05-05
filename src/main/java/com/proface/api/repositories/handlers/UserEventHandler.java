@@ -1,7 +1,7 @@
 package com.proface.api.repositories.handlers;
 
-import com.proface.api.entities.Usuario;
-import com.proface.api.repositories.UsuarioRepository;
+import com.proface.api.entities.User;
+import com.proface.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
@@ -11,30 +11,29 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RepositoryEventHandler
-class UsuarioEventHandler {
+class UserEventHandler {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository userRepository;
 
     @HandleBeforeCreate
-    public void handleUserCreate(Usuario usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+    public void handleUserCreate(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
     @HandleBeforeSave
-    public void handleUserUpdate(Usuario usuario) {
-        if (usuario.getPassword() == null || usuario.getPassword().equals("")) {
-
-            Usuario storedUser = usuarioRepository
-                    .findById(usuario.getUserId())
+    public void handleUserUpdate(User user) {
+        if (user.getPassword().trim().isEmpty()) {
+            User storedUser = userRepository
+                    .findById(user.getId())
                     .orElseThrow(() -> new RuntimeException("User not exists"));
 
-            usuario.setPassword(storedUser.getPassword());
+            user.setPassword(storedUser.getPassword());
         } else {
-            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
     }
 }

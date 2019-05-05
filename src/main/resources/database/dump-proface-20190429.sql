@@ -36,7 +36,7 @@ CREATE TABLE `app_role` (
 
 LOCK TABLES `app_role` WRITE;
 /*!40000 ALTER TABLE `app_role` DISABLE KEYS */;
-INSERT INTO `app_role` VALUES (1,'Usuario administrador','ADMIN'),(2,'Usuario de compras','COMPRAS'),(3,'Usuario de ventas','VENTAS'),(4,'Usuario de almacen','ALMACEN');
+INSERT INTO `app_role` VALUES (1,'User administrador','ADMIN'),(2,'User de compras','COMPRAS'),(3,'User de ventas','VENTAS'),(4,'User de almacen','ALMACEN');
 /*!40000 ALTER TABLE `app_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,13 +122,13 @@ INSERT INTO `tipo_proveedor` VALUES (1,'Nacional','S/'),(2,'Internacional','$');
 UNLOCK TABLES;
 
 --
--- Table structure for table `proveedor`
+-- Table structure for table `supplier`
 --
 
-DROP TABLE IF EXISTS `proveedor`;
+DROP TABLE IF EXISTS `supplier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `proveedor` (
+CREATE TABLE `supplier` (
   `id_proveedor` varchar(4) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `id_tipo_proveedor` int(1) DEFAULT NULL,
@@ -139,67 +139,67 @@ CREATE TABLE `proveedor` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `proveedor`
+-- Dumping data for table `supplier`
 --
 
-LOCK TABLES `proveedor` WRITE;
-/*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES ('PE01','Proveedor de Prueba',2),('PE02','Proveedor de Prueba 2',2);
-/*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
+LOCK TABLES `supplier` WRITE;
+/*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
+INSERT INTO `supplier` VALUES ('PE01','Supplier de Prueba',2),('PE02','Supplier de Prueba 2',2);
+/*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `contacto`
+-- Table structure for table `contacts`
 --
 
-DROP TABLE IF EXISTS `contacto`;
+DROP TABLE IF EXISTS `supplierContact`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `contacto` (
+CREATE TABLE `supplierContact` (
   `id_contacto` varchar(4) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `apellido` varchar(255) NOT NULL,
   `telefono` varchar(20) NOT NULL,
   `correo` varchar(100) NOT NULL,
   PRIMARY KEY (`id_contacto`),
-  CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`id_contacto`) REFERENCES `proveedor` (`id_proveedor`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`id_contacto`) REFERENCES `supplier` (`id_proveedor`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `contacto`
+-- Dumping data for table `contacts`
 --
 
-LOCK TABLES `contacto` WRITE;
-/*!40000 ALTER TABLE `contacto` DISABLE KEYS */;
-INSERT INTO `contacto` VALUES ('PE01','Jose Carlos','Bustamante Falcón','925176890','josecarlos160125@gmail.com');
-/*!40000 ALTER TABLE `contacto` ENABLE KEYS */;
+LOCK TABLES `supplierContact` WRITE;
+/*!40000 ALTER TABLE `contacts` DISABLE KEYS */;
+INSERT INTO `supplierContact` VALUES ('PE01','Jose Carlos','Bustamante Falcón','925176890','josecarlos160125@gmail.com');
+/*!40000 ALTER TABLE `contacts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cuenta`
+-- Table structure for table `accounts`
 --
 
-DROP TABLE IF EXISTS `cuenta`;
+DROP TABLE IF EXISTS `supplierAccount`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `cuenta` (
+CREATE TABLE `supplierAccount` (
   `nro_cuenta` varchar(100) NOT NULL,
   `id_proveedor` varchar(4) NOT NULL,
   PRIMARY KEY (`nro_cuenta`),
   KEY `id_proveedor` (`id_proveedor`),
-  CONSTRAINT `cuenta_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedor` (`id_proveedor`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `cuenta_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `supplier` (`id_proveedor`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cuenta`
+-- Dumping data for table `accounts`
 --
 
-LOCK TABLES `cuenta` WRITE;
-/*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
-INSERT INTO `cuenta` VALUES ('12345678','PE01');
-/*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
+LOCK TABLES `supplierAccount` WRITE;
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `supplierAccount` VALUES ('12345678','PE01');
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -214,7 +214,7 @@ CREATE TABLE `direccion` (
   `nombre_calle` varchar(300) NOT NULL,
   `ciudad` varchar(100) NOT NULL,
   PRIMARY KEY (`id_direccion`),
-  CONSTRAINT `direccion_ibfk_1` FOREIGN KEY (`id_direccion`) REFERENCES `proveedor` (`id_proveedor`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `direccion_ibfk_1` FOREIGN KEY (`id_direccion`) REFERENCES `supplier` (`id_proveedor`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

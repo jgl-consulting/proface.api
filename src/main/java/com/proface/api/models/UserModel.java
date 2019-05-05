@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UsuarioModel {
+public class UserModel {
 
     private String firstName;
 
     private String lastName;
 
-    @Email(message = "El correo del usuario debe tener el formato correcto.")
+    @Email(message = "El email del usuario debe tener el formato correcto.")
     private String email;
 
 }

@@ -36,7 +36,7 @@ CREATE TABLE `app_role` (
 
 LOCK TABLES `app_role` WRITE;
 /*!40000 ALTER TABLE `app_role` DISABLE KEYS */;
-INSERT INTO `app_role` VALUES (1,'ADMIN','Usuario administrador'),(2,'COMPRAS','Usuario de compras'),(3,'VENTAS','Usuario de ventas'),(4,'ALMACEN','Usuario de almacen');
+INSERT INTO `app_role` VALUES (1,'ADMIN','User administrador'),(2,'COMPRAS','User de compras'),(3,'VENTAS','User de ventas'),(4,'ALMACEN','User de almacen');
 /*!40000 ALTER TABLE `app_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,13 +96,13 @@ INSERT INTO `app_user_role` VALUES (1,1),(2,1),(3,1);
 UNLOCK TABLES;
 
 --
--- Table structure for table `proveedor`
+-- Table structure for table `supplier`
 --
 
-DROP TABLE IF EXISTS `proveedor`;
+DROP TABLE IF EXISTS `supplier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `proveedor` (
+CREATE TABLE `supplier` (
   `id_proveedor` varchar(4) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `id_tipo_proveedor` int(1) DEFAULT NULL,
@@ -113,12 +113,12 @@ CREATE TABLE `proveedor` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `proveedor`
+-- Dumping data for table `supplier`
 --
 
-LOCK TABLES `proveedor` WRITE;
-/*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
+LOCK TABLES `supplier` WRITE;
+/*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
+/*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

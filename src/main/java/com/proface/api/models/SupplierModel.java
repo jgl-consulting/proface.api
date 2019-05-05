@@ -6,23 +6,24 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-public class ProveedorModel {
+public class SupplierModel {
 
 	@NotBlank(message = "El identificador del proveedor no puede ser vacío.")
-	private String idProveedor;
+	private int id;
 	
 	@NotBlank(message = "El nombre no puede ser vacío.")
-	private String nombre;
+	private String name;
 	
 	@NotNull(message = "El tipo de proveedor no puede ser nulo.")
-	private TipoProveedorModel tipoProveedor;
+	private SupplierTypeModel type;
 	
-	private ContactoModel contacto;
+	private List<SupplierContactModel> contacts;
 	
-	private CuentaModel cuenta;
-	
-	private DireccionModel direccion;
-	
+	private List<SupplierAccountModel> accounts;
+
+	private CountryModel country;
 }

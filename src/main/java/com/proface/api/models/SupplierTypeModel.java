@@ -8,15 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class TipoProveedorModel {
+public class SupplierTypeModel {
 	
 	@NotNull(message = "El identificador del tipo de proveedor no puede ser vacío.")
-	private Integer idTipoProveedor;
+	private int id;
 	
 	@NotBlank(message = "La descripción del tipo de proveedor no puede ser vacía.")
-	private String descripcion;
-	
-	@NotBlank(message = "El tipo de moneda de este tipo de proveedor no puede ser vacío.")
-	private String tipoMoneda;
+	private String name;
 
 }
