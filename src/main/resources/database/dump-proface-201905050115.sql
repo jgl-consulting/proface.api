@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `region`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `region` (
   `id` int(11) NOT NULL,
-  `firstName` varchar(2555) DEFAULT NULL,
+  `name` varchar(2555) DEFAULT NULL,
   `code` varchar(10) DEFAULT NULL,
   `country_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -105,7 +105,7 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `description` varchar(255) DEFAULT NULL,
-  `firstName` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,7 +129,7 @@ DROP TABLE IF EXISTS `supplier`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `supplier` (
   `id` int(11) NOT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
   `native_id` varchar(20) NOT NULL,
   `type_id` int(11) NOT NULL,
@@ -221,7 +221,7 @@ DROP TABLE IF EXISTS `supplier_type`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `supplier_type` (
   `id` int(11) NOT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -303,4 +303,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-04  1:01:01
+-- Dump completed on 2019-05-05  1:15:12
