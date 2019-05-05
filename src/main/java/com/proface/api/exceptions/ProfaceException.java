@@ -3,19 +3,27 @@ package com.proface.api.exceptions;
 import java.util.List;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Data
-public class ProfaceError {
+@RequiredArgsConstructor
+@NoArgsConstructor
+public class ProfaceException {
 
-	private ProfaceErrorCode code;
+	@NonNull
+	private ProfaceExceptionCode code;
+	
+	@NonNull
 	private String message;	
-	private List<ProfaceSingleError> errors;
+	
+	@NonNull
+	private List<ProfaceSingleException> errors;
 	
 	@Data
 	@RequiredArgsConstructor
-	class ProfaceSingleError {
+	class ProfaceSingleException {
 		
 		@NonNull
 		private String errorMessage;

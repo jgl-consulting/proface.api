@@ -2,7 +2,7 @@ package com.proface.api.controllers;
 
 import com.proface.api.entities.User;
 import com.proface.api.mappers.UserMapper;
-import com.proface.api.services.impl.UsuarioService;
+import com.proface.api.services.impl.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,7 +20,7 @@ import java.util.function.Function;
 public class OAuthController {
 
     @Autowired
-    private UsuarioService usersService;
+    private UsersService usersService;
 
     private UserMapper userMapper = UserMapper.INSTANCE;
 

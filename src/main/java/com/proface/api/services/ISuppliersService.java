@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.proface.api.entities.Supplier;
 
-public interface IProveedorService {
+public interface ISuppliersService {
 
 	List<Supplier> findAll();
 	

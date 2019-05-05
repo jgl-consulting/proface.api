@@ -22,17 +22,16 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	}
 
 	private Object methodArgumentNotValidExceptionEntity(MethodArgumentNotValidException ex) {
-		ProfaceError error = new ProfaceError();
-		error.setCode(ProfaceErrorCode.ARGUMENT_NOT_VALID);
+		ProfaceException error = new ProfaceException();
+		error.setCode(ProfaceExceptionCode.ARGUMENT_NOT_VALID);
 		error.setMessage("Argumentos no válidos.");
-		List<ProfaceError.ProfaceSingleError> errors = new ArrayList<>();
+		List<ProfaceException.ProfaceSingleException> errors = new ArrayList<>();
 		ex.getBindingResult().getAllErrors().forEach(e -> {
 			String errorMessage = e.getDefaultMessage();
 			String stackTrace = e.toString();
-			errors.add(error.new ProfaceSingleError(errorMessage, stackTrace));
+			errors.add(error.new ProfaceSingleException(errorMessage, stackTrace));
 		});
 		error.setErrors(errors);
 		return error;
 	}
-
 }

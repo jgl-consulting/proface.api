@@ -4,7 +4,7 @@ import com.proface.api.entities.User;
 
 import java.util.Optional;
 
-public interface IUserService {
+public interface IUsersService {
 
     boolean existsByUsername(String username);
 

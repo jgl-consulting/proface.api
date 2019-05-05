@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proface.api.repositories.SupplierRepository;
-import com.proface.api.services.IProveedorService;
+import com.proface.api.services.ISuppliersService;
 
 @Service
-public class ProveedorService implements IProveedorService {
+public class SuppliersService implements ISuppliersService {
 
 	@Autowired
 	private SupplierRepository supplierRepository;

@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proface.api.mappers.SupplierMapper;
 import com.proface.api.models.SupplierModel;
-import com.proface.api.services.IProveedorService;
+import com.proface.api.services.ISuppliersService;
 
 @RestController
 @RequestMapping("api/suppliers")
 public class SuppliersController {
 
 	@Autowired
-	private IProveedorService proveedorService;	
+	private ISuppliersService suppliersService;
 
 	private SupplierMapper supplierMapper = SupplierMapper.INSTANCE;
 
@@ -28,7 +28,7 @@ public class SuppliersController {
 
 		Supplier supplier = supplierMapper.convertToEntity(supplierModel);
 
-		proveedorService.save(supplier);
+		suppliersService.save(supplier);
 
 		return ResponseEntity.ok(supplier);
 	}
