@@ -12,12 +12,17 @@ import java.util.List;
 @NoArgsConstructor
 public class SupplierModel {
 
-	@NotBlank(message = "El identificador del proveedor no puede ser vacío.")
 	private int id;
 	
 	@NotBlank(message = "El nombre no puede ser vacío.")
 	private String name;
-	
+
+	@NotBlank(message = "El codigo local no puede ser vacio")
+	private String nativeId;
+
+	@NotBlank(message = "La dirección no puede ser vacia")
+	private String address;
+
 	@NotNull(message = "El tipo de proveedor no puede ser nulo.")
 	private SupplierTypeModel type;
 	

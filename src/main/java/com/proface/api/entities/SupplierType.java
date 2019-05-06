@@ -1,9 +1,6 @@
 package com.proface.api.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 @Entity
@@ -12,6 +9,7 @@ import lombok.Data;
 public class SupplierType {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
     private int id;
 	

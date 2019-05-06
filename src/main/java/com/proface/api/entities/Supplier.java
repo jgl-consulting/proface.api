@@ -18,6 +18,7 @@ import java.util.List;
 public class Supplier {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
@@ -40,16 +41,12 @@ public class Supplier {
 
 	@OneToMany(
 			mappedBy = "supplier",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
 			fetch = FetchType.LAZY
 	)
 	private List<SupplierContact> contacts;
 
 	@OneToMany(
 			mappedBy = "supplier",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
 			fetch = FetchType.LAZY
 	)
 	private List<SupplierAccount> accounts;
