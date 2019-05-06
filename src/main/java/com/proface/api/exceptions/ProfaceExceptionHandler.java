@@ -18,7 +18,7 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
-		return handleExceptionInternal(ex, methodArgumentNotValidExceptionEntity(ex), headers, HttpStatus.BAD_REQUEST,
+		return handleExceptionInternal(ex, methodArgumentNotValidExceptionEntity(ex), headers, HttpStatus.CONFLICT,
 				request);
 	}
 
