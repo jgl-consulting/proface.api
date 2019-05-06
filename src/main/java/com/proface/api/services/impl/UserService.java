@@ -3,7 +3,7 @@ package com.proface.api.services.impl;
 import com.proface.api.entities.User;
 import com.proface.api.repositories.UserRepository;
 import com.proface.api.security.ProfaceUser;
-import com.proface.api.services.IUsersService;
+import com.proface.api.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsersService implements IUsersService, UserDetailsService {
+public class UserService implements IUserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;

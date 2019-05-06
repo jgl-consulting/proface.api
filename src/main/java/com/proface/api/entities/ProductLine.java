@@ -10,16 +10,16 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name= "supplier_type")
+@Table(name = "product_line")
 @Data
-public class SupplierType {
+public class ProductLine {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-	
-	@Column(name = "name")
-    private String name;
+	private int id;
 
+	@Column(name = "name")
+	private String name;
+	
 }

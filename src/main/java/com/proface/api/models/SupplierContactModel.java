@@ -10,16 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SupplierContactModel {
 
-	private String id;
+	private int id;
 
-	@NotBlank(message = "El nombre del contacts no puede ser vacío.")
+	@NotBlank(message = "El nombre del contacto no debe ser vacío.")
 	private String firstName;
 	
-	@NotBlank(message = "El apellido del contacts no puede ser vacío.")
 	private String lastName;
 	
 	private String phone;
 	
 	@Email(message = "El correo del contacto debe tener el formato correcto.")
 	private String email;
+	
+	private SupplierModel supplier;
+	
 }

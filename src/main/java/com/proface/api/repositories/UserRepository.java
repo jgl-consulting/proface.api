@@ -11,7 +11,7 @@ import org.springframework.security.access.annotation.Secured;
 import java.util.Optional;
 
 @Secured("ADMIN")
-@RepositoryRestResource(path = "usuarios", collectionResourceRel = "usuarios")
+@RepositoryRestResource
 public interface UserRepository extends PagingAndSortingRepository<User,Long>{
 
     Page<User> findAllByUsernameContains(Pageable pageable, @Param("username") String username);

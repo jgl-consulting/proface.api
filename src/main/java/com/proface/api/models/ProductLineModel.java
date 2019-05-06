@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class SupplierTypeModel {
+public class ProductLineModel {
 	
-	@Positive(message = "El identificador del tipo de proveedor debe ser un número positivo.")
+	@Positive(message = "El identificador de la línea de producto debe ser positivo.")
 	private int id;
 	
 	private String name;

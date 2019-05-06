@@ -1,11 +1,11 @@
 package com.proface.api.repositories;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-
-import com.proface.api.entities.SupplierContact;
 import org.springframework.stereotype.Repository;
 
+import com.proface.api.entities.Product;
+
 @Repository
-public interface SupplierContactsRepository extends PagingAndSortingRepository<SupplierContact, Integer> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 
 }

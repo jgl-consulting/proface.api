@@ -2,13 +2,7 @@ package com.proface.api.entities;
 
 import javax.persistence.*;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.core.config.Projection;
-
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "supplier_contact")
@@ -17,6 +11,7 @@ public class SupplierContact {
 
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "first_name")

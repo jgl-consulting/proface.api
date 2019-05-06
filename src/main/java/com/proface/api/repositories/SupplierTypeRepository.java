@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.proface.api.entities.SupplierType;
 
-@RepositoryRestResource(collectionResourceRel = "supplierTypes", path = "supplierTypes")
-public interface SupplierTypesRepository extends PagingAndSortingRepository<SupplierType, Integer> {
+@RepositoryRestResource
+public interface SupplierTypeRepository extends PagingAndSortingRepository<SupplierType, Integer> {
 	
 }

@@ -1,5 +1,6 @@
 package com.proface.api.models;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -12,18 +13,26 @@ import java.util.List;
 @NoArgsConstructor
 public class SupplierModel {
 
-	@NotBlank(message = "El identificador del proveedor no puede ser vacío.")
 	private int id;
 	
-	@NotBlank(message = "El nombre no puede ser vacío.")
+	@NotBlank(message = "El nombre del proveedor no debe ser vacío.")
 	private String name;
 	
-	@NotNull(message = "El tipo de proveedor no puede ser nulo.")
+	@NotBlank(message = "El identificador del proveedor no debe ser vacío.")
+	private String nativeId;
+	
+	private String address;
+	
+	@Valid
+	@NotNull(message = "El tipo de proveedor no debe ser vacío.")
 	private SupplierTypeModel type;
 	
+	@Valid
 	private List<SupplierContactModel> contacts;
 	
+	@Valid
 	private List<SupplierAccountModel> accounts;
 
+	@Valid
 	private CountryModel country;
 }

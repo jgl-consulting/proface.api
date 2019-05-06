@@ -1,11 +1,11 @@
 package com.proface.api.repositories;
 
-import com.proface.api.entities.Role;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.security.access.annotation.Secured;
 
-@Secured("ADMIN")
+import com.proface.api.entities.ProductLine;
+
 @RepositoryRestResource
-public interface RoleRepository extends PagingAndSortingRepository<Role, Long> {
+public interface ProductLineRepository extends PagingAndSortingRepository<ProductLine, Integer> {
+
 }

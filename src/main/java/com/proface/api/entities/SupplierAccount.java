@@ -1,15 +1,8 @@
 package com.proface.api.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.core.config.Projection;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "supplier_account")
@@ -23,13 +16,12 @@ public class SupplierAccount {
 
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@NotNull
 	@Column(name="number")
 	private String number;
 
-	@NotNull
 	@Column(name="cci", columnDefinition = "char")
 	private String cci;
 

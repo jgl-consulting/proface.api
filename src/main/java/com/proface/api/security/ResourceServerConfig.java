@@ -8,7 +8,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
 @EnableResourceServer
@@ -16,9 +15,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Value("${security.jwt.resource-ids}")
     private String resourceIds;
-
-    @Autowired
-    private TokenStore tokenStore;
 
     @Autowired
     private ResourceServerTokenServices tokenServices;

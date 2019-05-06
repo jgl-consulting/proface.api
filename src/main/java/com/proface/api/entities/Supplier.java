@@ -2,13 +2,7 @@ package com.proface.api.entities;
 
 import javax.persistence.*;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.core.config.Projection;
-
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -19,15 +13,16 @@ public class Supplier {
 
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "name")
 	private String name;
 
-	@Column(name="address")
+	@Column(name = "address")
 	private String address;
 
-	@Column(name="native_id")
+	@Column(name = "native_id")
 	private String nativeId;
 
 	@JoinColumn(name = "type_id", referencedColumnName = "id")
@@ -38,20 +33,10 @@ public class Supplier {
 	@ManyToOne
 	private Country country;
 
-	@OneToMany(
-			mappedBy = "supplier",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
+	@OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<SupplierContact> contacts;
 
-	@OneToMany(
-			mappedBy = "supplier",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true,
-			fetch = FetchType.LAZY
-	)
+	@OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<SupplierAccount> accounts;
 
 }

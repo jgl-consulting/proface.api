@@ -9,7 +9,9 @@ import java.io.Serializable;
 @Data
 public class SupplierAccountPK implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = -2035800160473596939L;
+
+	@Id
     @Column(name = "supplier_id")
     private int supplierId;
 

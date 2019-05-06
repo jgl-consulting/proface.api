@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@RepositoryEventHandler
-class UserEventHandler {
+@RepositoryEventHandler(User.class)
+public class UserEventHandler {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -20,12 +20,12 @@ class UserEventHandler {
     private UserRepository userRepository;
 
     @HandleBeforeCreate
-    public void handleUserCreate(User user) {
+    public void handleUserBeforeCreate(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
     @HandleBeforeSave
-    public void handleUserUpdate(User user) {
+    public void handleUserBeforeSave(User user) {
         if (user.getPassword().trim().isEmpty()) {
             User storedUser = userRepository
                     .findById(user.getId())
