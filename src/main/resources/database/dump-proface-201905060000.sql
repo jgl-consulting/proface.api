@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
 -- Host: localhost    Database: proface
 -- ------------------------------------------------------
--- Server version	5.7.26-0ubuntu0.18.04.1
+-- Server version	8.0.15
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8mb4 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `bank`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `bank` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `bank` (
   `country_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_bank_country1_idx` (`country_id`),
-  CONSTRAINT `fk_bank_country1` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_bank_country1` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,13 +48,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `country`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `country` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `iso` char(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `region`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `region` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(2555) DEFAULT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE `region` (
   PRIMARY KEY (`id`),
   KEY `fk_region_country1_idx` (`country_id`),
   CONSTRAINT `fk_region_country` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3889 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `description` varchar(255) DEFAULT NULL,
@@ -126,7 +126,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `supplier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `supplier` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
@@ -135,11 +135,12 @@ CREATE TABLE `supplier` (
   `type_id` int(11) NOT NULL,
   `country_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_country_native_id` (`native_id`,`country_id`),
   KEY `fk_supplier_supplier_type1_idx` (`type_id`),
   KEY `fk_supplier_country1_idx` (`country_id`),
-  CONSTRAINT `fk_supplier_country1` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_supplier_supplier_type1` FOREIGN KEY (`type_id`) REFERENCES `supplier_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Supplier table, stores all supplier related data.';
+  CONSTRAINT `fk_supplier_country1` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`),
+  CONSTRAINT `fk_supplier_supplier_type1` FOREIGN KEY (`type_id`) REFERENCES `supplier_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Supplier table, stores all supplier related data.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,6 +149,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
+INSERT INTO `supplier` VALUES (4,'Supplier 4','P. Sherman, St. Walaby 43, Sydney','16798718978',2,12),(6,'Supplier 6','P. Sherman, St. Walaby 43, Sydney','16798718976',1,12),(9,'Supplier for delete','Av. Peru 2369','16798718979',2,161);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +159,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `supplier_account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `supplier_account` (
   `supplier_id` int(11) NOT NULL,
   `id` int(11) NOT NULL,
@@ -169,8 +171,8 @@ CREATE TABLE `supplier_account` (
   PRIMARY KEY (`supplier_id`,`id`),
   KEY `fk_supplier_account_supplier1_idx` (`supplier_id`),
   KEY `fk_supplier_account_bank1_idx` (`bank_id`),
-  CONSTRAINT `fk_supplier_account_bank1` FOREIGN KEY (`bank_id`) REFERENCES `bank` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_supplier_account_supplier1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_supplier_account_bank1` FOREIGN KEY (`bank_id`) REFERENCES `bank` (`id`),
+  CONSTRAINT `fk_supplier_account_supplier1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -189,7 +191,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `supplier_contact`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `supplier_contact` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) DEFAULT NULL,
@@ -199,8 +201,8 @@ CREATE TABLE `supplier_contact` (
   `supplier_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_contact_supplier1_idx` (`supplier_id`),
-  CONSTRAINT `fk_contact_supplier1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_contact_supplier1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,6 +211,7 @@ CREATE TABLE `supplier_contact` (
 
 LOCK TABLES `supplier_contact` WRITE;
 /*!40000 ALTER TABLE `supplier_contact` DISABLE KEYS */;
+INSERT INTO `supplier_contact` VALUES (1,'Joe','Doe','944971879','joe.doe@supplier1.com',6),(2,'Joe','Doe','944971879','joe.doe@supplier1.com',4),(3,'Joe','Doe','944971879','joe.doe@supplier1.com',6),(6,'Joe','Doe','944971879','joe.doe@supplier1.com',9);
 /*!40000 ALTER TABLE `supplier_contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,12 +221,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `supplier_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `supplier_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,6 +235,7 @@ CREATE TABLE `supplier_type` (
 
 LOCK TABLES `supplier_type` WRITE;
 /*!40000 ALTER TABLE `supplier_type` DISABLE KEYS */;
+INSERT INTO `supplier_type` VALUES (1,'Internacional'),(2,'Nacional');
 /*!40000 ALTER TABLE `supplier_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +245,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
@@ -269,7 +273,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user_role` (
   `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
@@ -303,4 +307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05  1:15:12
+-- Dump completed on 2019-05-06  0:00:55
