@@ -22,6 +22,4 @@ public class SupplierContactModel {
 	@Email(message = "El correo del contacto debe tener el formato correcto.")
 	private String email;
 	
-	private SupplierModel supplier;
-	
 }

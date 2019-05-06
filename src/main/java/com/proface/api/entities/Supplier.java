@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,9 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Table(name = "supplier")
 @Data
+@DynamicUpdate
 public class Supplier {
 
 	@Id
@@ -44,14 +48,30 @@ public class Supplier {
 
 	@OneToMany(
 			mappedBy = "supplier",
-			fetch = FetchType.LAZY
+			fetch = FetchType.LAZY,
+			cascade = CascadeType.PERSIST
 	)
 	private List<SupplierContact> contacts;
 
 	@OneToMany(
 			mappedBy = "supplier",
-			fetch = FetchType.LAZY
+			fetch = FetchType.LAZY,
+			cascade = CascadeType.PERSIST
 	)
 	private List<SupplierAccount> accounts;
 
+	public void setContacts(List<SupplierContact> contacts) {
+		if(contacts != null) {
+			this.contacts = contacts;
+			contacts.forEach(contact -> contact.setSupplier(this));
+		}
+	}
+	
+	public void setAccounts(List<SupplierAccount> accounts) {
+		if(accounts != null) {
+			this.accounts = accounts;
+			accounts.forEach(account -> account.setSupplier(this));
+		}
+	}
+	
 }

@@ -32,20 +32,13 @@ public class SupplierService implements ISupplierService {
 	@Override
 	@Transactional
 	public void save(Supplier supplier) {
-		if(supplier.getContacts() != null)
-			supplier.getContacts().forEach(contact -> contact.setSupplier(supplier));
-		if(supplier.getAccounts() != null)
-			supplier.getAccounts().forEach(account -> account.setSupplier(supplier));
 		supplierRepository.save(supplier);
 	}
 
 	@Override
+	@Transactional
 	public void edit(int id, Supplier supplier) {
 		supplier.setId(id);		
-		if(supplier.getContacts() != null)
-			supplier.getContacts().forEach(contact -> contact.setSupplier(supplier));
-		if(supplier.getAccounts() != null)
-			supplier.getAccounts().forEach(account -> account.setSupplier(supplier));
 		supplierRepository.save(supplier);
 	}
 

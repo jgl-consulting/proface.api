@@ -6,13 +6,8 @@ import lombok.Data;
 
 @Entity
 @Table(name = "supplier_account")
-@IdClass(SupplierAccountPK.class)
 @Data
 public class SupplierAccount {
-
-	@Id
-	@Column(name = "supplier_id")
-	private int supplierId;
 
 	@Id
 	@Column(name = "id")
@@ -36,7 +31,7 @@ public class SupplierAccount {
 	private Bank bank;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "supplier_id", insertable = false, updatable = false)
+	@JoinColumn(name = "supplier_id")
 	private Supplier supplier;
 
 }
