@@ -18,7 +18,7 @@ public class SupplierAccountModel {
 	private String description;
 	
 	private String currency;
-
+	
 	@Valid
 	private BankModel bank;
 

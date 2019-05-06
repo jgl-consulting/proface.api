@@ -239,6 +239,58 @@ INSERT INTO `supplier_type` VALUES (4,'Nacional'),(5,'Internacional');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `product_line`
+--
+
+DROP TABLE IF EXISTS `product_line`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `product_line` (
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_line`
+--
+
+LOCK TABLES `product_line` WRITE;
+/*!40000 ALTER TABLE `product_line` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_line` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `product` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `native_id` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(300) DEFAULT NULL,
+  `sale_price` double DEFAULT NULL,
+  `product_line_id` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_product_product_line` (`product_line_id`),
+  CONSTRAINT `fk_product_product_line` FOREIGN KEY (`product_line_id`) REFERENCES `product_line` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product`
+--
+
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 

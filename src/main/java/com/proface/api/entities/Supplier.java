@@ -1,10 +1,19 @@
 package com.proface.api.entities;
 
-import javax.persistence.*;
-
 import lombok.Data;
 
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "supplier")
@@ -33,10 +42,16 @@ public class Supplier {
 	@ManyToOne
 	private Country country;
 
-	@OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(
+			mappedBy = "supplier",
+			fetch = FetchType.LAZY
+	)
 	private List<SupplierContact> contacts;
 
-	@OneToMany(mappedBy = "supplier", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(
+			mappedBy = "supplier",
+			fetch = FetchType.LAZY
+	)
 	private List<SupplierAccount> accounts;
 
 }
