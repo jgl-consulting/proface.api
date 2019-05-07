@@ -16,12 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
-
 @Entity
 @Table(name = "supplier")
 @Data
-@DynamicUpdate
 public class Supplier {
 
 	@Id
@@ -59,6 +56,12 @@ public class Supplier {
 			cascade = CascadeType.PERSIST
 	)
 	private List<SupplierAccount> accounts;
+	
+	@OneToMany(
+			mappedBy = "supplier",
+			fetch = FetchType.LAZY
+	)
+	private List<PurchaseOrder> purchases;
 
 	public void setContacts(List<SupplierContact> contacts) {
 		if(contacts != null) {

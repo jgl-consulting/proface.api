@@ -25,8 +25,13 @@ public class SupplierService implements ISupplierService {
 	}
 	
 	@Override
-	public Optional<Supplier> findOne(int id) {
+	public Optional<Supplier> findOne(Integer id) {
 		return supplierRepository.findById(id);
+	}
+	
+	@Override
+	public boolean exists(Integer id) {
+		return supplierRepository.existsById(id);
 	}
 
 	@Override
@@ -37,14 +42,14 @@ public class SupplierService implements ISupplierService {
 
 	@Override
 	@Transactional
-	public void edit(int id, Supplier supplier) {
+	public void edit(Integer id, Supplier supplier) {
 		supplier.setId(id);		
 		supplierRepository.save(supplier);
 	}
 
 	@Override
 	@Transactional
-	public void delete(int id) {
+	public void delete(Integer id) {
 		supplierRepository.deleteById(id);
 	}
 	

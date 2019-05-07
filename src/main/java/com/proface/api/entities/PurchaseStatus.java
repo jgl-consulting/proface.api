@@ -14,22 +14,28 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name= "supplier_type")
+@Table(name = "purchase_status")
 @Data
-public class SupplierType {
+public class PurchaseStatus {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	private int id;
 	
-	@Column(name = "name")
-    private String name;
+	@Column(name = "native_id")
+	private String nativeId;
+	
+	@Column(name = "description")
+	private String description;
+	
+	@Column(name = "color", columnDefinition = "char")
+	private String color;
 	
 	@OneToMany(
-			mappedBy = "type",
+			mappedBy = "status",
 			fetch = FetchType.LAZY
 	)
-	private List<Supplier> suppliers;
-
+	private List<PurchaseOrder> orders;
+	
 }
