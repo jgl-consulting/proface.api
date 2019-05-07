@@ -2,7 +2,6 @@ package com.proface.api.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +26,7 @@ public class Product {
 	private int id;
 
 	@Column(name = "name")
-	private String name;
+	private String name;	
 
 	@Column(name = "description")
 	private String description;
@@ -44,8 +43,7 @@ public class Product {
 	
 	@OneToMany(
 			mappedBy = "product",
-			fetch = FetchType.LAZY,
-			cascade = CascadeType.PERSIST
+			fetch = FetchType.LAZY
 	)
 	private List<PurchaseDetail> details;
 
