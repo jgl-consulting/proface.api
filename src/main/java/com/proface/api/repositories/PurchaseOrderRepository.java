@@ -8,4 +8,6 @@ import com.proface.api.entities.PurchaseOrder;
 @Repository
 public interface PurchaseOrderRepository extends PagingAndSortingRepository<PurchaseOrder, Integer> {
 
+	boolean existsByNativeId(String nativeId);
+	
 }

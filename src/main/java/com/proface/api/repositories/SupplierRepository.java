@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SupplierRepository extends PagingAndSortingRepository<Supplier, Integer> {
 
+	boolean existsByNativeId(String nativeId);
+	
 }

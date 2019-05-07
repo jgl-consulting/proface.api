@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proface.api.entities.PurchaseOrder;
+import com.proface.api.exceptions.customs.ProfaceDuplicatedIdException;
+import com.proface.api.exceptions.customs.ProfaceNotExistingException;
 import com.proface.api.repositories.PurchaseOrderRepository;
 import com.proface.api.services.IPurchaseOrderService;
 
@@ -24,18 +26,20 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 	}
 
 	@Override
-	public Optional<PurchaseOrder> findOne(Integer id) {
-		return purchaseOrderRepository.findById(id);
-	}
-	
-	@Override
-	public boolean exists(Integer id) {
-		return purchaseOrderRepository.existsById(id);
+	public PurchaseOrder findOne(Integer id) {
+		Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepository.findById(id);
+		if(!purchaseOrder.isPresent())
+			throw new ProfaceNotExistingException("La orden de compra no ha sido registrada anteriormente.");
+		return purchaseOrder.get();
 	}
 
 	@Override
 	@Transactional
 	public void save(PurchaseOrder purchaseOrder) {
+		purchaseOrder.setId(0);
+		if(purchaseOrderRepository.existsByNativeId(purchaseOrder.getNativeId()))
+			throw new ProfaceDuplicatedIdException(String.format(
+					"La orden de compra con identificador %s ya ha sido registrada anteriormente.", purchaseOrder.getNativeId()));
 		purchaseOrderRepository.save(purchaseOrder);
 	}
 
@@ -43,12 +47,19 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 	@Transactional
 	public void edit(Integer id, PurchaseOrder purchaseOrder) {
 		purchaseOrder.setId(id);
+		if(!purchaseOrderRepository.existsById(purchaseOrder.getId()))
+			throw new ProfaceNotExistingException("La orden de compra no ha sido registrada anteriormente.");
+		if(purchaseOrderRepository.existsByNativeId(purchaseOrder.getNativeId()))
+			throw new ProfaceDuplicatedIdException(String.format(
+					"La orden de compra con identificador %s ya ha sido registrada anteriormente.", purchaseOrder.getNativeId()));
 		purchaseOrderRepository.save(purchaseOrder);
 	}
 
 	@Override
 	@Transactional
 	public void delete(Integer id) {
+		if(!purchaseOrderRepository.existsById(id))
+			throw new ProfaceNotExistingException("La orden de compra no ha sido registrada anteriormente.");
 		purchaseOrderRepository.deleteById(id);
 		
 	}

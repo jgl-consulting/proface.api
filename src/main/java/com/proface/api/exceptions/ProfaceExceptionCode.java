@@ -2,6 +2,6 @@ package com.proface.api.exceptions;
 
 public enum ProfaceExceptionCode {
 
-	ARGUMENT_NOT_VALID
+	NOT_VALID, DUPLICATED_ID, NOT_EXISTING
 	
 }

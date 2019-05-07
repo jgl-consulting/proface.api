@@ -1,9 +1,5 @@
 package com.proface.api.controllers;
 
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import com.proface.api.entities.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,15 +16,14 @@ import com.proface.api.services.ISupplierService;
 
 @RestController
 @RequestMapping("api/suppliers")
-public class SupplierController {
+public class SupplierController implements IAbstractRestController<Integer, SupplierModel> {
 
 	@Autowired
 	private ISupplierService suppliersService;
 
 	private SupplierMapper supplierMapper = SupplierMapper.INSTANCE;
 
-	@PostMapping
-	public ResponseEntity<?> saveSupplier(@Valid @RequestBody SupplierModel supplierModel) {
+	public ResponseEntity<?> save(SupplierModel supplierModel) {
 
 		Supplier supplier = supplierMapper.convertToEntity(supplierModel);
 
@@ -43,28 +32,21 @@ public class SupplierController {
 		return new ResponseEntity<>(supplierModel, HttpStatus.CREATED);
 	}
 
-	@GetMapping
-	public ResponseEntity<?> listSuppliers(Pageable pageable) {
+	public ResponseEntity<?> list(Pageable pageable) {
 
 		Page<Supplier> suppliers = suppliersService.findAll(pageable);
 
 		return new ResponseEntity<>(suppliers.map(supplier -> supplierMapper.convertToModel(supplier)), HttpStatus.OK);
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<?> findSupplier(@PathVariable int id) {
+	public ResponseEntity<?> find(Integer id) {
 
-		Optional<Supplier> supplier = suppliersService.findOne(id);
+		Supplier supplier = suppliersService.findOne(id);
 
-		return supplier.isPresent() ? new ResponseEntity<>(supplierMapper.convertToModel(supplier.get()), HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(supplierMapper.convertToModel(supplier), HttpStatus.OK);
 	}
 
-	@PutMapping("{id}")
-	public ResponseEntity<?> editSupplier(@RequestBody SupplierModel supplierModel, @PathVariable int id) {
-
-		if (!suppliersService.exists(id))
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<?> edit(SupplierModel supplierModel, Integer id) {
 
 		Supplier supplier = supplierMapper.convertToEntity(supplierModel);
 
@@ -72,12 +54,8 @@ public class SupplierController {
 
 		return new ResponseEntity<>(supplierModel, HttpStatus.OK);
 	}
-
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> deleteSupplier(@PathVariable int id) {
-
-		if (!suppliersService.exists(id))
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	
+	public ResponseEntity<?> delete(Integer id) {
 
 		suppliersService.delete(id);
 

@@ -1,24 +1,22 @@
 package com.proface.api.exceptions;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor
-public class ProfaceException {
-
-	@NonNull
+public class ProfaceExceptionEntity {
+	
 	private ProfaceExceptionCode code;
 	
-	@NonNull
+	private String timeStamp;
+	
 	private String message;	
 	
-	@NonNull
 	private List<ProfaceSingleException> errors;
 	
 	@Data
@@ -31,6 +29,10 @@ public class ProfaceException {
 		@NonNull
 		private String stackTrace;
 	
+	}
+	
+	public ProfaceExceptionEntity() {
+		this.timeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyy hh:mm:ss"));
 	}
 	
 }
