@@ -2,6 +2,7 @@ package com.proface.api.models;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import lombok.Data;
@@ -25,6 +26,7 @@ public class ProductModel {
 	private double salePrice;
 	
 	@Valid
+	@NotNull(message = "La línea del producto no debe ser vacía.")
 	private ProductLineModel line;
 	
 }

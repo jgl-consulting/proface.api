@@ -8,6 +8,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface UserMapper extends IAbstractMapper<UserModel, User> {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
+	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+	
 }

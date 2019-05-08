@@ -41,7 +41,7 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = { ProfaceNotExistingException.class })
 	public ResponseEntity<?> handleProfaceException(ProfaceNotExistingException ex, WebRequest request) {
 		return handleExceptionInternal(ex,
-				profaceEntity(ex, ProfaceExceptionCode.NOT_EXISTING_ERROR, "La entidad ya ha sido registrada."),
+				profaceEntity(ex, ProfaceExceptionCode.NOT_EXISTING_ERROR, "La entidad no ha sido registrada anteriormente."),
 				new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 

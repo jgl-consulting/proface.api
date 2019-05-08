@@ -8,4 +8,6 @@ import com.proface.api.entities.Product;
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 
+	boolean existsByNativeId(String nativeId);
+	
 }
