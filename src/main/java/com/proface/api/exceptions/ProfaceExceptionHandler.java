@@ -1,8 +1,12 @@
 package com.proface.api.exceptions;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.ValidationException;
+
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,50 +25,81 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
-		ProfaceExceptionCode code = ProfaceExceptionCode.NOT_VALID;
-		String message = "La entidad no es válida.";
-		return handleExceptionInternal(ex, profaceEntity(ex, code, message), headers, HttpStatus.BAD_REQUEST, request);
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.ENTITY_VALIDATION_ERROR, "La entidad no es válida."), headers,
+				HttpStatus.BAD_REQUEST, request);
 	}
 
 	@ExceptionHandler(value = { ProfaceDuplicatedIdException.class })
 	public ResponseEntity<?> handleProfaceException(ProfaceDuplicatedIdException ex, WebRequest request) {
-		ProfaceExceptionCode code = ProfaceExceptionCode.DUPLICATED_ID;
-		String message = "El identificador de la entidad ya ha sido registrado.";
-		return handleExceptionInternal(ex, profaceEntity(ex, code, message), new HttpHeaders(), HttpStatus.BAD_REQUEST,
-				request);
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.DUPLICATED_ID_ERROR,
+						"El identificador de la entidad ya ha sido registrado."),
+				new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 
 	@ExceptionHandler(value = { ProfaceNotExistingException.class })
 	public ResponseEntity<?> handleProfaceException(ProfaceNotExistingException ex, WebRequest request) {
-		ProfaceExceptionCode code = ProfaceExceptionCode.NOT_EXISTING;
-		String message = "La entidad ya ha sido registrada.";
-		return handleExceptionInternal(ex, profaceEntity(ex, code, message), new HttpHeaders(), HttpStatus.NOT_FOUND,
-				request);
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.NOT_EXISTING_ERROR, "La entidad ya ha sido registrada."),
+				new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+
+	@ExceptionHandler(value = { SQLException.class })
+	public ResponseEntity<?> handleSQLException(SQLException ex, WebRequest request) {
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.SQL_ERROR, "Ha ocurrido un error en la base de datos."),
+				new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+
+	@ExceptionHandler(value = { DataAccessException.class })
+	public ResponseEntity<?> handleDAOException(DataAccessException ex, WebRequest request) {
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.DATA_ACCESS_ERROR, "Ha ocurrido un error de acceso a datos."),
+				new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+
+	@ExceptionHandler(value = { ValidationException.class })
+	public ResponseEntity<?> handleValidationException(ValidationException ex, WebRequest request) {
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.SQL_VALIDATION_ERROR,
+						"Ha ocurrido un error en la validación de base de datos."),
+				new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+
+	@ExceptionHandler(value = { Exception.class })
+	public ResponseEntity<Object> handleGeneralException(Exception ex, WebRequest request) {
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.GENERAL_ERROR, "Ha ocurrido un error no controlado."),
+				new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+
+	private Object profaceEntity(Exception ex, ProfaceExceptionCode code, String message) {
+		return buildProfaceException(code, message, new ProfaceSingleException(ex.getMessage(), ex.toString()));
+	}
+
+	private Object profaceEntity(SQLException ex, ProfaceExceptionCode code, String message) {
+		return buildProfaceException(code, message,
+				new ProfaceSingleException(String.format("Code: %d - State: %s - Message: %s.", ex.getErrorCode(),
+						ex.getSQLState(), ex.getMessage()), ex.toString()));
 	}
 
 	private Object profaceEntity(RuntimeException ex, ProfaceExceptionCode code, String message) {
-		ProfaceExceptionEntity error = new ProfaceExceptionEntity();
-		error.setCode(code);
-		error.setMessage(message);
-		String errorMessage = ex.getMessage();
-		String stackTrace = ex.toString();
-		List<ProfaceExceptionEntity.ProfaceSingleException> errors = new ArrayList<>();
-		errors.add(error.new ProfaceSingleException(errorMessage, stackTrace));
-		error.setErrors(errors);
-		return error;
+		return buildProfaceException(code, message, new ProfaceSingleException(ex.getMessage(), ex.toString()));
 	}
 
 	private Object profaceEntity(MethodArgumentNotValidException ex, ProfaceExceptionCode code, String message) {
-		ProfaceExceptionEntity error = new ProfaceExceptionEntity();
-		error.setCode(code);
-		error.setMessage(message);
-		List<ProfaceExceptionEntity.ProfaceSingleException> errors = new ArrayList<>();
+		List<ProfaceSingleException> errors = new ArrayList<>();
 		ex.getBindingResult().getAllErrors().forEach(e -> {
 			String errorMessage = e.getDefaultMessage();
 			String stackTrace = e.toString();
-			errors.add(error.new ProfaceSingleException(errorMessage, stackTrace));
+			errors.add(new ProfaceSingleException(errorMessage, stackTrace));
 		});
-		error.setErrors(errors);
-		return error;
+		return new ProfaceExceptionEntity(code, message, errors);
+	}
+
+	private ProfaceExceptionEntity buildProfaceException(ProfaceExceptionCode code, String message,
+			ProfaceSingleException ex) {
+		return new ProfaceExceptionEntity(code, message, ex);
 	}
 }
