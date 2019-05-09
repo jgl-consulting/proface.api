@@ -23,12 +23,7 @@ public class SupplierService extends BaseService<SupplierRepository, Supplier, I
 		entity.setId(id);
 		super.edit(id, entity);
 	}
-
-	@Override
-	public void delete(Integer id) {
-		super.delete(id);
-	}
-
+	
 	@Override
 	protected void duplicatedId(String nativeId) {
 		if (super.getRepository().existsByNativeId(nativeId))

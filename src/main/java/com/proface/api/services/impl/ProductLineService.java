@@ -23,11 +23,6 @@ public class ProductLineService extends BaseService<ProductLineRepository, Produ
 	}
 
 	@Override
-	public void delete(Integer id) {
-		super.delete(id);
-	}
-
-	@Override
 	protected String getEntityName() {
 		return ProductLine.class.getSimpleName();
 	}

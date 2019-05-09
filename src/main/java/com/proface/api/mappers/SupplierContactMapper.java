@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import com.proface.api.entities.SupplierContact;
 import com.proface.api.models.SupplierContactModel;
 
-@Mapper (componentModel = "Spring")
+@Mapper(componentModel = "Spring")
 public interface SupplierContactMapper extends IAbstractMapper<SupplierContactModel, SupplierContact> {
 
 }

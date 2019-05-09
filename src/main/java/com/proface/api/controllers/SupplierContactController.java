@@ -10,6 +10,6 @@ import com.proface.api.services.ISupplierContactService;
 
 @RestController
 @RequestMapping("api/supplierContacts")
-public class SupplierContactController
-	extends BaseRestController<Integer, SupplierContact, SupplierContactModel, SupplierContactMapper, ISupplierContactService> {
+public class SupplierContactController extends
+		BaseRestController<Integer, SupplierContact, SupplierContactModel, SupplierContactMapper, ISupplierContactService> {
 }

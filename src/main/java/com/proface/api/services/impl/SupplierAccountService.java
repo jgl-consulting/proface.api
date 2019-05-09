@@ -23,12 +23,7 @@ public class SupplierAccountService extends BaseService<SupplierAccountRepositor
 		entity.setId(id);
 		super.edit(id, entity);
 	}
-
-	@Override
-	public void delete(Integer id) {
-		super.delete(id);
-	}
-
+	
 	@Override
 	protected void duplicatedId(String nativeId) {
 		if (super.getRepository().existsByCci(nativeId))
@@ -43,6 +38,7 @@ public class SupplierAccountService extends BaseService<SupplierAccountRepositor
 			}
 		} else
 			entity.setCci(repositoryEntity.getCci());
+		entity.setSupplier(repositoryEntity.getSupplier());
 	}
 
 	@Override

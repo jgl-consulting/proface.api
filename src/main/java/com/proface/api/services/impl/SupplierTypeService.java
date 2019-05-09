@@ -23,11 +23,6 @@ public class SupplierTypeService extends BaseService<SupplierTypeRepository, Sup
 	}
 
 	@Override
-	public void delete(Integer id) {
-		super.delete(id);
-	}
-
-	@Override
 	protected String getEntityName() {
 		return SupplierType.class.getSimpleName();
 	}

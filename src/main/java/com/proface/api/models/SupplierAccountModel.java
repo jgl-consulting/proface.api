@@ -2,6 +2,7 @@ package com.proface.api.models;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.proface.api.validations.ProfaceValidationMessage;
 
@@ -17,13 +18,16 @@ public class SupplierAccountModel {
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String number;
 
+	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String cci;
 
 	private String description;
-	
+
+	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String currency;
 	
 	@Valid
+	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private BankModel bank;
 
 }

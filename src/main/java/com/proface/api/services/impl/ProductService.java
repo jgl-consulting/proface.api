@@ -25,11 +25,6 @@ public class ProductService extends BaseService<ProductRepository, Product, Inte
 	}
 
 	@Override
-	public void delete(Integer id) {
-		super.delete(id);
-	}
-
-	@Override
 	protected void duplicatedId(String nativeId) {
 		if (super.getRepository().existsByNativeId(nativeId))
 			super.duplicatedId(nativeId);
