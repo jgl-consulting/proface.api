@@ -1,12 +1,15 @@
 package com.proface.api.security;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class ProfaceUser extends User {
 
     private static final long serialVersionUID = -3531439484732724601L;

@@ -1,11 +1,13 @@
 package com.proface.api.repositories;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
 import com.proface.api.entities.PurchaseStatus;
 
-@RepositoryRestResource
+@Repository
 public interface PurchaseStatusRepository extends PagingAndSortingRepository<PurchaseStatus, Integer> {
 
+	boolean existsByNativeId(String nativeId);
+	
 }

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PurchaseStatusModel {
 
+	private int id;
+	
 	private String nativeId;
 	
 	private String description;

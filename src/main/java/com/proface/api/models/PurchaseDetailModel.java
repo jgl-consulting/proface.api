@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PurchaseDetailModel {
-
+	
 	@NotEmpty(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String nativeId;
 

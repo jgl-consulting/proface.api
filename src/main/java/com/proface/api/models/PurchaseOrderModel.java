@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PurchaseOrderModel {
 
+	private int id;
+	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String nativeId;
 	

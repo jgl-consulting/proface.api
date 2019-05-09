@@ -2,7 +2,7 @@ package com.proface.api.validations;
 
 public abstract class ProfaceValidationMessage {
 
-	public final static String DUPLICATED_ID = "La entidad %s con identificador %s ya ha sido registrada anteriormente.";
+	public final static String DUPLICATED_ID = "La entidad %s con el campo único %s ya ha sido registrada anteriormente.";
 	
 	public final static String NOT_EXISTING = "La entidad %s no ha sido registrado anteriormente.";
 	

@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SupplierAccountModel {
 
+	private int id;
+	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String number;
 
