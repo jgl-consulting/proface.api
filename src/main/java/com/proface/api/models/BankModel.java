@@ -3,6 +3,8 @@ package com.proface.api.models;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+import com.proface.api.validations.ProfaceValidationMessage;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BankModel {
 
-	@Positive(message = "El identificador del banco debe ser un número positivo.")
+	@Positive(message = ProfaceValidationMessage.POSITIVE)
 	private int id;
 	
     private String name;

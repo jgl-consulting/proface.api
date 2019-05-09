@@ -1,5 +1,6 @@
 package com.proface.api.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.repositories.PurchaseOrderRepository;
 import com.proface.api.services.IPurchaseOrderService;
+import com.proface.api.util.CollectionConverter;
 import com.proface.api.validations.ProfaceValidationHelper;
 
 @Service
@@ -19,16 +21,25 @@ public class PurchaseOrderService extends ProfaceValidationHelper<String> implem
 	@Autowired
 	private PurchaseOrderRepository purchaseOrderRepository;
 	
+	@Autowired
+	private CollectionConverter<PurchaseOrder> converter;
+	
 	@Override
 	public Page<PurchaseOrder> findAll(Pageable pageable) {
 		return purchaseOrderRepository.findAll(pageable);
 	}
 
 	@Override
+	public List<PurchaseOrder> findAll() {
+		return converter.iterableToList(purchaseOrderRepository.findAll());
+	}
+	
+	@Override
 	public PurchaseOrder findOne(Integer id) {
-		Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepository.findById(id);
-		notExisting(id);
-		return purchaseOrder.get();
+		Optional<PurchaseOrder> entity = purchaseOrderRepository.findById(id);
+		if(!entity.isPresent())
+			notExisting();
+		return entity.get();
 	}
 
 	@Override
@@ -56,6 +67,7 @@ public class PurchaseOrderService extends ProfaceValidationHelper<String> implem
 		
 	}
 	
+	@Override
 	protected void duplicatedId(String nativeId) {
 		if (purchaseOrderRepository.existsByNativeId(nativeId))
 			super.duplicatedId(nativeId);
@@ -66,8 +78,9 @@ public class PurchaseOrderService extends ProfaceValidationHelper<String> implem
 			super.notExisting();
 	}
 	
+	@Override
 	protected String getEntityName() {
-		return "La Orden de Compra";
+		return PurchaseOrder.class.getSimpleName();
 	}
 
 }

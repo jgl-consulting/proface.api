@@ -4,6 +4,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.proface.api.validations.ProfaceValidationMessage;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,24 +17,23 @@ public class SupplierModel {
 
 	private int id;
 	
-	@NotBlank(message = "El nombre del proveedor no debe ser vacío.")
+	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String name;
 	
-	@NotBlank(message = "El identificador del proveedor no debe ser vacío.")
+	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String nativeId;
 	
 	private String address;
 	
 	@Valid
-	@NotNull(message = "El tipo de proveedor no debe ser vacío.")
+	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private SupplierTypeModel type;
 	
-	@Valid
-	private List<SupplierContactModel> contacts;
+	private List<@Valid SupplierContactModel> contacts;
 	
-	@Valid
-	private List<SupplierAccountModel> accounts;
+	private List<@Valid SupplierAccountModel> accounts;
 
 	@Valid
 	private CountryModel country;
+	
 }

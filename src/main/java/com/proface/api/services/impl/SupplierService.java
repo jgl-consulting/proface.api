@@ -2,6 +2,7 @@ package com.proface.api.services.impl;
 
 import com.proface.api.entities.Supplier;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.proface.api.repositories.SupplierRepository;
 import com.proface.api.services.ISupplierService;
+import com.proface.api.util.CollectionConverter;
 import com.proface.api.validations.ProfaceValidationHelper;
 
 @Service
@@ -19,16 +21,25 @@ public class SupplierService extends ProfaceValidationHelper<String> implements 
 
 	@Autowired
 	private SupplierRepository supplierRepository;
+	
+	@Autowired
+	private CollectionConverter<Supplier> converter;
 
 	@Override
 	public Page<Supplier> findAll(Pageable pageable) {
 		return supplierRepository.findAll(pageable);
 	}
+	
+	@Override
+	public List<Supplier> findAll() {
+		return converter.iterableToList(supplierRepository.findAll());
+	}
 
 	@Override
 	public Supplier findOne(Integer id) {
 		Optional<Supplier> entity = supplierRepository.findById(id);
-		notExisting(id);
+		if(!entity.isPresent())
+			notExisting();
 		return entity.get();
 	}
 
@@ -56,6 +67,7 @@ public class SupplierService extends ProfaceValidationHelper<String> implements 
 		supplierRepository.deleteById(id);
 	}
 	
+	@Override
 	protected void duplicatedId(String nativeId) {
 		if (supplierRepository.existsByNativeId(nativeId))
 			super.duplicatedId(nativeId);
@@ -66,8 +78,9 @@ public class SupplierService extends ProfaceValidationHelper<String> implements 
 			super.notExisting();
 	}
 	
+	@Override
 	protected String getEntityName() {
-		return "El Proveedor";
+		return Supplier.class.getSimpleName();
 	}
 
 }

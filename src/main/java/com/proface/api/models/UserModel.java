@@ -2,6 +2,8 @@ package com.proface.api.models;
 
 import javax.validation.constraints.Email;
 
+import com.proface.api.validations.ProfaceValidationMessage;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +15,7 @@ public class UserModel {
 
     private String lastName;
 
-    @Email(message = "El email del usuario debe tener el formato correcto.")
+    @Email(message = ProfaceValidationMessage.EMAIL)
     private String email;
 
 }

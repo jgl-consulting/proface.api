@@ -2,6 +2,8 @@ package com.proface.api.models;
 
 import javax.validation.constraints.Positive;
 
+import com.proface.api.validations.ProfaceValidationMessage;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductLineModel {
 	
-	@Positive(message = "El identificador de la línea de producto debe ser positivo.")
+	@Positive(message = ProfaceValidationMessage.POSITIVE)
 	private int id;
 	
 	private String name;

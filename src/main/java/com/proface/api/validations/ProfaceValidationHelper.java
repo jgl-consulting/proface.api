@@ -15,7 +15,7 @@ public class ProfaceValidationHelper<NID> {
 	}
 	
 	protected String getEntityName() {
-		return "";
+		return "Proface";
 	}
 	
 }

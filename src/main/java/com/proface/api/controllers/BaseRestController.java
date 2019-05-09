@@ -1,5 +1,8 @@
 package com.proface.api.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,15 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 		return new ResponseEntity<>(list.map(entity -> mapper.convertToModel(entity)), HttpStatus.OK);
 	}
 
+	@GetMapping("unpaged")
+	public ResponseEntity<?> list() {
+
+		List<E> list = service.findAll();
+
+		return new ResponseEntity<>(
+				list.stream().map(entity -> mapper.convertToModel(entity)).collect(Collectors.toList()), HttpStatus.OK);
+	}
+
 	@GetMapping("{id}")
 	public ResponseEntity<?> find(@PathVariable ID id) {
 
@@ -72,7 +84,7 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 	public SV getService() {
 		return this.service;
 	}
-	
+
 	public MP getMapper() {
 		return this.mapper;
 	}

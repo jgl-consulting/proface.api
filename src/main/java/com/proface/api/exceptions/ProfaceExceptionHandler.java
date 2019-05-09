@@ -10,6 +10,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,8 +29,8 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 		return handleExceptionInternal(ex,
-				profaceEntity(ex, ProfaceExceptionCode.ENTITY_VALIDATION_ERROR, "La entidad no es válida."), headers,
-				HttpStatus.BAD_REQUEST, request);
+				profaceEntity(ex, ProfaceExceptionCode.ENTITY_VALIDATION_ERROR, "La entidad tiene campos no válidos."),
+				headers, HttpStatus.BAD_REQUEST, request);
 	}
 
 	@ExceptionHandler(value = { ProfaceDuplicatedIdException.class })
@@ -41,7 +44,8 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = { ProfaceNotExistingException.class })
 	public ResponseEntity<?> handleProfaceException(ProfaceNotExistingException ex, WebRequest request) {
 		return handleExceptionInternal(ex,
-				profaceEntity(ex, ProfaceExceptionCode.NOT_EXISTING_ERROR, "La entidad no ha sido registrada anteriormente."),
+				profaceEntity(ex, ProfaceExceptionCode.NOT_EXISTING_ERROR,
+						"La entidad no ha sido registrada anteriormente."),
 				new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
@@ -90,11 +94,13 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private Object profaceEntity(MethodArgumentNotValidException ex, ProfaceExceptionCode code, String message) {
 		List<ProfaceSingleException> errors = new ArrayList<>();
-		ex.getBindingResult().getAllErrors().forEach(e -> {
-			String errorMessage = e.getDefaultMessage();
-			String stackTrace = e.toString();
-			errors.add(new ProfaceSingleException(errorMessage, stackTrace));
-		});
+		BindingResult binding = ex.getBindingResult();
+		for (int i = 0; i < binding.getErrorCount(); i++) {
+			ObjectError e = binding.getAllErrors().get(i);
+			FieldError f = binding.getFieldErrors().get(i);
+			errors.add(new ProfaceSingleException(String.format(e.getDefaultMessage(), f.getField(), f.getObjectName()),
+					e.toString()));
+		}
 		return new ProfaceExceptionEntity(code, message, errors);
 	}
 
