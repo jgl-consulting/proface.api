@@ -2,14 +2,11 @@ package com.proface.api.entities;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.DynamicUpdate;
-
 import lombok.Data;
 
 @Entity
 @Table(name = "supplier_account")
 @Data
-@DynamicUpdate
 public class SupplierAccount {
 
 	@Id
