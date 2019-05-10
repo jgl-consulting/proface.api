@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import com.proface.api.models.references.BaseReferenceModel;
+import com.proface.api.models.references.PurchaseOrderRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -25,6 +25,6 @@ public class PurchaseCostModel {
 	
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	@Valid
-	private BaseReferenceModel<Integer> purchase;
+	private PurchaseOrderRefModel purchase;
 	
 }

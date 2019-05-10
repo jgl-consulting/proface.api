@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.proface.api.models.references.BaseReferenceModel;
+import com.proface.api.models.references.ProductRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -16,7 +16,7 @@ public class PurchaseDetailChModel {
 
 	@Valid
 	@NotNull
-	private BaseReferenceModel<Integer> product;
+	private ProductRefModel product;
 	
 	@Positive(message = ProfaceValidationMessage.POSITIVE)
 	private int quantity;

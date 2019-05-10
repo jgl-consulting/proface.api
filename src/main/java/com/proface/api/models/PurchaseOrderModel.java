@@ -9,7 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 
 import com.proface.api.models.children.PurchaseDetailChModel;
-import com.proface.api.models.references.BaseReferenceModel;
+import com.proface.api.models.references.PurchaseStatusRefModel;
+import com.proface.api.models.references.SupplierRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -34,10 +35,10 @@ public class PurchaseOrderModel {
 	private LocalDate billingDate;
 	
 	@Valid
-	private BaseReferenceModel<Integer> supplier;
+	private SupplierRefModel supplier;
 	
 	@Valid
-	private BaseReferenceModel<Integer> status;
+	private PurchaseStatusRefModel status;
 	
 	@NotEmpty(message = ProfaceValidationMessage.NOT_EMPTY)
 	private List<@Valid PurchaseDetailChModel> details;

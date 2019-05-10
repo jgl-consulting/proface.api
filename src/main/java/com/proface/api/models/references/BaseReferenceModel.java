@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class BaseReferenceModel<ID> {
+public class BaseReferenceModel {
 
 	/**
 	 * Must be a number > 0

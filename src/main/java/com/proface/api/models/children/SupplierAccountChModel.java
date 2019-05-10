@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.proface.api.models.references.BaseReferenceModel;
+import com.proface.api.models.references.BankRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -27,6 +27,6 @@ public class SupplierAccountChModel {
 	
 	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-	private BaseReferenceModel<Integer> bank;
+	private BankRefModel bank;
 	
 }

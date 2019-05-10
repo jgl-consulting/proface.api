@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import com.proface.api.models.references.BaseReferenceModel;
+import com.proface.api.models.references.ProductLineRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -30,6 +30,6 @@ public class ProductModel {
 	
 	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-	private BaseReferenceModel<Integer> line;
+	private ProductLineRefModel line;
 	
 }

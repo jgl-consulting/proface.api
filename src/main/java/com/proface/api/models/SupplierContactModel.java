@@ -5,7 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.proface.api.models.references.BaseReferenceModel;
+import com.proface.api.models.references.SupplierRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -29,6 +29,6 @@ public class SupplierContactModel {
 	
 	@NotNull
 	@Valid
-	private BaseReferenceModel<Integer> supplier;
+	private SupplierRefModel supplier;
 	
 }

@@ -6,7 +6,8 @@ import javax.validation.constraints.NotNull;
 
 import com.proface.api.models.children.SupplierAccountChModel;
 import com.proface.api.models.children.SupplierContactChModel;
-import com.proface.api.models.references.BaseReferenceModel;
+import com.proface.api.models.references.CountryRefModel;
+import com.proface.api.models.references.SupplierTypeRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -30,13 +31,13 @@ public class SupplierModel {
 	
 	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-	private BaseReferenceModel<Integer> type;
+	private SupplierTypeRefModel type;
 	
 	private List<@Valid SupplierContactChModel> contacts;
 	
 	private List<@Valid SupplierAccountChModel> accounts;
 
 	@Valid
-	private BaseReferenceModel<Integer> country;
+	private CountryRefModel country;
 	
 }
