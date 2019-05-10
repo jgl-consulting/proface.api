@@ -1,5 +1,10 @@
 package com.proface.api.validations;
 
+/**
+ * This Class has Messages used to export Errors to API Clients
+ * @author josec
+ *
+ */
 public abstract class ProfaceValidationMessage {
 
 	public final static String DUPLICATED_ID = "La entidad %s con el campo único %s ya ha sido registrada anteriormente.";
@@ -13,4 +18,6 @@ public abstract class ProfaceValidationMessage {
 	public final static String EMAIL = "El campo %s de la entidad %s debe tener formato de correo.";
 	
 	public final static String POSITIVE = "El campo %s de la entidad %s debe ser un número positivo.";	
+	
+	public final static String PAST_PRESENT = "El campo %s de la entidad %s debe ser una fecha menor o igual al día actual.";
 }

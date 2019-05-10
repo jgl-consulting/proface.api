@@ -58,11 +58,4 @@ public class ApplicationBeans {
 	public HttpFirewall defaultHttpFirewall() {
 		return new DefaultHttpFirewall();
 	}
-
-	/*@Bean
-	@Primary
-	public TokenEnhancer tokenEnhancer() {
-		return new CustomTokenEnhancer();
-	}*/
-
 }

@@ -13,23 +13,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ProductModel {
+public class PurchaseCostModel {
 
 	private int id;
 	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-	private String nativeId;
-	
-	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-	private String name;
-	
 	private String description;
 	
 	@PositiveOrZero(message = ProfaceValidationMessage.POSITIVE)
-	private double salePrice;
+	private double totalCost;
 	
-	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-	private BaseReferenceModel<Integer> line;
+	@Valid
+	private BaseReferenceModel<Integer> purchase;
 	
 }

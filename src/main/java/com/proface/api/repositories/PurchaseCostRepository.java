@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.proface.api.entities.PurchaseCost;
 
 @Repository
-public interface PurchaseCostInterface extends PagingAndSortingRepository<PurchaseCost, Integer> {
+public interface PurchaseCostRepository extends PagingAndSortingRepository<PurchaseCost, Integer> {
 
 }

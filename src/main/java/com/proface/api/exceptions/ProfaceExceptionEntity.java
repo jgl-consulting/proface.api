@@ -13,14 +13,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProfaceExceptionEntity {
 
+	/**
+	 * Exception Code of Error
+	 */
 	@NonNull
 	private ProfaceExceptionCode code;
 
+	/**
+	 * Date and Time of Error occurence
+	 */
 	private String timeStamp;
 
+	/**
+	 * General message of Error
+	 */
 	@NonNull
 	private String message;
 
+	/**
+	 * List of detailed Errors
+	 */
 	@NonNull
 	private List<ProfaceSingleException> errors;
 

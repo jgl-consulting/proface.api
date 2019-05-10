@@ -36,6 +36,9 @@ public class PurchaseOrder {
 	@Column(name = "quotation_date")
 	private LocalDate quotationDate;
 	
+	@Column(name = "billing_date")
+	private LocalDate billingDate;
+	
 	@Column(name = "reception_date")
 	private LocalDate receptionDate;
 	

@@ -10,27 +10,52 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proface.api.services.IAbstractService;
-import com.proface.api.util.CollectionConverter;
+import com.proface.api.util.Converter;
 import com.proface.api.validations.ProfaceValidationHelper;
 
-public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID> extends ProfaceValidationHelper<NID> implements IAbstractService<E, ID> {
+/**
+ * 
+ * @author josec
+ * This class abstracts basic implementation of Service
+ * Children classes can implement their Service Inteface to use custom methods
+ * @param <R>	Repository
+ * @param <E>	Entity
+ * @param <ID>	Primary Key of Entity
+ * @param <NID>	Optional: Native Key of Entity
+ */
+public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID> extends ProfaceValidationHelper<E, NID> implements IAbstractService<E, ID> {
 	
+	/**
+	 * Injected Repository
+	 */
 	@Autowired
 	private R repository;
 	
+	/**
+	 * Injected Converter
+	 */
 	@Autowired
-	private CollectionConverter<E> converter;	
+	private Converter<E> converter;	
 	
+	/**
+	 * Lists all Entities from Repository
+	 */
 	@Override
 	public List<E> findAll() {
 		return converter.iterableToList(repository.findAll());
 	}
 
+	/**
+	 * Pages Entites from Repository
+	 */
 	@Override
 	public Page<E> findAll(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 
+	/**
+	 * Finds an Entity from Repository
+	 */
 	@Override
 	public E findOne(ID id) {
 		Optional<E> entity = repository.findById(id);
@@ -39,12 +64,18 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 		return entity.get();
 	}
 
+	/**
+	 * Saves an Entity into Repository
+	 */
 	@Override
 	@Transactional
 	public void save(E entity) {
 		repository.save(entity);
 	}
 
+	/**
+	 * Saves a modified Entity into Repository
+	 */
 	@Override
 	@Transactional
 	public void edit(ID id, E entity) {
@@ -53,6 +84,9 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 		repository.save(entity);
 	}
 
+	/**
+	 * Deletes an Entity from Reprository
+	 */
 	@Override
 	@Transactional
 	public void delete(ID id) {
@@ -60,14 +94,19 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 		repository.deleteById(id);
 	}
 	
+	/**
+	 * Returns Repository
+	 * Usage: If Childrens of this class needs it.
+	 * @return
+	 */
 	protected R getRepository() {
 		return this.repository;
 	}
-	
-	protected void compareEntity(E entity, E repositoryEntity) {
 		
-	}
-	
+	/**
+	 * Validates if Entity exists in Repository by its ID
+	 * @param id
+	 */
 	protected void notExisting(ID id) {
 		if (!repository.existsById(id))
 			super.notExisting();

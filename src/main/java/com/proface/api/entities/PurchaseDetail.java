@@ -47,4 +47,8 @@ public class PurchaseDetail {
 	@Column(name = "final_price")
 	private double finalPrice;
 	
+	@JoinColumn(name = "status_id", referencedColumnName = "id")
+	@ManyToOne
+	private ReceptionStatus status;
+	
 }

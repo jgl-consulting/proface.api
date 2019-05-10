@@ -23,6 +23,12 @@ public class ProductLineService extends BaseService<ProductLineRepository, Produ
 	}
 
 	@Override
+	protected void compareEntity(ProductLine entity, ProductLine repositoryEntity) {
+		if (entity.getName() == null)
+			entity.setName(repositoryEntity.getName());
+	}
+
+	@Override
 	protected String getEntityName() {
 		return ProductLine.class.getSimpleName();
 	}

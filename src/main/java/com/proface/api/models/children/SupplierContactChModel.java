@@ -1,11 +1,8 @@
-package com.proface.api.models;
+package com.proface.api.models.children;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-import com.proface.api.models.references.BaseReferenceModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -13,10 +10,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class SupplierContactModel {
-
-	private int id;
-
+public class SupplierContactChModel {
+	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String firstName;
 	
@@ -26,9 +21,5 @@ public class SupplierContactModel {
 	
 	@Email(message = ProfaceValidationMessage.EMAIL)
 	private String email;
-	
-	@NotNull
-	@Valid
-	private BaseReferenceModel<Integer> supplier;
 	
 }

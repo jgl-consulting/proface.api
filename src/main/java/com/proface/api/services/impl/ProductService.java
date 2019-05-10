@@ -33,11 +33,16 @@ public class ProductService extends BaseService<ProductRepository, Product, Inte
 	@Override
 	protected void compareEntity(Product entity, Product repositoryEntity) {
 		if (entity.getNativeId() != null) {
-			if (!entity.getNativeId().equals(repositoryEntity.getNativeId())) {
+			if (!entity.getNativeId().equals(repositoryEntity.getNativeId()))
 				duplicatedId(entity.getNativeId());
-			}
 		} else
 			entity.setNativeId(repositoryEntity.getNativeId());
+		if (entity.getName() == null)
+			entity.setName(repositoryEntity.getName());
+		if (entity.getSalePrice() == 0)
+			entity.setSalePrice(repositoryEntity.getSalePrice());
+		if (entity.getLine() == null)
+			entity.setLine(repositoryEntity.getLine());
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PurchaseStatusModel {
+public class ReceptionStatusModel {
 
 	private int id;
 	
@@ -18,7 +18,5 @@ public class PurchaseStatusModel {
 	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String description;
-	
-	private String color;
 	
 }

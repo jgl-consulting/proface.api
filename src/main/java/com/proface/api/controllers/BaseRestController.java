@@ -20,14 +20,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.proface.api.mappers.IAbstractMapper;
 import com.proface.api.services.IAbstractService;
 
+/**
+ * 
+ * @author josec
+ * This class abstracts the basic usage of a REST API
+ * Supports 4 HttpMethods: GET, POST, PUT, DELETE
+ * @param <ID> Primary Key 	Type
+ * @param <E>  Entity 		Type
+ * @param <M>  Model 		Type
+ * @param <MP> Mapper 		Type
+ * @param <SV> Service		Type
+ */
 public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV extends IAbstractService<E, ID>> {
 
+	/**
+	 * Injected Entity Service
+	 * Must extend IAbstractService Class
+	 * Types must be <E, ID>
+	 */
 	@Autowired
 	private SV service;
 
+	/**
+	 * Injected Entity-Model Mapper
+	 * Must extend IAbstractMapper Class
+	 * Types must be <M, E>
+	 */
 	@Autowired
 	private MP mapper;
 
+	/**
+	 * Saves an Entity sent as a Model
+	 * @param model
+	 * @return model with 201
+	 */
 	@PostMapping
 	public ResponseEntity<?> save(@Valid @RequestBody M model) {
 
@@ -38,6 +64,12 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 		return new ResponseEntity<>(model, HttpStatus.CREATED);
 	}
 
+	/**
+	 * Pages Entities as Models 
+	 * Param follows the format: page=#pageNumber&size=#pageSize&order=#attribute_#orientation
+	 * @param pageable
+	 * @return List<model> with 200
+	 */
 	@GetMapping
 	public ResponseEntity<?> list(Pageable pageable) {
 
@@ -46,6 +78,10 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 		return new ResponseEntity<>(list.map(entity -> mapper.convertToModel(entity)), HttpStatus.OK);
 	}
 
+	/**
+	 * Lists Entities as Models
+	 * @return List<model> with 200
+	 */
 	@GetMapping("unpaged")
 	public ResponseEntity<?> list() {
 
@@ -55,6 +91,11 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 				list.stream().map(entity -> mapper.convertToModel(entity)).collect(Collectors.toList()), HttpStatus.OK);
 	}
 
+	/**
+	 * Finds an Entity as Model by its ID
+	 * @param id
+	 * @return model with 200
+	 */
 	@GetMapping("{id}")
 	public ResponseEntity<?> find(@PathVariable ID id) {
 
@@ -63,6 +104,12 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 		return new ResponseEntity<>(mapper.convertToModel(entity), HttpStatus.OK);
 	}
 
+	/**
+	 * Modify Entity as Model by its ID
+	 * @param model
+	 * @param id
+	 * @return model with 200
+	 */
 	@PutMapping("{id}")
 	public ResponseEntity<?> edit(@RequestBody M model, @PathVariable ID id) {
 
@@ -73,6 +120,11 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 		return new ResponseEntity<>(model, HttpStatus.OK);
 	}
 
+	/**
+	 * Deletes an Entity by its ID
+	 * @param id
+	 * @return with 204
+	 */
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> delete(@PathVariable ID id) {
 
@@ -81,11 +133,21 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	public SV getService() {
+	/**
+	 * Returns injected Sevice
+	 * Usage: If Childrens of this class needs it.
+	 * @return
+	 */
+	protected SV getService() {
 		return this.service;
 	}
 
-	public MP getMapper() {
+	/**
+	 * Returns injected Mapper
+	 * Usage: If Childrens of this class needs it.
+	 * @return
+	 */
+	protected MP getMapper() {
 		return this.mapper;
 	}
 }
