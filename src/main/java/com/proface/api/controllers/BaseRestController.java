@@ -74,8 +74,8 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 	public ResponseEntity<?> list(Pageable pageable) {
 
 		Page<E> list = service.findAll(pageable);
-
-		return new ResponseEntity<>(list.map(entity -> mapper.convertToModel(entity)), HttpStatus.OK);
+		Page<M> pageModel = list.map(entity -> mapper.convertToModel(entity));
+		return new ResponseEntity(pageModel, HttpStatus.OK);
 	}
 
 	/**
@@ -88,7 +88,10 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 		List<E> list = service.findAll();
 
 		return new ResponseEntity<>(
-				list.stream().map(entity -> mapper.convertToModel(entity)).collect(Collectors.toList()), HttpStatus.OK);
+				list.stream()
+						.map(entity -> mapper.convertToModel(entity))
+						.collect(Collectors.toList()),
+				HttpStatus.OK);
 	}
 
 	/**

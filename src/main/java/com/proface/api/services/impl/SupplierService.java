@@ -26,8 +26,9 @@ public class SupplierService extends BaseService<SupplierRepository, Supplier, I
 	
 	@Override
 	protected void duplicatedId(String nativeId) {
-		if (super.getRepository().existsByNativeId(nativeId))
-			super.duplicatedId(nativeId);
+		if (super.getRepository().existsByNativeId(nativeId)) {
+				super.duplicatedId(nativeId);
+		}
 	}
 	
 	@Override
@@ -36,8 +37,10 @@ public class SupplierService extends BaseService<SupplierRepository, Supplier, I
 			if (!entity.getNativeId().equals(repositoryEntity.getNativeId())) {
 				duplicatedId(entity.getNativeId());
 			}
-		} else
-			entity.setNativeId(repositoryEntity.getNativeId());
+		} else {
+				entity.setNativeId(repositoryEntity.getNativeId());
+		}
+
 	}
 
 	@Override

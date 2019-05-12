@@ -10,14 +10,16 @@ import lombok.Setter;
 @Setter
 public class SupplierRefModel extends BaseReferenceModel {
 
-	private String name;
-	
-	private String nativeId;
-	
-	private String address;
-	
-	private SupplierTypeModel type;
-	
-	private CountryModel country;
+		private int id;
+
+		private String name;
+
+		private String nativeId;
+
+		private String address;
+
+		private SupplierTypeModel type;
+
+		private CountryModel country;
 	
 }

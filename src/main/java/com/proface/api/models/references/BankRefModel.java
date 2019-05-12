@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 public class BankRefModel extends BaseReferenceModel {
 
-    private String name;
+		private String name;
 	
-	private String accountNumberMask;
+		private String accountNumberMask;
 
     private CountryModel country;
 	

@@ -46,7 +46,7 @@ public class Supplier {
 	@OneToMany(
 			mappedBy = "supplier",
 			fetch = FetchType.LAZY,
-			cascade = CascadeType.PERSIST
+			cascade = CascadeType.ALL
 	)
 	private List<SupplierContact> contacts;
 
