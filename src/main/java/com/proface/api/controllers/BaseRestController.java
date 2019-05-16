@@ -75,7 +75,7 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 
 		Page<E> list = service.findAll(pageable);
 		Page<M> pageModel = list.map(entity -> mapper.convertToModel(entity));
-		return new ResponseEntity(pageModel, HttpStatus.OK);
+		return new ResponseEntity<>(pageModel, HttpStatus.OK);
 	}
 
 	/**

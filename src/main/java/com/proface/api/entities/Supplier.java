@@ -43,38 +43,27 @@ public class Supplier {
 	@ManyToOne
 	private Country country;
 
-	@OneToMany(
-			mappedBy = "supplier",
-			fetch = FetchType.LAZY,
-			cascade = CascadeType.ALL
-	)
+	@OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<SupplierContact> contacts;
 
-	@OneToMany(
-			mappedBy = "supplier",
-			fetch = FetchType.LAZY,
-			cascade = CascadeType.PERSIST
-	)
+	@OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<SupplierAccount> accounts;
-	
-	@OneToMany(
-			mappedBy = "supplier",
-			fetch = FetchType.LAZY
-	)
+
+	@OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
 	private List<PurchaseOrder> purchases;
 
 	public void setContacts(List<SupplierContact> contacts) {
-		if(contacts != null) {
+		if (contacts != null) {
 			this.contacts = contacts;
 			contacts.forEach(contact -> contact.setSupplier(this));
 		}
 	}
-	
+
 	public void setAccounts(List<SupplierAccount> accounts) {
-		if(accounts != null) {
+		if (accounts != null) {
 			this.accounts = accounts;
 			accounts.forEach(account -> account.setSupplier(this));
 		}
 	}
-	
+
 }

@@ -1,9 +1,12 @@
 package com.proface.api.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.entities.Supplier;
+import com.proface.api.repositories.PurchaseDetailRepository;
 import com.proface.api.repositories.PurchaseOrderRepository;
 import com.proface.api.services.IPurchaseOrderService;
 
@@ -11,11 +14,21 @@ import com.proface.api.services.IPurchaseOrderService;
 public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, PurchaseOrder, Integer, String>
 		implements IPurchaseOrderService {
 
+	@Autowired
+	private PurchaseDetailRepository purchaseDetailRepository;
+	
 	@Override
 	public void save(PurchaseOrder entity) {
 		entity.setId(0);
 		duplicatedId(entity.getNativeId());
-		super.save(entity);
+		PurchaseOrder persistedEntity = getRepository().save(entity);
+		entity.getDetails().forEach(detail -> {
+			PurchaseDetailPK id = new PurchaseDetailPK();
+			id.setProductId(detail.getProduct() == null ? 0 : detail.getProduct().getId());
+			id.setPurchaseId(persistedEntity == null ? 0 : persistedEntity.getId());
+			detail.setId(id);
+		});
+		purchaseDetailRepository.saveAll(entity.getDetails());
 	}
 
 	@Override
@@ -38,6 +51,10 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 			}
 		} else
 			entity.setNativeId(repositoryEntity.getNativeId());
+		if (entity.getCreationDate() == null)
+			entity.setCreationDate(repositoryEntity.getCreationDate());
+		if (entity.getStatus() == null)
+			entity.setStatus(repositoryEntity.getStatus());
 	}
 
 	@Override

@@ -23,14 +23,14 @@ public class SupplierService extends BaseService<SupplierRepository, Supplier, I
 		entity.setId(id);
 		super.edit(id, entity);
 	}
-	
+
 	@Override
 	protected void duplicatedId(String nativeId) {
 		if (super.getRepository().existsByNativeId(nativeId)) {
-				super.duplicatedId(nativeId);
+			super.duplicatedId(nativeId);
 		}
 	}
-	
+
 	@Override
 	protected void compareEntity(Supplier entity, Supplier repositoryEntity) {
 		if (entity.getNativeId() != null) {
@@ -38,7 +38,7 @@ public class SupplierService extends BaseService<SupplierRepository, Supplier, I
 				duplicatedId(entity.getNativeId());
 			}
 		} else {
-				entity.setNativeId(repositoryEntity.getNativeId());
+			entity.setNativeId(repositoryEntity.getNativeId());
 		}
 
 	}

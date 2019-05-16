@@ -12,16 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SupplierContactChModel {
 
-		private int id;
+	private int id;
 
-		@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-		private String firstName;
+	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	private String firstName;
 
-		private String lastName;
+	private String lastName;
 
-		private String phone;
+	private String phone;
 
-		@Email(message = ProfaceValidationMessage.EMAIL)
-		private String email;
+	@Email(message = ProfaceValidationMessage.EMAIL)
+	private String email;
 
 }

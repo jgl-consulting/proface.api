@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SupplierAccountChModel {
 
+	private int id;
+
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String number;
 
@@ -24,9 +26,9 @@ public class SupplierAccountChModel {
 
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String currency;
-	
+
 	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private BankRefModel bank;
-	
+
 }

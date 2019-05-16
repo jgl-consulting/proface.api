@@ -3,7 +3,6 @@ package com.proface.api.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -58,8 +57,7 @@ public class PurchaseOrder {
 	
 	@OneToMany(
 			mappedBy = "purchase",
-			fetch = FetchType.LAZY,
-			cascade = CascadeType.PERSIST
+			fetch = FetchType.LAZY
 	)
 	private List<PurchaseDetail> details;
 	
@@ -69,11 +67,11 @@ public class PurchaseOrder {
 	)
 	private List<PurchaseInvoice> invoices;
 	
-	public void setDetails(List<PurchaseDetail> details) {
+	/*public void setDetails(List<PurchaseDetail> details) {
 		if(details != null) {
 			this.details = details;
 			details.forEach(detail -> detail.setPurchase(this));
 		}
-	}
+	}*/
 	
 }
