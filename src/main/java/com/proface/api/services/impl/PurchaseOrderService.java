@@ -1,6 +1,8 @@
 package com.proface.api.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.PurchaseDetailPK;
@@ -60,6 +62,11 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 	@Override
 	protected String getEntityName() {
 		return Supplier.class.getSimpleName();
+	}
+
+	@Override
+	public Page<PurchaseOrder> findAll(Pageable pageable, int supplierId) {
+		return super.getRepository().findBySupplierId(pageable, supplierId);
 	}
 
 }
