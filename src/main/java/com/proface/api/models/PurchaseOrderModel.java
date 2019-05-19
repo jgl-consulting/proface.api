@@ -34,6 +34,8 @@ public class PurchaseOrderModel {
 	
 	private LocalDate billingDate;
 	
+	private LocalDate cancellationDate;
+	
 	@Valid
 	private SupplierRefModel supplier;
 	

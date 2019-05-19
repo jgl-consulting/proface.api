@@ -2,8 +2,6 @@ package com.proface.api.models;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import com.proface.api.models.children.SupplierAccountChModel;
 import com.proface.api.models.children.SupplierContactChModel;
 import com.proface.api.models.references.CountryRefModel;
@@ -30,7 +28,6 @@ public class SupplierModel {
 	private String address;
 	
 	@Valid
-	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private SupplierTypeRefModel type;
 	
 	private List<@Valid SupplierContactChModel> contacts;

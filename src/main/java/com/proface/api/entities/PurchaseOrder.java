@@ -41,6 +41,9 @@ public class PurchaseOrder {
 	@Column(name = "reception_date")
 	private LocalDate receptionDate;
 	
+	@Column(name = "cancellation_date")
+	private LocalDate cancellationDate;
+	
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	@ManyToOne
 	private PurchaseStatus status;
@@ -65,13 +68,5 @@ public class PurchaseOrder {
 			mappedBy = "purchase",
 			fetch = FetchType.LAZY
 	)
-	private List<PurchaseInvoice> invoices;
-	
-	/*public void setDetails(List<PurchaseDetail> details) {
-		if(details != null) {
-			this.details = details;
-			details.forEach(detail -> detail.setPurchase(this));
-		}
-	}*/
-	
+	private List<PurchaseInvoice> invoices;	
 }
