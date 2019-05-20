@@ -33,13 +33,15 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 		duplicatedId(entity.getNativeId());
 		getDateByStatus(entity);
 		PurchaseOrder persistedEntity = getRepository().save(entity);
-		entity.getDetails().forEach(detail -> {
-			PurchaseDetailPK id = new PurchaseDetailPK();
-			id.setProductId(detail.getProduct() == null ? 0 : detail.getProduct().getId());
-			id.setPurchaseId(persistedEntity == null ? 0 : persistedEntity.getId());
-			detail.setId(id);
-		});
-		purchaseDetailRepository.saveAll(entity.getDetails());
+		if (entity.getDetails() != null) {
+			entity.getDetails().forEach(detail -> {
+				PurchaseDetailPK id = new PurchaseDetailPK();
+				id.setProductId(detail.getProduct() == null ? 0 : detail.getProduct().getId());
+				id.setPurchaseId(persistedEntity == null ? 0 : persistedEntity.getId());
+				detail.setId(id);
+			});
+			purchaseDetailRepository.saveAll(entity.getDetails());
+		}
 	}
 
 	@Override
