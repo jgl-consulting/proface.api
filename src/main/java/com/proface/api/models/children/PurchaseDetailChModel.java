@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PurchaseDetailChModel {
 
+	private int id;
+	
 	@Valid
 	@NotNull
 	private ProductRefModel product;
