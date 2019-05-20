@@ -32,7 +32,7 @@ public class PurchaseDetailModel {
 
 	private double finalPrice;
 	
-	@NotNull
+	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private ReceptionStatusRefModel status;
 
 }
