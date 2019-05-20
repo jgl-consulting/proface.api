@@ -18,6 +18,7 @@ public class PurchaseDetailService
 		id.setProductId(entity.getProduct() == null ? 0 : entity.getProduct().getId());
 		id.setPurchaseId(entity.getPurchase() == null ? 0 : entity.getPurchase().getId());
 		entity.setId(id);
+		getPricesbyMath(entity);
 		super.save(entity);
 	}
 
@@ -29,12 +30,20 @@ public class PurchaseDetailService
 			id.setPurchaseId(entity.getPurchase() == null ? 0 : entity.getPurchase().getId());
 		}
 		entity.setId(id);
+		getPricesbyMath(entity);
 		super.edit(id, entity);
 	}
 
 	@Override
 	protected String getEntityName() {
 		return PurchaseDetail.class.getSimpleName();
+	}
+
+	private void getPricesbyMath(PurchaseDetail entity) {
+		if (entity.getPurchasePrice() == 0)
+			entity.setPurchasePrice(entity.getQuantity() * entity.getUnitPrice());
+		if (entity.getFinalPrice() == 0)
+			entity.setFinalPrice(entity.getPurchasePrice() - entity.getDisscount());
 	}
 
 }
