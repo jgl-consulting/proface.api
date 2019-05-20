@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 
 import com.proface.api.models.children.PurchaseDetailChModel;
@@ -42,7 +41,6 @@ public class PurchaseOrderModel {
 	@Valid
 	private PurchaseStatusRefModel status;
 	
-	@NotEmpty(message = ProfaceValidationMessage.NOT_EMPTY)
 	private List<@Valid PurchaseDetailChModel> details;
 	
 }

@@ -19,4 +19,13 @@ public class PurchaseDetailPK implements Serializable {
 	@Column(name = "purchase_id")
 	private int purchaseId;
 	
+	public PurchaseDetailPK() {
+		
+	}
+	
+	public PurchaseDetailPK(int productId, int purchaseId) {
+		this.productId = productId;
+		this.purchaseId = purchaseId;
+	}
+	
 }
