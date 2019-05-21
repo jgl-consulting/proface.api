@@ -34,6 +34,9 @@ public class Product {
 	@Column(name = "native_id")
 	private String nativeId;
 	
+	@Column(name="currency", columnDefinition = "char")
+	private String currency;
+	
 	@Column(name = "sale_price")
 	private double salePrice;
 	

@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import com.proface.api.models.children.SupplierAccountChModel;
 import com.proface.api.models.children.SupplierContactChModel;
 import com.proface.api.models.references.CountryRefModel;
+import com.proface.api.models.references.PurchaseOrderRefModel;
 import com.proface.api.models.references.SupplierTypeRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
@@ -36,5 +37,7 @@ public class SupplierModel {
 
 	@Valid
 	private CountryRefModel country;
+	
+	private List<PurchaseOrderRefModel> purchases;
 	
 }

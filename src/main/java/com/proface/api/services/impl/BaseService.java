@@ -61,6 +61,7 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 		Optional<E> entity = repository.findById(id);
 		if(!entity.isPresent())
 			super.notExisting();
+		prepareEntity(entity.get());
 		return entity.get();
 	}
 
@@ -110,6 +111,14 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 	protected void notExisting(ID id) {
 		if (!repository.existsById(id))
 			super.notExisting();
+	}
+	
+	/**
+	 * Prepares the Entity before returning
+	 * Usage: If Childrens of this calss needs it
+	 */
+	protected void prepareEntity(E entity) {
+		
 	}
 
 }

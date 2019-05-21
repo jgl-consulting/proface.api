@@ -25,6 +25,9 @@ public class ProductModel {
 	
 	private String description;
 	
+	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	private String currency;
+	
 	@PositiveOrZero(message = ProfaceValidationMessage.POSITIVE)
 	private double salePrice;
 	
