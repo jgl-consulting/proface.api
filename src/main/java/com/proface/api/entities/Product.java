@@ -34,7 +34,7 @@ public class Product {
 	@Column(name = "native_id")
 	private String nativeId;
 	
-	@Column(name="currency", columnDefinition = "char")
+	@Column(name="currency")
 	private String currency;
 	
 	@Column(name = "sale_price")
