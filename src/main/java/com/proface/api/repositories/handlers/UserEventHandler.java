@@ -13,27 +13,25 @@ import org.springframework.stereotype.Component;
 @RepositoryEventHandler(User.class)
 public class UserEventHandler {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @HandleBeforeCreate
-    public void handleUserBeforeCreate(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
+	@HandleBeforeCreate
+	public void handleUserBeforeCreate(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+	}
 
-    @HandleBeforeSave
-    public void handleUserBeforeSave(User user) {
-        if (user.getPassword().trim().isEmpty()) {
-            User storedUser = userRepository
-                    .findById(user.getId())
-                    .orElseThrow(() -> new RuntimeException("User not exists"));
-
-            user.setPassword(storedUser.getPassword());
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-    }
+	@HandleBeforeSave
+	public void handleUserBeforeSave(User user) {
+		if (user.getPassword().trim().isEmpty()) {
+			User storedUser = userRepository.findById(user.getId())
+					.orElseThrow(() -> new RuntimeException("User not exists"));
+			user.setPassword(storedUser.getPassword());
+		} else {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
+	}
 }

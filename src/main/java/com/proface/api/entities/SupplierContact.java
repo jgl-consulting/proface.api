@@ -16,13 +16,13 @@ public class SupplierContact {
 
 	@Column(name = "first_name")
 	private String firstName;
-	
+
 	@Column(name = "last_name")
 	private String lastName;
-	
+
 	@Column(name = "phone", columnDefinition = "char")
 	private String phone;
-	
+
 	@Column(name = "email")
 	private String email;
 

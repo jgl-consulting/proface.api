@@ -25,48 +25,39 @@ public class PurchaseOrder {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "native_id")
 	private String nativeId;
-	
+
 	@Column(name = "creation_date")
 	private LocalDate creationDate;
 
 	@Column(name = "quotation_date")
 	private LocalDate quotationDate;
-	
+
 	@Column(name = "billing_date")
 	private LocalDate billingDate;
-	
+
 	@Column(name = "reception_date")
 	private LocalDate receptionDate;
-	
+
 	@Column(name = "cancellation_date")
 	private LocalDate cancellationDate;
-	
+
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	@ManyToOne
 	private PurchaseStatus status;
-	
+
 	@JoinColumn(name = "supplier_id", referencedColumnName = "id")
 	@ManyToOne
 	private Supplier supplier;
-	
-	@OneToMany(
-			mappedBy = "purchase",
-			fetch = FetchType.LAZY
-	)
+
+	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseCost> costs;
-	
-	@OneToMany(
-			mappedBy = "purchase",
-			fetch = FetchType.LAZY
-	)
+
+	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseDetail> details;
-	
-	@OneToMany(
-			mappedBy = "purchase",
-			fetch = FetchType.LAZY
-	)
-	private List<PurchaseInvoice> invoices;	
+
+	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
+	private List<PurchaseInvoice> invoices;
 }

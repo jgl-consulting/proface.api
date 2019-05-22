@@ -23,19 +23,19 @@ public class PurchaseInvoice {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "native_id")
 	private String nativeId;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "emission_date")
 	private LocalDate emissionDate;
-	
+
 	@Column(name = "total_price")
 	private double totalPrice;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "purchase_id")
 	private PurchaseOrder purchase;

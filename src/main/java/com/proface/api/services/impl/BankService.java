@@ -14,22 +14,16 @@ public class BankService extends BaseService<BankRepository, Bank, Integer, Inte
 		entity.setId(0);
 		super.save(entity);
 	}
-	
+
 	@Override
 	public void edit(Integer id, Bank entity) {
 		entity.setId(id);
 		super.edit(id, entity);
 	}
-	
-	@Override
-	protected void compareEntity(Bank entity, Bank repositoryEntity) {
-		if(entity.getName() == null)
-			entity.setName(repositoryEntity.getName());
-	}
-	
+
 	@Override
 	protected String getEntityName() {
 		return Bank.class.getSimpleName();
 	}
-	
+
 }

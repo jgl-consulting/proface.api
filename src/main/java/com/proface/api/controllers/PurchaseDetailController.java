@@ -33,13 +33,13 @@ public class PurchaseDetailController extends
 	@PutMapping("product/{productId}/purchase/{purchaseId}")
 	public ResponseEntity<?> edit(@RequestBody PurchaseDetailModel model, @PathVariable int productId,
 			@PathVariable int purchaseId) {
-		
+
 		PurchaseDetail entity = super.getMapper().convertToEntity(model);
-		
-		super.getService().edit(new PurchaseDetailPK(productId,  purchaseId), entity);
-		
+
+		super.getService().edit(new PurchaseDetailPK(productId, purchaseId), entity);
+
 		return new ResponseEntity<>(model, HttpStatus.OK);
-		
+
 	}
 
 	@DeleteMapping("product/{productId}/purchase/{purchaseId}")

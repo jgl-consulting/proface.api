@@ -19,39 +19,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${security.security-realm}")
-    private String securityRealm;
+	@Value("${security.security-realm}")
+	private String securityRealm;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserDetailsService usuarioService;
+	@Autowired
+	private UserDetailsService usuarioService;
 
-    @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
+	@Bean
+	@Override
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(usuarioService)
-                .passwordEncoder(passwordEncoder);
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder);
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .httpBasic()
-                .realmName(securityRealm)
-                .and()
-                .cors()
-                .and()
-                .csrf()
-                .disable();
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().httpBasic()
+				.realmName(securityRealm).and().cors().and().csrf().disable();
+	}
 }

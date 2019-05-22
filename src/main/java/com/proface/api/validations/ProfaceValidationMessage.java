@@ -20,4 +20,5 @@ public abstract class ProfaceValidationMessage {
 	public final static String POSITIVE = "El campo %s de la entidad %s debe ser un número positivo.";	
 	
 	public final static String PAST_PRESENT = "El campo %s de la entidad %s debe ser una fecha menor o igual al día actual.";
+	
 }

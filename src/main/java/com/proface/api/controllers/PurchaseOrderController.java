@@ -1,6 +1,5 @@
 package com.proface.api.controllers;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +20,9 @@ public class PurchaseOrderController extends
 
 	@GetMapping("/supplier/{supplierId}")
 	public ResponseEntity<?> list(Pageable pageable, @PathVariable int supplierId) {
-
-		Page<PurchaseOrder> list = super.getService().findAll(pageable, supplierId);
-		Page<PurchaseOrderModel> pageModel = list.map(entity -> super.getMapper().convertToModel(entity));
-		return new ResponseEntity<>(pageModel, HttpStatus.OK);
+		return new ResponseEntity<>(
+				super.getService().findAll(pageable, supplierId).map(e -> super.getMapper().convertToModel(e)),
+				HttpStatus.OK);
 	}
-	
+
 }

@@ -25,21 +25,20 @@ public class PurchaseInvoiceService extends BaseService<PurchaseInvoiceRepositor
 
 	@Override
 	protected void duplicatedId(String nativeId) {
-		if (super.getRepository().existsByNativeId(nativeId))
+		if (super.getRepository().existsByNativeId(nativeId)) {
 			super.duplicatedId(nativeId);
+		}
 	}
 
 	@Override
 	protected void compareEntity(PurchaseInvoice entity, PurchaseInvoice repositoryEntity) {
 		if (entity.getNativeId() != null) {
-			if (!entity.getNativeId().equals(repositoryEntity.getNativeId()))
+			if (!entity.getNativeId().equals(repositoryEntity.getNativeId())) {
 				duplicatedId(entity.getNativeId());
-		} else
+			}
+		} else {
 			entity.setNativeId(repositoryEntity.getNativeId());
-		if (entity.getEmissionDate() == null)
-			entity.setEmissionDate(repositoryEntity.getEmissionDate());
-		if (entity.getPurchase() == null)
-			entity.setPurchase(repositoryEntity.getPurchase());
+		}
 	}
 
 	@Override

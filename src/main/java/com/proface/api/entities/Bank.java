@@ -6,24 +6,24 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="bank")
+@Table(name = "bank")
 @Data
 @NoArgsConstructor
 public class Bank {
 
-    @Id
-    @Column(name="id")
+	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	private int id;
 
-    @Column(name="name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name="account_number_mask")
-    private String accountNumberMask;
+	@Column(name = "account_number_mask")
+	private String accountNumberMask;
 
-    @ManyToOne
-    @JoinColumn(name="country_id")
-    private Country country;
+	@ManyToOne
+	@JoinColumn(name = "country_id")
+	private Country country;
 
 }

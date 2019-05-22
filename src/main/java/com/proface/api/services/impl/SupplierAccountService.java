@@ -23,22 +23,23 @@ public class SupplierAccountService extends BaseService<SupplierAccountRepositor
 		entity.setId(id);
 		super.edit(id, entity);
 	}
-	
+
 	@Override
 	protected void duplicatedId(String nativeId) {
-		if (super.getRepository().existsByCci(nativeId))
+		if (super.getRepository().existsByCci(nativeId)) {
 			super.duplicatedId(nativeId);
+		}
 	}
-	
+
 	@Override
 	protected void compareEntity(SupplierAccount entity, SupplierAccount repositoryEntity) {
 		if (entity.getCci() != null) {
 			if (!entity.getCci().equals(repositoryEntity.getCci())) {
 				duplicatedId(entity.getCci());
 			}
-		} else
+		} else {
 			entity.setCci(repositoryEntity.getCci());
-		entity.setSupplier(repositoryEntity.getSupplier());
+		}
 	}
 
 	@Override

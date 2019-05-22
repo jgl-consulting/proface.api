@@ -26,28 +26,25 @@ public class Product {
 	private int id;
 
 	@Column(name = "name")
-	private String name;	
+	private String name;
 
 	@Column(name = "description")
 	private String description;
 
 	@Column(name = "native_id")
 	private String nativeId;
-	
-	@Column(name="currency")
+
+	@Column(name = "currency")
 	private String currency;
-	
+
 	@Column(name = "sale_price")
 	private double salePrice;
-	
+
 	@JoinColumn(name = "product_line_id", referencedColumnName = "id")
 	@ManyToOne
 	private ProductLine line;
-	
-	@OneToMany(
-			mappedBy = "product",
-			fetch = FetchType.LAZY
-	)
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	private List<PurchaseDetail> details;
 
 }

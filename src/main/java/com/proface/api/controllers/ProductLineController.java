@@ -10,6 +10,7 @@ import com.proface.api.services.IProductLineService;
 
 @RestController
 @RequestMapping("api/productLines")
-public class ProductLineController extends BaseRestController<Integer, ProductLine, ProductLineModel, ProductLineMapper, IProductLineService> {
+public class ProductLineController
+		extends BaseRestController<Integer, ProductLine, ProductLineModel, ProductLineMapper, IProductLineService> {
 
 }

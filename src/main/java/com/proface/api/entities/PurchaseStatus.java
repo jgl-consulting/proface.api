@@ -22,20 +22,17 @@ public class PurchaseStatus {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "native_id")
 	private String nativeId;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "color", columnDefinition = "char")
 	private String color;
-	
-	@OneToMany(
-			mappedBy = "status",
-			fetch = FetchType.LAZY
-	)
+
+	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
 	private List<PurchaseOrder> orders;
-	
+
 }

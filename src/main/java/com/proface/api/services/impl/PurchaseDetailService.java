@@ -14,23 +14,13 @@ public class PurchaseDetailService
 
 	@Override
 	public void save(PurchaseDetail entity) {
-		PurchaseDetailPK id = new PurchaseDetailPK();
-		id.setProductId(entity.getProduct() == null ? 0 : entity.getProduct().getId());
-		id.setPurchaseId(entity.getPurchase() == null ? 0 : entity.getPurchase().getId());
-		entity.setId(id);
-		getPricesbyMath(entity);
+		entity.setId(getId(entity));
 		super.save(entity);
 	}
 
 	@Override
 	public void edit(PurchaseDetailPK id, PurchaseDetail entity) {
-		if (id == null) {
-			id = new PurchaseDetailPK();
-			id.setProductId(entity.getProduct() == null ? 0 : entity.getProduct().getId());
-			id.setPurchaseId(entity.getPurchase() == null ? 0 : entity.getPurchase().getId());
-		}
-		entity.setId(id);
-		getPricesbyMath(entity);
+		entity.setId(id == null ? getId(entity) : id);
 		super.edit(id, entity);
 	}
 
@@ -39,11 +29,19 @@ public class PurchaseDetailService
 		return PurchaseDetail.class.getSimpleName();
 	}
 
-	private void getPricesbyMath(PurchaseDetail entity) {
-		if (entity.getPurchasePrice() == 0)
+	@Override
+	protected void prepareEntity(PurchaseDetail entity) {
+		if (entity.getPurchasePrice() == 0) {
 			entity.setPurchasePrice(entity.getQuantity() * entity.getUnitPrice());
-		if (entity.getFinalPrice() == 0)
+		}
+		if (entity.getFinalPrice() == 0) {
 			entity.setFinalPrice(entity.getPurchasePrice() - entity.getDisscount());
+		}
+	}
+
+	private PurchaseDetailPK getId(PurchaseDetail entity) {
+		return new PurchaseDetailPK(entity.getProduct() == null ? 0 : entity.getProduct().getId(),
+				entity.getPurchase() == null ? 0 : entity.getPurchase().getId());
 	}
 
 }

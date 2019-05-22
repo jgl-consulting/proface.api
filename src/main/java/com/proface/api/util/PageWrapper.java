@@ -8,36 +8,29 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Data
-public class PageWrapper<T>{
+public class PageWrapper<T> {
 
-    public static <T, K> PageWrapper<K> of(Page<T> page, Function<T, K> mapper) {
+	public static <T, K> PageWrapper<K> of(Page<T> page, Function<T, K> mapper) {
+		PageWrapper<K> pageWrapper = new PageWrapper<>();
+		pageWrapper.content = page.getContent().stream().map(mapper).collect(Collectors.toList());
+		pageWrapper.totalElements = page.getTotalElements();
+		pageWrapper.totalPages = page.getTotalPages();
+		pageWrapper.page = page.getPageable().getPageNumber();
+		pageWrapper.size = page.getPageable().getPageSize();
+		pageWrapper.isSorted = page.getPageable().getSort().isSorted();
+		return pageWrapper;
+	}
 
-        PageWrapper<K> pageWrapper = new PageWrapper<>();
+	private long totalElements;
 
-        pageWrapper.content = page.getContent()
-                .stream()
-                .map(mapper)
-                .collect(Collectors.toList());
+	private long totalPages;
 
-        pageWrapper.totalElements = page.getTotalElements();
-        pageWrapper.totalPages = page.getTotalPages();
-        pageWrapper.page = page.getPageable().getPageNumber();
-        pageWrapper.size = page.getPageable().getPageSize();
-        pageWrapper.isSorted = page.getPageable().getSort().isSorted();
+	private int page;
 
-        return pageWrapper;
-    }
+	private int size;
 
-    private long totalElements;
+	private boolean isSorted;
 
-    private long totalPages;
-
-    private int page;
-
-    private int size;
-
-    private boolean isSorted;
-
-    private List<T> content;
+	private List<T> content;
 
 }

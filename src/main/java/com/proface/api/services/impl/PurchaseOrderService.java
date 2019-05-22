@@ -1,6 +1,7 @@
 package com.proface.api.services.impl;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,11 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 	public void save(PurchaseOrder entity) {
 		entity.setId(0);
 		duplicatedId(entity.getNativeId());
-		getDateByStatus(entity);
 		PurchaseOrder persistedEntity = getRepository().save(entity);
 		if (entity.getDetails() != null) {
-			entity.getDetails().forEach(detail -> {
-				PurchaseDetailPK id = new PurchaseDetailPK();
-				id.setProductId(detail.getProduct() == null ? 0 : detail.getProduct().getId());
-				id.setPurchaseId(persistedEntity == null ? 0 : persistedEntity.getId());
-				detail.setId(id);
-			});
+			entity.getDetails()
+					.forEach(d -> d.setId(new PurchaseDetailPK(d.getProduct() == null ? 0 : d.getProduct().getId(),
+							persistedEntity == null ? 0 : persistedEntity.getId())));
 			purchaseDetailRepository.saveAll(entity.getDetails());
 		}
 	}
@@ -47,14 +44,14 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 	@Override
 	public void edit(Integer id, PurchaseOrder entity) {
 		entity.setId(id);
-		getDateByStatus(entity);
 		super.edit(id, entity);
 	}
 
 	@Override
 	protected void duplicatedId(String nativeId) {
-		if (super.getRepository().existsByNativeId(nativeId))
+		if (super.getRepository().existsByNativeId(nativeId)) {
 			super.duplicatedId(nativeId);
+		}
 	}
 
 	@Override
@@ -63,12 +60,9 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 			if (!entity.getNativeId().equals(repositoryEntity.getNativeId())) {
 				duplicatedId(entity.getNativeId());
 			}
-		} else
+		} else {
 			entity.setNativeId(repositoryEntity.getNativeId());
-		if (entity.getCreationDate() == null)
-			entity.setCreationDate(repositoryEntity.getCreationDate());
-		if (entity.getStatus() == null)
-			entity.setStatus(repositoryEntity.getStatus());
+		}
 	}
 
 	@Override
@@ -81,30 +75,36 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 		return super.getRepository().findBySupplierId(pageable, supplierId);
 	}
 
-	private void getDateByStatus(PurchaseOrder purchaseOrder) {
+	@Override
+	protected void prepareEntity(PurchaseOrder purchaseOrder) {
 		if (purchaseOrder.getStatus() != null) {
 			Optional<PurchaseStatus> status = purchaseStatusRepository.findById(purchaseOrder.getStatus().getId());
 			if (status.isPresent()) {
 				switch (status.get().getNativeId()) {
 				case "E":
-					if (purchaseOrder.getCreationDate() == null)
-						purchaseOrder.setCreationDate(LocalDate.now());
+					purchaseOrder.setCreationDate(
+							purchaseOrder.getCreationDate() == null ? LocalDate.now(ZoneId.systemDefault())
+									: purchaseOrder.getCreationDate());
 					break;
 				case "C":
-					if (purchaseOrder.getCancellationDate() == null)
-						purchaseOrder.setCancellationDate(LocalDate.now());
+					purchaseOrder.setCancellationDate(
+							purchaseOrder.getCancellationDate() == null ? LocalDate.now(ZoneId.systemDefault())
+									: purchaseOrder.getCancellationDate());
 					break;
 				case "P":
-					if (purchaseOrder.getQuotationDate() == null)
-						purchaseOrder.setQuotationDate(LocalDate.now());
+					purchaseOrder.setQuotationDate(
+							purchaseOrder.getQuotationDate() == null ? LocalDate.now(ZoneId.systemDefault())
+									: purchaseOrder.getQuotationDate());
 					break;
 				case "F":
-					if (purchaseOrder.getBillingDate() == null)
-						purchaseOrder.setBillingDate(LocalDate.now());
+					purchaseOrder.setBillingDate(
+							purchaseOrder.getBillingDate() == null ? LocalDate.now(ZoneId.systemDefault())
+									: purchaseOrder.getBillingDate());
 					break;
 				case "R":
-					if (purchaseOrder.getReceptionDate() == null)
-						purchaseOrder.setReceptionDate(LocalDate.now());
+					purchaseOrder.setReceptionDate(
+							purchaseOrder.getReceptionDate() == null ? LocalDate.now(ZoneId.systemDefault())
+									: purchaseOrder.getReceptionDate());
 					break;
 				}
 			}

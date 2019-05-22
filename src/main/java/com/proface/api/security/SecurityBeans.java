@@ -15,7 +15,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityBeans {
 	
     @Autowired
-    private CorsConfigurationSource corsConfigurationSource;
+	private CorsConfigurationSource corsConfigurationSource;
 
     @Autowired
     private JwtAccessTokenConverter accessTokenConverter;

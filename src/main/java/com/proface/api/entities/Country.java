@@ -11,20 +11,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="country")
+@Table(name = "country")
 @Data
 @NoArgsConstructor
 public class Country {
 
-    @Id
-    @Column(name = "id")
+	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	private int id;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "iso", columnDefinition = "char")
-    private String iso;
+	@Column(name = "iso", columnDefinition = "char")
+	private String iso;
 
 }

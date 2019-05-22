@@ -15,44 +15,40 @@ public class ProductService extends BaseService<ProductRepository, Product, Inte
 	public void save(Product entity) {
 		entity.setId(0);
 		duplicatedId(entity.getNativeId());
-		getCurrency(entity);
 		super.save(entity);
 	}
 
 	@Override
 	public void edit(Integer id, Product entity) {
 		entity.setId(id);
-		getCurrency(entity);
 		super.edit(id, entity);
 	}
 
 	@Override
 	protected void duplicatedId(String nativeId) {
-		if (super.getRepository().existsByNativeId(nativeId))
+		if (super.getRepository().existsByNativeId(nativeId)) {
 			super.duplicatedId(nativeId);
+		}
 	}
 
 	@Override
 	protected void compareEntity(Product entity, Product repositoryEntity) {
 		if (entity.getNativeId() != null) {
-			if (!entity.getNativeId().equals(repositoryEntity.getNativeId()))
+			if (!entity.getNativeId().equals(repositoryEntity.getNativeId())) {
 				duplicatedId(entity.getNativeId());
-		} else
+			}
+		} else {
 			entity.setNativeId(repositoryEntity.getNativeId());
-		if (entity.getName() == null)
-			entity.setName(repositoryEntity.getName());
-		if (entity.getSalePrice() == 0)
-			entity.setSalePrice(repositoryEntity.getSalePrice());
-		if (entity.getLine() == null)
-			entity.setLine(repositoryEntity.getLine());
+		}
 	}
 
 	@Override
 	protected String getEntityName() {
 		return Supplier.class.getSimpleName();
 	}
-	
-	private void getCurrency(Product entity) {
+
+	@Override
+	protected void prepareEntity(Product entity) {
 		entity.setCurrency(entity.getCurrency() == null ? "PEN" : entity.getCurrency());
 	}
 

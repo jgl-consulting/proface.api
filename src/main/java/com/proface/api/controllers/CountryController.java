@@ -12,21 +12,22 @@ import com.proface.api.services.impl.CountryService;
 
 @RestController
 @RequestMapping("api/countries")
-public class CountryController extends BaseRestController<Integer, Country, CountryModel, CountryMapper, CountryService>{
+public class CountryController
+		extends BaseRestController<Integer, Country, CountryModel, CountryMapper, CountryService> {
 
 	@Override
 	public ResponseEntity<?> save(CountryModel countryModel) {
 		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
-	
+
 	@Override
 	public ResponseEntity<?> edit(CountryModel countryModel, Integer id) {
 		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
-	
+
 	@Override
 	public ResponseEntity<?> delete(Integer id) {
 		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
-	
+
 }

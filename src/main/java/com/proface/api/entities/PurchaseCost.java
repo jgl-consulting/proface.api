@@ -21,15 +21,15 @@ public class PurchaseCost {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "total_cost")
 	private double totalCost;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "purchase_id")
 	private PurchaseOrder purchase;
-	
+
 }

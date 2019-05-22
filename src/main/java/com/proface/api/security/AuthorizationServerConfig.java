@@ -20,61 +20,54 @@ import java.util.Arrays;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Value("${security.jwt.grant-type}")
-    private String grantType;
+	@Value("${security.jwt.grant-type}")
+	private String grantType;
 
-    @Value("${security.jwt.scope-read}")
-    private String scopeRead;
+	@Value("${security.jwt.scope-read}")
+	private String scopeRead;
 
-    @Value("${security.jwt.scope-write}")
-    private String scopeWrite = "write";
+	@Value("${security.jwt.scope-write}")
+	private String scopeWrite = "write";
 
-    @Value("${security.jwt.client-id}")
-    private String clientId;
+	@Value("${security.jwt.client-id}")
+	private String clientId;
 
-    @Value("${security.jwt.client-secret}")
-    private String clientSecret;
+	@Value("${security.jwt.client-secret}")
+	private String clientSecret;
 
-    @Value("${security.jwt.resource-ids}")
-    private String resourceIds;
+	@Value("${security.jwt.resource-ids}")
+	private String resourceIds;
 
-    @Autowired
-    private JwtAccessTokenConverter accessTokenConverter;
+	@Autowired
+	private JwtAccessTokenConverter accessTokenConverter;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private CorsFilter corsFilter;
+	@Autowired
+	private CorsFilter corsFilter;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    @Override
-    public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
-        configurer.inMemory()
-                .withClient(clientId)
-                .secret(passwordEncoder.encode(clientSecret))
-                .authorizedGrantTypes(grantType)
-                .scopes(scopeRead, scopeWrite)
-                .resourceIds(resourceIds);
-    }
+	@Override
+	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
+		configurer.inMemory().withClient(clientId).secret(passwordEncoder.encode(clientSecret))
+				.authorizedGrantTypes(grantType).scopes(scopeRead, scopeWrite).resourceIds(resourceIds);
+	}
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+		enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
+		endpoints.accessTokenConverter(accessTokenConverter).tokenEnhancer(enhancerChain)
+				.authenticationManager(authenticationManager);
+	}
 
-        enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
-
-        endpoints.accessTokenConverter(accessTokenConverter)
-                .tokenEnhancer(enhancerChain)
-                .authenticationManager(authenticationManager);
-    }
-
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()")
-                .addTokenEndpointAuthenticationFilter(corsFilter);
-    }
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()")
+				.addTokenEndpointAuthenticationFilter(corsFilter);
+	}
+	
 }

@@ -25,11 +25,8 @@ public class ProductLine {
 
 	@Column(name = "name")
 	private String name;
-	
-	@OneToMany(
-			mappedBy = "line",
-			fetch = FetchType.LAZY
-	)
+
+	@OneToMany(mappedBy = "line", fetch = FetchType.LAZY)
 	private List<Product> products;
-	
+
 }

@@ -30,11 +30,8 @@ public class ProfaceValidationHelper<E, NID> {
 		throw new ProfaceNotExistingException(String.format(ProfaceValidationMessage.NOT_EXISTING, getEntityName()));
 	}
 	
-
 	/**
-	 * Can be implemented if Children wants to validate new Entity an saved Entity
-	 * @param entity
-	 * @param repositoryEntity
+	 * Compares incoming entity with persisted entity
 	 */
 	protected void compareEntity(E entity, E repositoryEntity) {
 		

@@ -19,26 +19,25 @@ import java.util.function.Function;
 @RequestMapping("/oauth")
 public class OAuthController {
 
-    @Autowired
-    private UserService usersService;
+	@Autowired
+	private UserService usersService;
 
-    private UserMapper userMapper = UserMapper.INSTANCE;
+	private UserMapper userMapper = UserMapper.INSTANCE;
 
-    @GetMapping("/info")
-    public ResponseEntity<?> info(Authentication authentication) {
+	@GetMapping("/info")
+	public ResponseEntity<?> info(Authentication authentication) {
 
-        String username = (String) authentication.getPrincipal();
+		String username = (String) authentication.getPrincipal();
 
-        Optional<User> user = usersService.findByUsername(username);
+		Optional<User> user = usersService.findByUsername(username);
 
-        Function<User, ResponseEntity<?>> mapToResponse =
-                (u) -> ResponseEntity.of(singletonMap("user", userMapper.convertToModel(u)));
+		Function<User, ResponseEntity<?>> mapToResponse = (u) -> ResponseEntity
+				.of(singletonMap("user", userMapper.convertToModel(u)));
 
-        return user.map(mapToResponse)
-                .orElse(ResponseEntity.badRequest().build());
-    }
+		return user.map(mapToResponse).orElse(ResponseEntity.badRequest().build());
+	}
 
-    private Optional<Map<String,?>> singletonMap(String key, Object value) {
-        return Optional.of(Collections.singletonMap(key, value));
-    }
+	private Optional<Map<String, ?>> singletonMap(String key, Object value) {
+		return Optional.of(Collections.singletonMap(key, value));
+	}
 }

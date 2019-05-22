@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 
- * @author josec
- * Util Class to Convert Types
+ * @author josec Util Class to Convert Types
  * @param <E>
  */
 @Component
@@ -16,14 +15,16 @@ public class Converter<E> {
 
 	/**
 	 * Converts Iterable to List
+	 * 
 	 * @param iterable
 	 * @return List<entity>
 	 */
 	public List<E> iterableToList(Iterable<E> iterable) {
 		List<E> list = new ArrayList<>();
-		for(E entity: iterable)
+		for (E entity : iterable) {
 			list.add(entity);
+		}
 		return list;
 	}
-	
+
 }

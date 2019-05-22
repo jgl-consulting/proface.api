@@ -19,40 +19,30 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService, UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override
-    public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
+	@Override
+	public boolean existsByUsername(String username) {
+		return userRepository.existsByUsername(username);
+	}
 
-    @Override
-    public Optional<User> findByUsername(String username) {
-        return  userRepository.findUserByUsername(username);
-    }
+	@Override
+	public Optional<User> findByUsername(String username) {
+		return userRepository.findUserByUsername(username);
+	}
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        String.format("The username %s doesn't exist", username)
-                ));
-
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
-
-        UserDetails userDetails = new ProfaceUser(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getUsername(),
-                user.getPassword(),
-                authorities
-        );
-
-        return userDetails;
-    }
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findUserByUsername(username).orElseThrow(
+				() -> new UsernameNotFoundException(String.format("The username %s doesn't exist", username)));
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		user.getRoles().forEach(role -> {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+		});
+		UserDetails userDetails = new ProfaceUser(user.getFirstName(), user.getLastName(), user.getUsername(),
+				user.getPassword(), authorities);
+		return userDetails;
+	}
 
 }

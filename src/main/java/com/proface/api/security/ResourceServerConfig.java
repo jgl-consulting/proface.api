@@ -13,30 +13,20 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    @Value("${security.jwt.resource-ids}")
-    private String resourceIds;
+	@Value("${security.jwt.resource-ids}")
+	private String resourceIds;
 
-    @Autowired
-    private ResourceServerTokenServices tokenServices;
+	@Autowired
+	private ResourceServerTokenServices tokenServices;
 
-    @Override
-    public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId(resourceIds)
-                .tokenServices(tokenServices);
-    }
+	@Override
+	public void configure(ResourceServerSecurityConfigurer resources) {
+		resources.resourceId(resourceIds).tokenServices(tokenServices);
+	}
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.cors()
-            .and()
-            .requestMatchers()
-            .and()
-            .csrf()
-            .disable()
-            .authorizeRequests()
-            .antMatchers("/actuator/**", "/api-docs/**")
-                .permitAll()
-            .antMatchers("/**")
-                .permitAll();
-    }
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
+		http.cors().and().requestMatchers().and().csrf().disable().authorizeRequests()
+				.antMatchers("/actuator/**", "/api-docs/**").permitAll().antMatchers("/**").permitAll();
+	}
 }

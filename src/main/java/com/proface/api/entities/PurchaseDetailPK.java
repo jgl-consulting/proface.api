@@ -20,7 +20,7 @@ public class PurchaseDetailPK implements Serializable {
 	private int purchaseId;
 	
 	public PurchaseDetailPK() {
-		
+
 	}
 	
 	public PurchaseDetailPK(int productId, int purchaseId) {

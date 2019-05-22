@@ -15,34 +15,40 @@ import com.proface.api.validations.ProfaceValidationHelper;
 
 /**
  * 
- * @author josec
- * This class abstracts basic implementation of Service
- * Children classes can implement their Service Inteface to use custom methods
- * @param <R>	Repository
- * @param <E>	Entity
- * @param <ID>	Primary Key of Entity
- * @param <NID>	Optional: Native Key of Entity
+ * @author josec This class abstracts basic implementation of Service Children
+ *         classes can implement their Service Inteface to use custom methods
+ * @param <R>
+ *            Repository
+ * @param <E>
+ *            Entity
+ * @param <ID>
+ *            Primary Key of Entity
+ * @param <NID>
+ *            Optional: Native Key of Entity
  */
-public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID> extends ProfaceValidationHelper<E, NID> implements IAbstractService<E, ID> {
-	
+public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID>
+		extends ProfaceValidationHelper<E, NID> implements IAbstractService<E, ID> {
+
 	/**
 	 * Injected Repository
 	 */
 	@Autowired
 	private R repository;
-	
+
 	/**
 	 * Injected Converter
 	 */
 	@Autowired
-	private Converter<E> converter;	
-	
+	private Converter<E> converter;
+
 	/**
 	 * Lists all Entities from Repository
 	 */
 	@Override
 	public List<E> findAll() {
-		return converter.iterableToList(repository.findAll());
+		List<E> list = converter.iterableToList(repository.findAll());
+		list.forEach(e -> filterEntity(e));
+		return list;
 	}
 
 	/**
@@ -50,7 +56,9 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 	 */
 	@Override
 	public Page<E> findAll(Pageable pageable) {
-		return repository.findAll(pageable);
+		Page<E> page = repository.findAll(pageable);
+		page.forEach(e -> filterEntity(e));
+		return page;
 	}
 
 	/**
@@ -59,9 +67,10 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 	@Override
 	public E findOne(ID id) {
 		Optional<E> entity = repository.findById(id);
-		if(!entity.isPresent())
+		if (!entity.isPresent()) {
 			super.notExisting();
-		prepareEntity(entity.get());
+		}
+		filterEntity(entity.get());
 		return entity.get();
 	}
 
@@ -71,6 +80,7 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 	@Override
 	@Transactional
 	public void save(E entity) {
+		prepareEntity(entity);
 		repository.save(entity);
 	}
 
@@ -80,8 +90,12 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 	@Override
 	@Transactional
 	public void edit(ID id, E entity) {
-		E repositoryEntity = findOne(id);
-		compareEntity(entity, repositoryEntity);
+		Optional<E> repositoryEntity = repository.findById(id);
+		if (!repositoryEntity.isPresent()) {
+			super.notExisting();
+		}
+		super.compareEntity(entity, repositoryEntity.get());
+		prepareEntity(entity);
 		repository.save(entity);
 	}
 
@@ -94,31 +108,42 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 		notExisting(id);
 		repository.deleteById(id);
 	}
-	
+
 	/**
-	 * Returns Repository
-	 * Usage: If Childrens of this class needs it.
+	 * Returns Repository Usage: If Childrens of this class needs it.
+	 * 
 	 * @return
 	 */
 	protected R getRepository() {
 		return this.repository;
 	}
-		
+
 	/**
 	 * Validates if Entity exists in Repository by its ID
+	 * 
 	 * @param id
 	 */
 	protected void notExisting(ID id) {
-		if (!repository.existsById(id))
+		if (!repository.existsById(id)) {
 			super.notExisting();
+		}
 	}
-	
+
 	/**
-	 * Prepares the Entity before returning
-	 * Usage: If Childrens of this calss needs it
+	 * Filters the Entity before returning Usage: If Childrens of this calss needs
+	 * it
+	 */
+	protected void filterEntity(E entity) {
+
+	}
+
+	/**
+	 * Prepares the Entity before persisting
+	 * 
+	 * @param entity
 	 */
 	protected void prepareEntity(E entity) {
-		
+
 	}
 
 }

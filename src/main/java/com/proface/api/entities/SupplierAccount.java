@@ -14,16 +14,16 @@ public class SupplierAccount {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="number")
+	@Column(name = "number")
 	private String number;
 
-	@Column(name="cci", columnDefinition = "char")
+	@Column(name = "cci", columnDefinition = "char")
 	private String cci;
 
-	@Column(name="description")
+	@Column(name = "description")
 	private String description;
 
-	@Column(name="currency", columnDefinition = "char")
+	@Column(name = "currency", columnDefinition = "char")
 	private String currency;
 
 	@ManyToOne

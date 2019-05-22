@@ -16,33 +16,34 @@ public class ReceptionStatusService extends BaseService<ReceptionStatusRepositor
 		duplicatedId(entity.getNativeId());
 		super.save(entity);
 	}
-	
+
 	@Override
 	public void edit(Integer id, ReceptionStatus entity) {
 		entity.setId(id);
 		super.edit(id, entity);
 	}
-	
+
 	@Override
 	protected void duplicatedId(String nativeId) {
-		if (super.getRepository().existsByNativeId(nativeId))
+		if (super.getRepository().existsByNativeId(nativeId)) {
 			super.duplicatedId(nativeId);
+		}
 	}
-	
+
 	@Override
 	protected void compareEntity(ReceptionStatus entity, ReceptionStatus repositoryEntity) {
 		if (entity.getNativeId() != null) {
-			if (!entity.getNativeId().equals(repositoryEntity.getNativeId()))
+			if (!entity.getNativeId().equals(repositoryEntity.getNativeId())) {
 				duplicatedId(entity.getNativeId());
-		} else
+			}
+		} else {
 			entity.setNativeId(repositoryEntity.getNativeId());
-		if (entity.getDescription() == null) 
-			entity.setDescription(repositoryEntity.getDescription());
+		}
 	}
-	
+
 	@Override
 	protected String getEntityName() {
 		return ReceptionStatus.class.getSimpleName();
 	}
-	
+
 }

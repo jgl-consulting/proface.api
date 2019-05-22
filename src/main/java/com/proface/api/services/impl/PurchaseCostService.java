@@ -23,14 +23,6 @@ public class PurchaseCostService extends BaseService<PurchaseCostRepository, Pur
 	}
 
 	@Override
-	protected void compareEntity(PurchaseCost entity, PurchaseCost repositoryEntity) {
-		if (entity.getDescription() == null)
-			entity.setDescription(repositoryEntity.getDescription());
-		if (entity.getPurchase() == null)
-			entity.setPurchase(repositoryEntity.getPurchase());
-	}
-
-	@Override
 	protected String getEntityName() {
 		return PurchaseCost.class.getSimpleName();
 	}
