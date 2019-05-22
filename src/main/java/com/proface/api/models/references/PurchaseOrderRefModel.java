@@ -23,4 +23,6 @@ public class PurchaseOrderRefModel extends BaseReferenceModel {
 		
 	private PurchaseStatusModel status;
 	
+	private SupplierRefModel supplier;
+	
 }

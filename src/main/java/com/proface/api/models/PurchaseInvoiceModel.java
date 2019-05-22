@@ -2,10 +2,13 @@ package com.proface.api.models;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.proface.api.models.references.PurchaseOrderRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
 import lombok.Data;
@@ -27,5 +30,9 @@ public class PurchaseInvoiceModel {
 	
 	@PositiveOrZero(message = ProfaceValidationMessage.POSITIVE)
 	private double totalPrice;
+	
+	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	@Valid
+	private PurchaseOrderRefModel purchase;
 	
 }

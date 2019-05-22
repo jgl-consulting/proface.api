@@ -43,4 +43,8 @@ public class PurchaseOrderModel {
 	
 	private List<@Valid PurchaseDetailChModel> details;
 	
+	private List<PurchaseCostModel> costs;
+
+	private List<PurchaseInvoiceModel> invoices;
+	
 }
