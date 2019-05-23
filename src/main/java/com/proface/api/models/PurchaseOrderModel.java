@@ -26,15 +26,7 @@ public class PurchaseOrderModel {
 	
 	@PastOrPresent(message = ProfaceValidationMessage.PAST_PRESENT)
 	private LocalDate creationDate;
-	
-	private LocalDate quotationDate;
-	
-	private LocalDate receptionDate;
-	
-	private LocalDate billingDate;
-	
-	private LocalDate cancellationDate;
-	
+		
 	@Valid
 	private SupplierRefModel supplier;
 	
@@ -46,5 +38,7 @@ public class PurchaseOrderModel {
 	private List<PurchaseCostModel> costs;
 
 	private List<PurchaseInvoiceModel> invoices;
+	
+	private List<PurchaseTraceModel> traces;	
 	
 }

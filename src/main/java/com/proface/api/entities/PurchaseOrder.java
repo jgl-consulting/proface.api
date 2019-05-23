@@ -3,6 +3,7 @@ package com.proface.api.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,21 +29,9 @@ public class PurchaseOrder {
 
 	@Column(name = "native_id")
 	private String nativeId;
-
-	@Column(name = "creation_date")
+	
+	@Column(name = "creationDate")
 	private LocalDate creationDate;
-
-	@Column(name = "quotation_date")
-	private LocalDate quotationDate;
-
-	@Column(name = "billing_date")
-	private LocalDate billingDate;
-
-	@Column(name = "reception_date")
-	private LocalDate receptionDate;
-
-	@Column(name = "cancellation_date")
-	private LocalDate cancellationDate;
 
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	@ManyToOne
@@ -60,4 +49,7 @@ public class PurchaseOrder {
 
 	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseInvoice> invoices;
+	
+	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private List<PurchaseTrace> traces;
 }

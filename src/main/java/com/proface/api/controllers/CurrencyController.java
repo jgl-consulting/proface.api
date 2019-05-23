@@ -18,7 +18,8 @@ public class CurrencyController {
 	@GetMapping("unpaged")
 	public ResponseEntity<?> list() {
 
-		Currency[] array = { new Currency("PEN", "Soles"), new Currency("USD", "Dólares") };
+		Currency[] array = { new Currency("PEN", "Nuevos Soles"), new Currency("USD", "Dólares Americanos"),
+				new Currency("EUR", "Euros") };
 
 		List<Currency> list = Arrays.asList(array);
 

@@ -2,6 +2,7 @@ package com.proface.api.services.impl;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.entities.PurchaseStatus;
+import com.proface.api.entities.PurchaseTrace;
 import com.proface.api.entities.Supplier;
 import com.proface.api.repositories.PurchaseDetailRepository;
 import com.proface.api.repositories.PurchaseOrderRepository;
@@ -80,33 +82,11 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 		if (purchaseOrder.getStatus() != null) {
 			Optional<PurchaseStatus> status = purchaseStatusRepository.findById(purchaseOrder.getStatus().getId());
 			if (status.isPresent()) {
-				switch (status.get().getNativeId()) {
-				case "E":
-					purchaseOrder.setCreationDate(
-							purchaseOrder.getCreationDate() == null ? LocalDate.now(ZoneId.systemDefault())
-									: purchaseOrder.getCreationDate());
-					break;
-				case "C":
-					purchaseOrder.setCancellationDate(
-							purchaseOrder.getCancellationDate() == null ? LocalDate.now(ZoneId.systemDefault())
-									: purchaseOrder.getCancellationDate());
-					break;
-				case "P":
-					purchaseOrder.setQuotationDate(
-							purchaseOrder.getQuotationDate() == null ? LocalDate.now(ZoneId.systemDefault())
-									: purchaseOrder.getQuotationDate());
-					break;
-				case "F":
-					purchaseOrder.setBillingDate(
-							purchaseOrder.getBillingDate() == null ? LocalDate.now(ZoneId.systemDefault())
-									: purchaseOrder.getBillingDate());
-					break;
-				case "R":
-					purchaseOrder.setReceptionDate(
-							purchaseOrder.getReceptionDate() == null ? LocalDate.now(ZoneId.systemDefault())
-									: purchaseOrder.getReceptionDate());
-					break;
-				}
+				PurchaseTrace trace = new PurchaseTrace();
+				trace.setPurchase(purchaseOrder);
+				trace.setStatus(status.get());
+				trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
+				purchaseOrder.setTraces(Arrays.asList());
 			}
 		}
 	}

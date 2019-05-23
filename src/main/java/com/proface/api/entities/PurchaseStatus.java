@@ -29,7 +29,7 @@ public class PurchaseStatus {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "color", columnDefinition = "char")
+	@Column(name = "color")
 	private String color;
 
 	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
