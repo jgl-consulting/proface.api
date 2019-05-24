@@ -13,4 +13,6 @@ public class PurchaseStatusRefModel extends BaseReferenceModel {
 	
 	private String color;
 	
+	private String icon;
+	
 }

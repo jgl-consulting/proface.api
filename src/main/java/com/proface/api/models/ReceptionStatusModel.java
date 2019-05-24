@@ -19,4 +19,8 @@ public class ReceptionStatusModel {
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String description;
 	
+	private String color;
+	
+	private String icon;
+	
 }

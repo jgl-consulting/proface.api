@@ -1,5 +1,6 @@
 package com.proface.api.models.references;
 
+import com.proface.api.models.CurrencyModel;
 import com.proface.api.models.ProductLineModel;
 
 import lombok.Getter;
@@ -14,6 +15,8 @@ public class ProductRefModel extends BaseReferenceModel {
 	private String name;
 	
 	private String description;
+	
+	private CurrencyModel currency;
 	
 	private double salePrice;
 	

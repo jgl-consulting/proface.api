@@ -11,4 +11,8 @@ public class ReceptionStatusRefModel extends BaseReferenceModel {
 	
 	private String description;
 	
+	private String color;
+	
+	private String icon;
+	
 }

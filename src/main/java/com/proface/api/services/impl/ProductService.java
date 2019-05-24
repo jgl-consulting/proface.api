@@ -46,10 +46,5 @@ public class ProductService extends BaseService<ProductRepository, Product, Inte
 	protected String getEntityName() {
 		return Supplier.class.getSimpleName();
 	}
-
-	@Override
-	protected void prepareEntity(Product entity) {
-		entity.setCurrency(entity.getCurrency() == null ? "PEN" : entity.getCurrency());
-	}
-
+	
 }

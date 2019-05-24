@@ -3,7 +3,6 @@ package com.proface.api.services.impl;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.entities.PurchaseOrder;
-import com.proface.api.entities.PurchaseStatus;
 import com.proface.api.entities.PurchaseTrace;
 import com.proface.api.entities.Supplier;
 import com.proface.api.repositories.PurchaseDetailRepository;
@@ -26,7 +24,7 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 
 	@Autowired
 	private PurchaseDetailRepository purchaseDetailRepository;
-
+	
 	@Autowired
 	private PurchaseStatusRepository purchaseStatusRepository;
 
@@ -80,14 +78,16 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 	@Override
 	protected void prepareEntity(PurchaseOrder purchaseOrder) {
 		if (purchaseOrder.getStatus() != null) {
-			Optional<PurchaseStatus> status = purchaseStatusRepository.findById(purchaseOrder.getStatus().getId());
-			if (status.isPresent()) {
-				PurchaseTrace trace = new PurchaseTrace();
-				trace.setPurchase(purchaseOrder);
-				trace.setStatus(status.get());
-				trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
-				purchaseOrder.setTraces(Arrays.asList());
-			}
+			PurchaseTrace trace = new PurchaseTrace();
+			trace.setPurchase(purchaseOrder);
+			trace.setStatus(purchaseOrder.getStatus());
+			trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
+			purchaseOrder.setTraces(Arrays.asList());
+		} else {
+			purchaseOrder.setStatus(purchaseStatusRepository.findByNativeId("CR").orElse(null));
+		}
+		if (purchaseOrder.getStatus().getNativeId() == "CR" && purchaseOrder.getCreationDate() == null) {
+			purchaseOrder.setCreationDate(LocalDate.now(ZoneId.systemDefault()));
 		}
 	}
 

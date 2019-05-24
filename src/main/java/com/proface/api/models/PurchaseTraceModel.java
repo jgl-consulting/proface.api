@@ -2,7 +2,7 @@ package com.proface.api.models;
 
 import java.time.LocalDate;
 
-import com.proface.api.entities.PurchaseStatus;
+import com.proface.api.models.references.PurchaseStatusRefModel;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +15,6 @@ public class PurchaseTraceModel {
 	
 	private LocalDate statusDate;
 	
-	private PurchaseStatus status;
+	private PurchaseStatusRefModel status;
 	
 }

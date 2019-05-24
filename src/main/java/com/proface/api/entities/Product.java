@@ -34,8 +34,9 @@ public class Product {
 	@Column(name = "native_id")
 	private String nativeId;
 
-	@Column(name = "currency")
-	private String currency;
+	@JoinColumn(name = "currency_id", referencedColumnName = "id")
+	@ManyToOne
+	private Currency currency;
 
 	@Column(name = "sale_price")
 	private double salePrice;

@@ -17,14 +17,15 @@ public class SupplierAccount {
 	@Column(name = "number")
 	private String number;
 
-	@Column(name = "cci", columnDefinition = "char")
+	@Column(name = "cci")
 	private String cci;
 
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "currency", columnDefinition = "char")
-	private String currency;
+	@ManyToOne
+	@JoinColumn(name = "currency_id", referencedColumnName = "id")
+	private Currency currency;
 
 	@ManyToOne
 	@JoinColumn(name = "bank_id")

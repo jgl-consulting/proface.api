@@ -10,7 +10,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proface.api.services.IAbstractService;
-import com.proface.api.util.Converter;
+import com.proface.api.util.ProfaceConverter;
 import com.proface.api.validations.ProfaceValidationHelper;
 
 /**
@@ -39,7 +39,7 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 	 * Injected Converter
 	 */
 	@Autowired
-	private Converter<E> converter;
+	private ProfaceConverter<E> converter;
 
 	/**
 	 * Lists all Entities from Repository

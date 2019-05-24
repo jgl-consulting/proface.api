@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @param <E>
  */
 @Component
-public class Converter<E> {
+public class ProfaceConverter<E> {
 
 	/**
 	 * Converts Iterable to List

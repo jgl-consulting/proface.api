@@ -31,12 +31,8 @@ public class PurchaseDetailService
 
 	@Override
 	protected void prepareEntity(PurchaseDetail entity) {
-		if (entity.getPurchasePrice() == 0) {
 			entity.setPurchasePrice(entity.getQuantity() * entity.getUnitPrice());
-		}
-		if (entity.getFinalPrice() == 0) {
 			entity.setFinalPrice(entity.getPurchasePrice() - entity.getDisscount());
-		}
 	}
 
 	private PurchaseDetailPK getId(PurchaseDetail entity) {

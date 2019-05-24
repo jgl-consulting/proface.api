@@ -29,6 +29,12 @@ public class ReceptionStatus {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "color")
+	private String color;
+	
+	@Column(name = "icon")
+	private String icon;
+
 	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
 	private List<PurchaseDetail> purchaseDetails;
 

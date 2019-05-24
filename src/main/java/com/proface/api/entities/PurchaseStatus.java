@@ -31,6 +31,9 @@ public class PurchaseStatus {
 
 	@Column(name = "color")
 	private String color;
+	
+	@Column(name = "icon")
+	private String icon;
 
 	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
 	private List<PurchaseOrder> orders;

@@ -1,33 +1,34 @@
 package com.proface.api.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proface.api.entities.Country;
-import com.proface.api.mappers.CountryMapper;
-import com.proface.api.models.CountryModel;
-import com.proface.api.services.impl.CountryService;
+import com.proface.api.repositories.CountryRepository;
+import com.proface.api.util.ProfaceConverter;
 
 @RestController
 @RequestMapping("api/countries")
-public class CountryController
-		extends BaseRestController<Integer, Country, CountryModel, CountryMapper, CountryService> {
+public class CountryController {
 
-	@Override
-	public ResponseEntity<?> save(CountryModel countryModel) {
-		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-	}
+	@Autowired
+	private CountryRepository repository;
+	
+	@Autowired
+	private ProfaceConverter<Country> converter;
+	
+	@GetMapping("unpaged")
+	public ResponseEntity<?> list() {
 
-	@Override
-	public ResponseEntity<?> edit(CountryModel countryModel, Integer id) {
-		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-	}
+		List<Country> list = converter.iterableToList(repository.findAll());
 
-	@Override
-	public ResponseEntity<?> delete(Integer id) {
-		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 }

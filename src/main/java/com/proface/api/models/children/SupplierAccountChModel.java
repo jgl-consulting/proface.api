@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.proface.api.models.CurrencyModel;
 import com.proface.api.models.references.BankRefModel;
 import com.proface.api.validations.ProfaceValidationMessage;
 
@@ -24,8 +25,8 @@ public class SupplierAccountChModel {
 
 	private String description;
 
-	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
-	private String currency;
+	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	private CurrencyModel currency;
 
 	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)

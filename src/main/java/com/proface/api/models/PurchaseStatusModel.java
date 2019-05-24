@@ -21,4 +21,6 @@ public class PurchaseStatusModel {
 	
 	private String color;
 	
+	private String icon;
+	
 }
