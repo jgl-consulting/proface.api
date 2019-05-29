@@ -1,7 +1,9 @@
 package com.proface.api.models.references;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import com.proface.api.models.CurrencyModel;
 import com.proface.api.models.PurchaseStatusModel;
 import com.proface.api.models.PurchaseTraceModel;
 
@@ -14,9 +16,15 @@ public class PurchaseOrderRefModel extends BaseReferenceModel {
 
 	private String nativeId;
 		
+	private LocalDate creationDate;
+	
 	private PurchaseStatusModel status;
 	
 	private SupplierRefModel supplier;
+	
+	private CurrencyModel currency;
+	
+	private double total;
 	
 	private List<PurchaseTraceModel> traces;
 	

@@ -123,7 +123,7 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 		if (!repositoryEntity.isPresent()) {
 			super.notExisting();
 		}
-		super.compareEntity(entity, repositoryEntity.get());
+		compareEntity(entity, repositoryEntity.get());
 		prepareEntity(entity);
 		repository.save(entity);
 	}
@@ -164,6 +164,13 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 	 */
 	protected void filterEntity(E entity) {
 
+	}
+	
+	/**
+	 * Compares incoming entity with persisted entity
+	 */
+	protected void compareEntity(E entity, E repositoryEntity) {
+		
 	}
 
 	/**

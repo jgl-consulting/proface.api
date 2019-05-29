@@ -30,6 +30,10 @@ public class PurchaseOrderModel {
 	@Valid
 	private SupplierRefModel supplier;
 	
+	private CurrencyModel currency;
+	
+	private double total;
+	
 	@Valid
 	private PurchaseStatusRefModel status;
 	

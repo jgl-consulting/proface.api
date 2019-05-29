@@ -27,6 +27,10 @@ public class PurchaseCost {
 
 	@Column(name = "total_cost")
 	private double totalCost;
+	
+	@JoinColumn(name = "currency_id", referencedColumnName = "id")
+	@ManyToOne
+	private Currency currency;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "purchase_id")

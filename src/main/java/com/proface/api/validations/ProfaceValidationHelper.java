@@ -31,13 +31,6 @@ public class ProfaceValidationHelper<E, NID> {
 	}
 	
 	/**
-	 * Compares incoming entity with persisted entity
-	 */
-	protected void compareEntity(E entity, E repositoryEntity) {
-		
-	}
-	
-	/**
 	 * Returns Entity name
 	 * Usage: In validation messages
 	 * @return

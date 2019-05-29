@@ -30,7 +30,7 @@ public class PurchaseOrder {
 	@Column(name = "native_id")
 	private String nativeId;
 	
-	@Column(name = "creationDate")
+	@Column(name = "creation_date")
 	private LocalDate creationDate;
 
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
@@ -40,7 +40,14 @@ public class PurchaseOrder {
 	@JoinColumn(name = "supplier_id", referencedColumnName = "id")
 	@ManyToOne
 	private Supplier supplier;
+	
+	@JoinColumn(name = "currency_id", referencedColumnName = "id")
+	@ManyToOne
+	private Currency currency;
 
+	@Column(name = "total")
+	private double total;
+	
 	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseCost> costs;
 
