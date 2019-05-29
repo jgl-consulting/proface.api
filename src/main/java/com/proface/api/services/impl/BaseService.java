@@ -2,14 +2,21 @@ package com.proface.api.services.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Joiner;
 import com.proface.api.services.IAbstractService;
+import com.proface.api.specifications.builder.EntityBuilder;
+import com.proface.api.specifications.operation.SearchOperation;
 import com.proface.api.util.ProfaceConverter;
 import com.proface.api.validations.ProfaceValidationHelper;
 
@@ -26,7 +33,7 @@ import com.proface.api.validations.ProfaceValidationHelper;
  * @param <NID>
  *            Optional: Native Key of Entity
  */
-public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID>
+public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecificationExecutor<E>, E, ID, NID>
 		extends ProfaceValidationHelper<E, NID> implements IAbstractService<E, ID> {
 
 	/**
@@ -57,6 +64,28 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID>, E, ID, NID
 	@Override
 	public Page<E> findAll(Pageable pageable) {
 		Page<E> page = repository.findAll(pageable);
+		page.forEach(e -> filterEntity(e));
+		return page;
+	}
+
+	/**
+	 * Pages Entities by Seach Query from Repository
+	 */
+	@Override
+	public Page<E> search(String search, Pageable pageable) {
+		char firstChar = search.charAt(0);
+		if (firstChar == '+' || firstChar == '-') {
+			search = search.substring(1);
+		}
+		EntityBuilder<E> builder = new EntityBuilder<>(firstChar == '+');
+		String operationSet = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
+		Pattern pattern = Pattern.compile("(\\w+?)(" + operationSet + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
+		Matcher matcher = pattern.matcher(search + ",");
+		while (matcher.find()) {
+			builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
+		}
+		Specification<E> specification = builder.build();
+		Page<E> page = repository.findAll(specification, pageable);
 		page.forEach(e -> filterEntity(e));
 		return page;
 	}

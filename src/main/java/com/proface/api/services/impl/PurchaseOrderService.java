@@ -24,7 +24,7 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 
 	@Autowired
 	private PurchaseDetailRepository purchaseDetailRepository;
-	
+
 	@Autowired
 	private PurchaseStatusRepository purchaseStatusRepository;
 

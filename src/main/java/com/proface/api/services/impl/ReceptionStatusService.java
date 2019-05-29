@@ -45,5 +45,5 @@ public class ReceptionStatusService extends BaseService<ReceptionStatusRepositor
 	protected String getEntityName() {
 		return ReceptionStatus.class.getSimpleName();
 	}
-
+	
 }

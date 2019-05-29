@@ -26,4 +26,5 @@ public class SupplierContactService extends BaseService<SupplierContactRepositor
 	protected String getEntityName() {
 		return SupplierContact.class.getSimpleName();
 	}
+
 }

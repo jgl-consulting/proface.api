@@ -73,9 +73,9 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 	@GetMapping
 	public ResponseEntity<?> list(Pageable pageable) {
 
-		Page<E> list = service.findAll(pageable);
-		Page<M> pageModel = list.map(entity -> mapper.convertToModel(entity));
-		return new ResponseEntity<>(pageModel, HttpStatus.OK);
+		Page<E> entityPage = service.findAll(pageable);
+		Page<M> modelPage = entityPage.map(entity -> mapper.convertToModel(entity));
+		return new ResponseEntity<>(modelPage, HttpStatus.OK);
 	}
 
 	/**
@@ -92,6 +92,17 @@ public class BaseRestController<ID, E, M, MP extends IAbstractMapper<M, E>, SV e
 						.map(entity -> mapper.convertToModel(entity))
 						.collect(Collectors.toList()),
 				HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 */
+	@GetMapping("search")
+	public ResponseEntity<?> search(String search, Pageable pageable) {
+		
+		Page<E> entityPage = service.search(search, pageable);
+		Page<M> modelPage = entityPage.map(entity -> mapper.convertToModel(entity));
+		return new ResponseEntity<>(modelPage, HttpStatus.OK);
 	}
 
 	/**

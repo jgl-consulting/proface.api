@@ -26,5 +26,5 @@ public class PurchaseCostService extends BaseService<PurchaseCostRepository, Pur
 	protected String getEntityName() {
 		return PurchaseCost.class.getSimpleName();
 	}
-	
+
 }

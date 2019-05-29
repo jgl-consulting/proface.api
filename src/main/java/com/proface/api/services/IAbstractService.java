@@ -29,6 +29,14 @@ public interface IAbstractService<E, ID> {
 	Page<E> findAll(Pageable pageable);
 	
 	/**
+	 * Pages Entities using Searching Query
+	 * @param search
+	 * @param pageable
+	 * @return Page<entity>
+	 */
+	Page<E> search(String search, Pageable pageable);
+	
+	/**
 	 * Finds an Entity
 	 * @param id
 	 * @return entity

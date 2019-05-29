@@ -25,5 +25,5 @@ public class BankService extends BaseService<BankRepository, Bank, Integer, Inte
 	protected String getEntityName() {
 		return Bank.class.getSimpleName();
 	}
-
+	
 }
