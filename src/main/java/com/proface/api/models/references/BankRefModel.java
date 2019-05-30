@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BankRefModel extends BaseReferenceModel {
+public class BankRefModel extends ProfaceRefModel {
 
 	private String name;
 

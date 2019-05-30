@@ -7,7 +7,7 @@ import com.proface.api.repositories.BankRepository;
 import com.proface.api.services.IBankService;
 
 @Service
-public class BankService extends BaseService<BankRepository, Bank, Integer, Integer> implements IBankService {
+public class BankService extends ProfaceService<BankRepository, Bank, Integer, Integer> implements IBankService {
 
 	@Override
 	public void save(Bank entity) {

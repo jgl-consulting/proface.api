@@ -6,6 +6,6 @@ import com.proface.api.entities.ProductLine;
 import com.proface.api.models.ProductLineModel;
 
 @Mapper(componentModel = "spring")
-public interface ProductLineMapper extends IAbstractMapper<ProductLineModel, ProductLine> {
+public interface ProductLineMapper extends IProfaceMapper<ProductLineModel, ProductLine> {
 
 }

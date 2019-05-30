@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
  * @param <E>	Entity
  * @param <ID>	Primary Key of Entity
  */
-public interface IAbstractService<E, ID> {
+public interface IProfaceService<E, ID> {
 
 	/**
 	 * Lists all Entities
@@ -29,12 +29,25 @@ public interface IAbstractService<E, ID> {
 	Page<E> findAll(Pageable pageable);
 	
 	/**
+	 * List all Entities using Searching Query
+	 * @return
+	 */
+	List<E> findAll(String search);
+	
+	/**
 	 * Pages Entities using Searching Query
 	 * @param search
 	 * @param pageable
 	 * @return Page<entity>
 	 */
-	Page<E> search(String search, Pageable pageable);
+	Page<E> findAll(String search, Pageable pageable);
+	
+	/**
+	 * Finds a searched Entity
+	 * @param search
+	 * @return
+	 */
+	E findOne(String search);
 	
 	/**
 	 * Finds an Entity
@@ -48,6 +61,12 @@ public interface IAbstractService<E, ID> {
 	 * @param entity
 	 */
 	void save(E entity);
+	
+	/**
+	 * Saves a list of Entities
+	 * @param entities
+	 */
+	void saveAll(List<E> entities);
 	
 	/**
 	 * Modifies an Entity

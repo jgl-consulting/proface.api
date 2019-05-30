@@ -3,7 +3,7 @@ package com.proface.api.models.children;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.proface.api.validations.ProfaceValidationMessage;
+import com.proface.api.util.ProfaceValidationMessage;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

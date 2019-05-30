@@ -8,10 +8,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Data
-public class PageWrapper<T> {
+public class ProfacePageWrapper<T> {
 
-	public static <T, K> PageWrapper<K> of(Page<T> page, Function<T, K> mapper) {
-		PageWrapper<K> pageWrapper = new PageWrapper<>();
+	public static <T, K> ProfacePageWrapper<K> of(Page<T> page, Function<T, K> mapper) {
+		ProfacePageWrapper<K> pageWrapper = new ProfacePageWrapper<>();
 		pageWrapper.content = page.getContent().stream().map(mapper).collect(Collectors.toList());
 		pageWrapper.totalElements = page.getTotalElements();
 		pageWrapper.totalPages = page.getTotalPages();

@@ -12,6 +12,6 @@ import com.proface.api.services.ISupplierService;
 @RestController
 @RequestMapping("api/suppliers")
 public class SupplierController
-		extends BaseRestController<Integer, Supplier, SupplierModel, SupplierMapper, ISupplierService> {
+		extends ProfaceController<Integer, Supplier, SupplierModel, SupplierMapper, ISupplierService> {
 
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PurchaseOrderRefModel extends BaseReferenceModel {
+public class PurchaseOrderRefModel extends ProfaceRefModel {
 
 	private String nativeId;
 		

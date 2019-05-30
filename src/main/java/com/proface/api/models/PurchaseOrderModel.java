@@ -10,7 +10,7 @@ import javax.validation.constraints.PastOrPresent;
 import com.proface.api.models.children.PurchaseDetailChModel;
 import com.proface.api.models.references.PurchaseStatusRefModel;
 import com.proface.api.models.references.SupplierRefModel;
-import com.proface.api.validations.ProfaceValidationMessage;
+import com.proface.api.util.ProfaceValidationMessage;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

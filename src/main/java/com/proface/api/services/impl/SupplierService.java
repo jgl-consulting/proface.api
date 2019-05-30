@@ -6,21 +6,20 @@ import com.proface.api.entities.Supplier;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proface.api.repositories.SupplierRepository;
-import com.proface.api.repositories.SupplierTypeRepository;
 import com.proface.api.services.ISupplierService;
+import com.proface.api.services.ISupplierTypeService;
 
 @Service
-public class SupplierService extends BaseService<SupplierRepository, Supplier, Integer, String>
+public class SupplierService extends ProfaceService<SupplierRepository, Supplier, Integer, String>
 		implements ISupplierService {
 
 	@Autowired
-	private SupplierTypeRepository supplierTypeRepository;
+	private ISupplierTypeService supplierTypeService;
 
 	@Override
 	public void save(Supplier entity) {
@@ -61,17 +60,17 @@ public class SupplierService extends BaseService<SupplierRepository, Supplier, I
 
 	@Override
 	protected void prepareEntity(Supplier entity) {
-		entity.setType(entity.getCountry() != null && entity.getCountry().getId() == 161
-				? supplierTypeRepository.findByName("Nacional").orElse(null)
-				: supplierTypeRepository.findByName("Internacional").orElse(null));
+		entity.setType(entity.getCountry() != null && entity.getCountry().getName() == "Peru"
+				? supplierTypeService.findOne("name:Nacional")
+				: supplierTypeService.findOne("name:Internacional"));
 	}
 
 	@Override
 	protected void filterEntity(Supplier supplier) {
 		if (supplier.getPurchases() != null && supplier.getPurchases().size() > 0) {
-			supplier.setPurchases(Arrays.asList(supplier.getPurchases().stream()
-					.filter(p -> Objects.nonNull(p.getCreationDate())).collect(Collectors.toList()).stream()
-					.max(Comparator.comparing(PurchaseOrder::getCreationDate)).orElse(null)));
+			supplier.setPurchases(
+					Arrays.asList(supplier.getPurchases().stream().filter(p -> Objects.nonNull(p.getCreationDate()))
+							.max(Comparator.comparing(PurchaseOrder::getCreationDate)).orElse(null)));
 		}
 	}
 

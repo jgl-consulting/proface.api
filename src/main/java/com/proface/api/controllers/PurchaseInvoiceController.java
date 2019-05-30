@@ -11,6 +11,6 @@ import com.proface.api.services.IPurchaseInvoiceService;
 @RestController
 @RequestMapping("api/purchaseInvoices")
 public class PurchaseInvoiceController extends
-		BaseRestController<Integer, PurchaseInvoice, PurchaseInvoiceModel, PurchaseInvoiceMapper, IPurchaseInvoiceService> {
+		ProfaceController<Integer, PurchaseInvoice, PurchaseInvoiceModel, PurchaseInvoiceMapper, IPurchaseInvoiceService> {
 
 }

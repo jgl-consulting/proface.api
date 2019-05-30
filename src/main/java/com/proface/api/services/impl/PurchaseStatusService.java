@@ -7,7 +7,7 @@ import com.proface.api.repositories.PurchaseStatusRepository;
 import com.proface.api.services.IPurchaseStatusService;
 
 @Service
-public class PurchaseStatusService extends BaseService<PurchaseStatusRepository, PurchaseStatus, Integer, String>
+public class PurchaseStatusService extends ProfaceService<PurchaseStatusRepository, PurchaseStatus, Integer, String>
 		implements IPurchaseStatusService {
 
 	@Override

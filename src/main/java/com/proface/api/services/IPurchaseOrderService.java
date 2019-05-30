@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.proface.api.entities.PurchaseOrder;
 
-public interface IPurchaseOrderService extends IAbstractService<PurchaseOrder, Integer> {
+public interface IPurchaseOrderService extends IProfaceService<PurchaseOrder, Integer> {
 
 	Page<PurchaseOrder> findAll(Pageable pageable, int supplierId);
 

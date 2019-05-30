@@ -11,6 +11,6 @@ import com.proface.api.services.IProductService;
 @RestController
 @RequestMapping("api/products")
 public class ProductController
-		extends BaseRestController<Integer, Product, ProductModel, ProductMapper, IProductService> {
+		extends ProfaceController<Integer, Product, ProductModel, ProductMapper, IProductService> {
 
 }

@@ -2,7 +2,7 @@ package com.proface.api.models.references;
 
 import javax.validation.constraints.Positive;
 
-import com.proface.api.validations.ProfaceValidationMessage;
+import com.proface.api.util.ProfaceValidationMessage;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class BaseReferenceModel {
+public class ProfaceRefModel {
 
 	/**
 	 * Must be a number > 0

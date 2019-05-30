@@ -1,4 +1,4 @@
-package com.proface.api.validations;
+package com.proface.api.util;
 
 /**
  * This Class has Messages used to export Errors to API Clients

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface UserMapper extends IAbstractMapper<UserModel, User> {
+public interface UserMapper extends IProfaceMapper<UserModel, User> {
 
 	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 	

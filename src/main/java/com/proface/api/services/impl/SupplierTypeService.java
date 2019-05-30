@@ -7,7 +7,7 @@ import com.proface.api.repositories.SupplierTypeRepository;
 import com.proface.api.services.ISupplierTypeService;
 
 @Service
-public class SupplierTypeService extends BaseService<SupplierTypeRepository, SupplierType, Integer, Integer>
+public class SupplierTypeService extends ProfaceService<SupplierTypeRepository, SupplierType, Integer, Integer>
 		implements ISupplierTypeService {
 
 	@Override

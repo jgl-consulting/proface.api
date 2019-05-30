@@ -6,6 +6,6 @@ import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.models.PurchaseOrderModel;
 
 @Mapper(componentModel = "spring")
-public interface PurchaseOrderMapper extends IAbstractMapper<PurchaseOrderModel, PurchaseOrder> {
+public interface PurchaseOrderMapper extends IProfaceMapper<PurchaseOrderModel, PurchaseOrder> {
 	
 }

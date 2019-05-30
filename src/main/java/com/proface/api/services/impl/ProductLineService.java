@@ -7,7 +7,7 @@ import com.proface.api.repositories.ProductLineRepository;
 import com.proface.api.services.IProductLineService;
 
 @Service
-public class ProductLineService extends BaseService<ProductLineRepository, ProductLine, Integer, Integer>
+public class ProductLineService extends ProfaceService<ProductLineRepository, ProductLine, Integer, Integer>
 		implements IProductLineService {
 
 	@Override

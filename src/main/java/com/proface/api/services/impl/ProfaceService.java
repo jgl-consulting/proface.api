@@ -2,23 +2,18 @@ package com.proface.api.services.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Joiner;
-import com.proface.api.services.IAbstractService;
-import com.proface.api.specifications.builder.EntityBuilder;
-import com.proface.api.specifications.operation.SearchOperation;
+import com.proface.api.services.IProfaceService;
 import com.proface.api.util.ProfaceConverter;
-import com.proface.api.validations.ProfaceValidationHelper;
+import com.proface.api.util.ProfaceSpecificationBuilder;
+import com.proface.api.util.ProfaceValidationHelper;
 
 /**
  * 
@@ -33,8 +28,8 @@ import com.proface.api.validations.ProfaceValidationHelper;
  * @param <NID>
  *            Optional: Native Key of Entity
  */
-public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecificationExecutor<E>, E, ID, NID>
-		extends ProfaceValidationHelper<E, NID> implements IAbstractService<E, ID> {
+public class ProfaceService<R extends PagingAndSortingRepository<E, ID> & JpaSpecificationExecutor<E>, E, ID, NID>
+		extends ProfaceValidationHelper<E, NID> implements IProfaceService<E, ID> {
 
 	/**
 	 * Injected Repository
@@ -47,6 +42,9 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 	 */
 	@Autowired
 	private ProfaceConverter<E> converter;
+	
+	@Autowired
+	private ProfaceSpecificationBuilder<E> builder;
 
 	/**
 	 * Lists all Entities from Repository
@@ -54,6 +52,13 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 	@Override
 	public List<E> findAll() {
 		List<E> list = converter.iterableToList(repository.findAll());
+		list.forEach(e -> filterEntity(e));
+		return list;
+	}
+	
+	@Override
+	public List<E> findAll(String search) {
+		List<E> list = converter.iterableToList(repository.findAll(builder.getSpecification(search)));
 		list.forEach(e -> filterEntity(e));
 		return list;
 	}
@@ -72,20 +77,8 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 	 * Pages Entities by Seach Query from Repository
 	 */
 	@Override
-	public Page<E> search(String search, Pageable pageable) {
-		char firstChar = search.charAt(0);
-		if (firstChar == '+' || firstChar == '-') {
-			search = search.substring(1);
-		}
-		EntityBuilder<E> builder = new EntityBuilder<>(firstChar == '+');
-		String operationSet = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
-		Pattern pattern = Pattern.compile("(\\w+?)(" + operationSet + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
-		Matcher matcher = pattern.matcher(search + ",");
-		while (matcher.find()) {
-			builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
-		}
-		Specification<E> specification = builder.build();
-		Page<E> page = repository.findAll(specification, pageable);
+	public Page<E> findAll(String search, Pageable pageable) {
+		Page<E> page = repository.findAll(builder.getSpecification(search), pageable);
 		page.forEach(e -> filterEntity(e));
 		return page;
 	}
@@ -102,7 +95,20 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 		filterEntity(entity.get());
 		return entity.get();
 	}
-
+	
+	/**
+	 * Finds a searched Entity from Repository
+	 */
+	@Override
+	public E findOne(String search) {
+		Optional<E> entity = repository.findOne(builder.getSpecification(search));
+		if (!entity.isPresent()) {
+			super.notExisting();
+		}
+		filterEntity(entity.get());
+		return entity.get();
+	}
+	
 	/**
 	 * Saves an Entity into Repository
 	 */
@@ -111,6 +117,13 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 	public void save(E entity) {
 		prepareEntity(entity);
 		repository.save(entity);
+	}
+	
+	@Override
+	@Transactional
+	public void saveAll(List<E> entities) {
+		entities.forEach(e -> prepareEntity(e));
+		repository.saveAll(entities);
 	}
 
 	/**
@@ -123,8 +136,8 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 		if (!repositoryEntity.isPresent()) {
 			super.notExisting();
 		}
-		compareEntity(entity, repositoryEntity.get());
 		prepareEntity(entity);
+		compareEntity(entity, repositoryEntity.get());
 		repository.save(entity);
 	}
 
@@ -146,7 +159,7 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 	protected R getRepository() {
 		return this.repository;
 	}
-
+	
 	/**
 	 * Validates if Entity exists in Repository by its ID
 	 * 
@@ -156,30 +169,6 @@ public class BaseService<R extends PagingAndSortingRepository<E, ID> & JpaSpecif
 		if (!repository.existsById(id)) {
 			super.notExisting();
 		}
-	}
-
-	/**
-	 * Filters the Entity before returning Usage: If Childrens of this calss needs
-	 * it
-	 */
-	protected void filterEntity(E entity) {
-
-	}
-	
-	/**
-	 * Compares incoming entity with persisted entity
-	 */
-	protected void compareEntity(E entity, E repositoryEntity) {
-		
-	}
-
-	/**
-	 * Prepares the Entity before persisting
-	 * 
-	 * @param entity
-	 */
-	protected void prepareEntity(E entity) {
-
 	}
 
 }

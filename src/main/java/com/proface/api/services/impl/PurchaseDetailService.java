@@ -6,28 +6,27 @@ import org.springframework.stereotype.Service;
 import com.proface.api.entities.PurchaseDetail;
 import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.repositories.PurchaseDetailRepository;
-import com.proface.api.repositories.PurchaseOrderRepository;
 import com.proface.api.services.IPurchaseDetailService;
+import com.proface.api.services.IPurchaseOrderService;
 
 @Service
 public class PurchaseDetailService
-		extends BaseService<PurchaseDetailRepository, PurchaseDetail, PurchaseDetailPK, String>
+		extends ProfaceService<PurchaseDetailRepository, PurchaseDetail, PurchaseDetailPK, String>
 		implements IPurchaseDetailService {
 
 	@Autowired
-	private PurchaseOrderRepository purchaseOrderRepository;
-	
+	private IPurchaseOrderService purchaseOrderService;
+
 	@Override
 	public void save(PurchaseDetail entity) {
-		entity.setId(getId(entity));
-		entity.getPurchase().setTotal(entity.getPurchase().getTotal() + entity.getFinalPrice());
-		purchaseOrderRepository.save(entity.getPurchase());
+		setId(entity);
 		super.save(entity);
 	}
 
 	@Override
 	public void edit(PurchaseDetailPK id, PurchaseDetail entity) {
-		entity.setId(id == null ? getId(entity) : id);
+		entity.setId(id);
+		setId(entity);
 		super.edit(id, entity);
 	}
 
@@ -40,19 +39,24 @@ public class PurchaseDetailService
 	protected void prepareEntity(PurchaseDetail entity) {
 		entity.setPurchasePrice(entity.getQuantity() * entity.getUnitPrice());
 		entity.setFinalPrice(entity.getPurchasePrice() - entity.getDisscount());
+		entity.getPurchase().setTotal(entity.getPurchase().getTotal() + entity.getFinalPrice());
+		purchaseOrderService.save(entity.getPurchase());
 	}
 
-	private PurchaseDetailPK getId(PurchaseDetail entity) {
-		return new PurchaseDetailPK(entity.getProduct() == null ? 0 : entity.getProduct().getId(),
-				entity.getPurchase() == null ? 0 : entity.getPurchase().getId());
+	@Override
+	protected void setId(PurchaseDetail entity) {
+		if (entity.getId() != null) {
+			entity.setId(new PurchaseDetailPK(entity.getProduct() == null ? 0 : entity.getProduct().getId(),
+					entity.getPurchase() == null ? 0 : entity.getPurchase().getId()));
+		}
 	}
-	
+
 	@Override
 	protected void compareEntity(PurchaseDetail entity, PurchaseDetail repositoryEntity) {
-		prepareEntity(entity);
-		double priceVar = entity.getFinalPrice() - repositoryEntity.getFinalPrice();
-		entity.getPurchase().setTotal(entity.getPurchase().getTotal() + priceVar);
-		purchaseOrderRepository.save(entity.getPurchase());
+		double totalVariation = entity.getFinalPrice() - repositoryEntity.getFinalPrice();
+		entity.getPurchase()
+				.setTotal(repositoryEntity.getPurchase().getTotal() + totalVariation - entity.getFinalPrice());
+		purchaseOrderService.save(entity.getPurchase());
 	}
 
 }

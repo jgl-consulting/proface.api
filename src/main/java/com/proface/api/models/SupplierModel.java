@@ -7,7 +7,7 @@ import com.proface.api.models.children.SupplierContactChModel;
 import com.proface.api.models.references.CountryRefModel;
 import com.proface.api.models.references.PurchaseOrderRefModel;
 import com.proface.api.models.references.SupplierTypeRefModel;
-import com.proface.api.validations.ProfaceValidationMessage;
+import com.proface.api.util.ProfaceValidationMessage;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

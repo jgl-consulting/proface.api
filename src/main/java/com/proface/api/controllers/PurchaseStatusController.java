@@ -11,6 +11,6 @@ import com.proface.api.services.impl.PurchaseStatusService;
 @RestController
 @RequestMapping("api/purchaseStatuses")
 public class PurchaseStatusController extends
-		BaseRestController<Integer, PurchaseStatus, PurchaseStatusModel, PurchaseStatusMapper, PurchaseStatusService> {
+		ProfaceController<Integer, PurchaseStatus, PurchaseStatusModel, PurchaseStatusMapper, PurchaseStatusService> {
 
 }

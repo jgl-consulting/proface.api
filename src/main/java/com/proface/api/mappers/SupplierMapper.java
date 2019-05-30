@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 import com.proface.api.models.SupplierModel;
 
 @Mapper(componentModel = "spring")
-public interface SupplierMapper extends IAbstractMapper<SupplierModel, Supplier> {
+public interface SupplierMapper extends IProfaceMapper<SupplierModel, Supplier> {
 
 }

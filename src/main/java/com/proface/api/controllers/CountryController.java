@@ -23,7 +23,7 @@ public class CountryController {
 	@Autowired
 	private ProfaceConverter<Country> converter;
 	
-	@GetMapping("unpaged")
+	@GetMapping
 	public ResponseEntity<?> list() {
 
 		List<Country> list = converter.iterableToList(repository.findAll());

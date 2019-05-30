@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SupplierRefModel extends BaseReferenceModel {
+public class SupplierRefModel extends ProfaceRefModel {
 
 	private String name;
 

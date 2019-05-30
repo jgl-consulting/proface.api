@@ -3,12 +3,11 @@ package com.proface.api.services.impl;
 import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.Product;
-import com.proface.api.entities.Supplier;
 import com.proface.api.repositories.ProductRepository;
 import com.proface.api.services.IProductService;
 
 @Service
-public class ProductService extends BaseService<ProductRepository, Product, Integer, String>
+public class ProductService extends ProfaceService<ProductRepository, Product, Integer, String>
 		implements IProductService {
 
 	@Override
@@ -44,7 +43,7 @@ public class ProductService extends BaseService<ProductRepository, Product, Inte
 
 	@Override
 	protected String getEntityName() {
-		return Supplier.class.getSimpleName();
+		return Product.class.getSimpleName();
 	}
 	
 }

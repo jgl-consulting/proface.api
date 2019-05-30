@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductRefModel extends BaseReferenceModel {
+public class ProductRefModel extends ProfaceRefModel {
 
 	private String nativeId;
 	

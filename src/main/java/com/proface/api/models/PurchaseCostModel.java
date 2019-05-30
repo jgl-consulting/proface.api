@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import com.proface.api.models.references.PurchaseOrderRefModel;
-import com.proface.api.validations.ProfaceValidationMessage;
+import com.proface.api.util.ProfaceValidationMessage;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

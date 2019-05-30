@@ -7,7 +7,7 @@ import com.proface.api.repositories.SupplierContactRepository;
 import com.proface.api.services.ISupplierContactService;
 
 @Service
-public class SupplierContactService extends BaseService<SupplierContactRepository, SupplierContact, Integer, Integer>
+public class SupplierContactService extends ProfaceService<SupplierContactRepository, SupplierContact, Integer, Integer>
 		implements ISupplierContactService {
 
 	@Override

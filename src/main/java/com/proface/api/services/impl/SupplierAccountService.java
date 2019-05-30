@@ -2,13 +2,12 @@ package com.proface.api.services.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.proface.api.entities.Supplier;
 import com.proface.api.entities.SupplierAccount;
 import com.proface.api.repositories.SupplierAccountRepository;
 import com.proface.api.services.ISupplierAccountService;
 
 @Service
-public class SupplierAccountService extends BaseService<SupplierAccountRepository, SupplierAccount, Integer, String>
+public class SupplierAccountService extends ProfaceService<SupplierAccountRepository, SupplierAccount, Integer, String>
 		implements ISupplierAccountService {
 
 	@Override
@@ -44,7 +43,7 @@ public class SupplierAccountService extends BaseService<SupplierAccountRepositor
 
 	@Override
 	protected String getEntityName() {
-		return Supplier.class.getSimpleName();
+		return SupplierAccount.class.getSimpleName();
 	}
 
 }

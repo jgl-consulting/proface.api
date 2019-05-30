@@ -6,7 +6,7 @@ import javax.validation.constraints.Positive;
 import com.proface.api.models.references.ProductRefModel;
 import com.proface.api.models.references.PurchaseOrderRefModel;
 import com.proface.api.models.references.ReceptionStatusRefModel;
-import com.proface.api.validations.ProfaceValidationMessage;
+import com.proface.api.util.ProfaceValidationMessage;
 
 import lombok.Data;
 

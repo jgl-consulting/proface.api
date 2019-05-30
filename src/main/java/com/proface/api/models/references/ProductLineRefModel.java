@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductLineRefModel extends BaseReferenceModel {
+public class ProductLineRefModel extends ProfaceRefModel {
 
 	private String name;
 	

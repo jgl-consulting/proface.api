@@ -23,7 +23,7 @@ public class CurrencyController {
 	@Autowired
 	private ProfaceConverter<Currency> converter;
 	
-	@GetMapping("unpaged")
+	@GetMapping
 	public ResponseEntity<?> list() {
 
 		List<Currency> list = converter.iterableToList(repository.findAll());

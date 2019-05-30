@@ -12,7 +12,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 @Component
-public class SecurityBeans {
+public class ProfaceSecurityBeans {
 	
     @Autowired
 	private CorsConfigurationSource corsConfigurationSource;

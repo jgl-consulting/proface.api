@@ -3,7 +3,6 @@ package com.proface.api.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,7 @@ import com.proface.api.services.IPurchaseDetailService;
 @RestController
 @RequestMapping("api/purchaseDetails")
 public class PurchaseDetailController extends
-		BaseRestController<PurchaseDetailPK, PurchaseDetail, PurchaseDetailModel, PurchaseDetailMapper, IPurchaseDetailService> {
+		ProfaceController<PurchaseDetailPK, PurchaseDetail, PurchaseDetailModel, PurchaseDetailMapper, IPurchaseDetailService> {
 
 	public ResponseEntity<?> delete(PurchaseDetailPK id) {
 
@@ -30,9 +29,8 @@ public class PurchaseDetailController extends
 		return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
-	@PutMapping("product/{productId}/purchase/{purchaseId}")
-	public ResponseEntity<?> edit(@RequestBody PurchaseDetailModel model, @PathVariable int productId,
-			@PathVariable int purchaseId) {
+	@PutMapping
+	public ResponseEntity<?> edit(@RequestBody PurchaseDetailModel model, int productId, int purchaseId) {
 
 		PurchaseDetail entity = super.getMapper().convertToEntity(model);
 
@@ -42,8 +40,8 @@ public class PurchaseDetailController extends
 
 	}
 
-	@DeleteMapping("product/{productId}/purchase/{purchaseId}")
-	public ResponseEntity<?> delete(@PathVariable int productId, @PathVariable int purchaseId) {
+	@DeleteMapping
+	public ResponseEntity<?> delete(int productId, int purchaseId) {
 
 		super.getService().delete(new PurchaseDetailPK(productId, purchaseId));
 

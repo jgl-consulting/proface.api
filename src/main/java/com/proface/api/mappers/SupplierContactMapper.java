@@ -6,6 +6,6 @@ import com.proface.api.entities.SupplierContact;
 import com.proface.api.models.SupplierContactModel;
 
 @Mapper(componentModel = "Spring")
-public interface SupplierContactMapper extends IAbstractMapper<SupplierContactModel, SupplierContact> {
+public interface SupplierContactMapper extends IProfaceMapper<SupplierContactModel, SupplierContact> {
 
 }

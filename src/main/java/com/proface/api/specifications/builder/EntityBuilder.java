@@ -12,11 +12,9 @@ import com.proface.api.specifications.operation.SearchOperation;
 public class EntityBuilder<E> {
 
 	private List<SearchCriteria> params;
-	private boolean isAndPredicate;
 
-	public EntityBuilder(boolean isAndPredicate) {
+	public EntityBuilder() {
 		this.params = new ArrayList<>();
-		this.isAndPredicate = isAndPredicate;
 	}
 
 	public EntityBuilder<E> with(String key, String operation, Object value, String prefix, String suffix) {
@@ -42,12 +40,27 @@ public class EntityBuilder<E> {
 		if (params.size() == 0) {
 			return null;
 		}
+		removeSpecialCharacters(params.get(0));
 		Specification<E> result = new EntitySpecification<E>(params.get(0));
 		for (int i = 1; i < params.size(); i++) {
-			result = this.isAndPredicate ? Specification.where(result).and(new EntitySpecification<E>(params.get(i)))
+			result = keyContainsAndJoiner(params.get(i))
+					? Specification.where(result).and(new EntitySpecification<E>(params.get(i)))
 					: Specification.where(result).or(new EntitySpecification<E>(params.get(i)));
 		}
 		return result;
+	}
+
+	private boolean keyContainsAndJoiner(SearchCriteria criteria) {
+		if (criteria.getKey() != null && !criteria.getKey().isEmpty()) {
+			char firstChar = criteria.getKey().charAt(0);
+			removeSpecialCharacters(criteria);
+			return firstChar == '¬';
+		}
+		return false;
+	}
+
+	private void removeSpecialCharacters(SearchCriteria criteria) {
+		criteria.setKey(criteria.getKey().replaceAll("\\W", ""));
 	}
 
 }

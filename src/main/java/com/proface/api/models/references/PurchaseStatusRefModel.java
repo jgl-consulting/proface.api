@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PurchaseStatusRefModel extends BaseReferenceModel {
+public class PurchaseStatusRefModel extends ProfaceRefModel {
 
 	private String nativeId;
 	

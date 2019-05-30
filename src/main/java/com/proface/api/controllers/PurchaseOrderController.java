@@ -16,7 +16,7 @@ import com.proface.api.services.IPurchaseOrderService;
 @RestController
 @RequestMapping("api/purchaseOrders")
 public class PurchaseOrderController extends
-		BaseRestController<Integer, PurchaseOrder, PurchaseOrderModel, PurchaseOrderMapper, IPurchaseOrderService> {
+		ProfaceController<Integer, PurchaseOrder, PurchaseOrderModel, PurchaseOrderMapper, IPurchaseOrderService> {
 
 	@GetMapping("/supplier/{supplierId}")
 	public ResponseEntity<?> list(Pageable pageable, @PathVariable int supplierId) {

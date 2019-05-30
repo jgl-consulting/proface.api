@@ -7,7 +7,7 @@ import com.proface.api.repositories.ReceptionStatusRepository;
 import com.proface.api.services.IReceptionStatusService;
 
 @Service
-public class ReceptionStatusService extends BaseService<ReceptionStatusRepository, ReceptionStatus, Integer, String>
+public class ReceptionStatusService extends ProfaceService<ReceptionStatusRepository, ReceptionStatus, Integer, String>
 		implements IReceptionStatusService {
 
 	@Override

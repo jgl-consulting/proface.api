@@ -7,7 +7,7 @@ package com.proface.api.mappers;
  * @param <M>	Model
  * @param <E>	Entity
  */
-public interface IAbstractMapper <M,E> {
+public interface IProfaceMapper <M,E> {
 	
 	/**
 	 * Converts Entity to Model

@@ -11,6 +11,6 @@ import com.proface.api.services.IReceptionStatusService;
 @RestController
 @RequestMapping("api/receptionStatuses")
 public class ReceptionStatusController extends
-		BaseRestController<Integer, ReceptionStatus, ReceptionStatusModel, ReceptionStatusMapper, IReceptionStatusService> {
+		ProfaceController<Integer, ReceptionStatus, ReceptionStatusModel, ReceptionStatusMapper, IReceptionStatusService> {
 
 }

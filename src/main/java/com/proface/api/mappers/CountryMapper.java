@@ -6,6 +6,6 @@ import com.proface.api.entities.Country;
 import com.proface.api.models.CountryModel;
 
 @Mapper(componentModel = "spring")
-public interface CountryMapper extends IAbstractMapper<CountryModel, Country> {
+public interface CountryMapper extends IProfaceMapper<CountryModel, Country> {
 
 }

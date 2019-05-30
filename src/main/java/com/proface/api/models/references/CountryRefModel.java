@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CountryRefModel extends BaseReferenceModel {
+public class CountryRefModel extends ProfaceRefModel {
 
 	private String name;
 

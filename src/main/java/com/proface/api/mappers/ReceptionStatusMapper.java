@@ -6,6 +6,6 @@ import com.proface.api.entities.ReceptionStatus;
 import com.proface.api.models.ReceptionStatusModel;
 
 @Mapper(componentModel = "spring")
-public interface ReceptionStatusMapper extends IAbstractMapper<ReceptionStatusModel, ReceptionStatus>{
+public interface ReceptionStatusMapper extends IProfaceMapper<ReceptionStatusModel, ReceptionStatus>{
 
 }

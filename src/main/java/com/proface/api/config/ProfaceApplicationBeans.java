@@ -1,6 +1,6 @@
 package com.proface.api.config;
 
-import com.proface.api.security.CustomTokenEnhancer;
+import com.proface.api.security.ProfaceTokenEnhancer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -17,7 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @Component
-public class ApplicationBeans {
+public class ProfaceApplicationBeans {
 
 	@Value("${security.signing-key}")
 	private String signingKey;
@@ -31,7 +31,7 @@ public class ApplicationBeans {
 	@Bean
 	@Primary
 	public JwtAccessTokenConverter accessTokenConverter() {
-		JwtAccessTokenConverter converter = new CustomTokenEnhancer();
+		JwtAccessTokenConverter converter = new ProfaceTokenEnhancer();
 		converter.setSigningKey(signingKey);
 		return converter;
 	}

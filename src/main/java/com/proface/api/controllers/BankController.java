@@ -10,6 +10,6 @@ import com.proface.api.services.IBankService;
 
 @RestController
 @RequestMapping("api/banks")
-public class BankController extends BaseRestController<Integer, Bank, BankModel, BankMapper, IBankService> {
+public class BankController extends ProfaceController<Integer, Bank, BankModel, BankMapper, IBankService> {
 
 }

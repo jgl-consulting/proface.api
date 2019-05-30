@@ -13,20 +13,20 @@ import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.entities.PurchaseTrace;
 import com.proface.api.entities.Supplier;
-import com.proface.api.repositories.PurchaseDetailRepository;
 import com.proface.api.repositories.PurchaseOrderRepository;
-import com.proface.api.repositories.PurchaseStatusRepository;
+import com.proface.api.services.IPurchaseDetailService;
 import com.proface.api.services.IPurchaseOrderService;
+import com.proface.api.services.IPurchaseStatusService;
 
 @Service
-public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, PurchaseOrder, Integer, String>
+public class PurchaseOrderService extends ProfaceService<PurchaseOrderRepository, PurchaseOrder, Integer, String>
 		implements IPurchaseOrderService {
 
 	@Autowired
-	private PurchaseDetailRepository purchaseDetailRepository;
+	private IPurchaseDetailService purchaseDetailService;
 
 	@Autowired
-	private PurchaseStatusRepository purchaseStatusRepository;
+	private IPurchaseStatusService purchaseStatusService;
 
 	@Override
 	public void save(PurchaseOrder entity) {
@@ -37,7 +37,7 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 			entity.getDetails()
 					.forEach(d -> d.setId(new PurchaseDetailPK(d.getProduct() == null ? 0 : d.getProduct().getId(),
 							persistedEntity == null ? 0 : persistedEntity.getId())));
-			purchaseDetailRepository.saveAll(entity.getDetails());
+			purchaseDetailService.saveAll(entity.getDetails());
 		}
 	}
 
@@ -82,9 +82,9 @@ public class PurchaseOrderService extends BaseService<PurchaseOrderRepository, P
 			trace.setPurchase(purchaseOrder);
 			trace.setStatus(purchaseOrder.getStatus());
 			trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
-			purchaseOrder.setTraces(Arrays.asList());
+			purchaseOrder.setTraces(Arrays.asList(trace));
 		} else {
-			purchaseOrder.setStatus(purchaseStatusRepository.findByNativeId("CR").orElse(null));
+			purchaseOrder.setStatus(purchaseStatusService.findOne("nativeId:CR"));
 		}
 		if (purchaseOrder.getStatus().getNativeId() == "CR" && purchaseOrder.getCreationDate() == null) {
 			purchaseOrder.setCreationDate(LocalDate.now(ZoneId.systemDefault()));

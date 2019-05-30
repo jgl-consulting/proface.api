@@ -1,4 +1,4 @@
-package com.proface.api.security;
+package com.proface.api.security.config;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

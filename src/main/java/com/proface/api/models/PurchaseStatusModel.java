@@ -2,7 +2,7 @@ package com.proface.api.models;
 
 import javax.validation.constraints.NotBlank;
 
-import com.proface.api.validations.ProfaceValidationMessage;
+import com.proface.api.util.ProfaceValidationMessage;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
