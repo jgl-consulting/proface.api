@@ -40,6 +40,9 @@ public class Product {
 
 	@Column(name = "sale_price")
 	private double salePrice;
+	
+	@Column(name = "local_price")
+	private double localPrice;
 
 	@JoinColumn(name = "product_line_id", referencedColumnName = "id")
 	@ManyToOne

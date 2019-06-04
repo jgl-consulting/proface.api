@@ -8,6 +8,7 @@ import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.repositories.PurchaseDetailRepository;
 import com.proface.api.services.IPurchaseDetailService;
 import com.proface.api.services.IPurchaseOrderService;
+import com.proface.api.util.ProfaceCurrencyExchanger;
 
 @Service
 public class PurchaseDetailService
@@ -39,13 +40,15 @@ public class PurchaseDetailService
 	protected void prepareEntity(PurchaseDetail entity) {
 		entity.setPurchasePrice(entity.getQuantity() * entity.getUnitPrice());
 		entity.setFinalPrice(entity.getPurchasePrice() - entity.getDisscount());
+		entity.setLocalPrice(ProfaceCurrencyExchanger.fromCurrencyToCurrency(entity.getPurchase().getCurrency().getId(),
+				"PEN", entity.getFinalPrice()));
 		entity.getPurchase().setTotal(entity.getPurchase().getTotal() + entity.getFinalPrice());
-		purchaseOrderService.save(entity.getPurchase());
+		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
 	}
 
 	@Override
 	protected void setId(PurchaseDetail entity) {
-		if (entity.getId() != null) {
+		if (entity.getId() == null) {
 			entity.setId(new PurchaseDetailPK(entity.getProduct() == null ? 0 : entity.getProduct().getId(),
 					entity.getPurchase() == null ? 0 : entity.getPurchase().getId()));
 		}
@@ -56,7 +59,13 @@ public class PurchaseDetailService
 		double totalVariation = entity.getFinalPrice() - repositoryEntity.getFinalPrice();
 		entity.getPurchase()
 				.setTotal(repositoryEntity.getPurchase().getTotal() + totalVariation - entity.getFinalPrice());
-		purchaseOrderService.save(entity.getPurchase());
+		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
+	}
+
+	@Override
+	protected void resetEntity(PurchaseDetail entity) {
+		entity.getPurchase().setTotal(entity.getPurchase().getTotal() - entity.getFinalPrice());
+		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
 	}
 
 }

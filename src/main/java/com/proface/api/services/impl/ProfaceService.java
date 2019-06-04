@@ -147,7 +147,11 @@ public class ProfaceService<R extends PagingAndSortingRepository<E, ID> & JpaSpe
 	@Override
 	@Transactional
 	public void delete(ID id) {
-		notExisting(id);
+		Optional<E> repositoryEntity = repository.findById(id);
+		if (!repositoryEntity.isPresent()) {
+			super.notExisting();
+		}
+		resetEntity(repositoryEntity.get());
 		repository.deleteById(id);
 	}
 

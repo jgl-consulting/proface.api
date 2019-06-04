@@ -34,6 +34,8 @@ public class PurchaseOrderModel {
 	
 	private double total;
 	
+	private double localTotal;
+	
 	@Valid
 	private PurchaseStatusRefModel status;
 	

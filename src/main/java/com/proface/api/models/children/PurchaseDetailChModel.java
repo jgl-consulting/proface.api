@@ -32,6 +32,8 @@ public class PurchaseDetailChModel {
 	
 	private double finalPrice;
 	
+	private double localPrice;
+	
 	private PurchaseStatusRefModel status;
 	
 }

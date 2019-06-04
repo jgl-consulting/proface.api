@@ -1,19 +1,15 @@
 package com.proface.api.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.PurchaseCost;
 import com.proface.api.repositories.PurchaseCostRepository;
 import com.proface.api.services.IPurchaseCostService;
-import com.proface.api.services.IPurchaseOrderService;
+import com.proface.api.util.ProfaceCurrencyExchanger;
 
 @Service
 public class PurchaseCostService extends ProfaceService<PurchaseCostRepository, PurchaseCost, Integer, Integer>
 		implements IPurchaseCostService {
-
-	@Autowired
-	private IPurchaseOrderService purchaseOrderService;
 
 	@Override
 	public void save(PurchaseCost entity) {
@@ -33,17 +29,9 @@ public class PurchaseCostService extends ProfaceService<PurchaseCostRepository, 
 	}
 
 	@Override
-	protected void compareEntity(PurchaseCost entity, PurchaseCost repositoryEntity) {
-		double totalVariation = entity.getTotalCost() - repositoryEntity.getTotalCost();
-		entity.getPurchase()
-				.setTotal(repositoryEntity.getPurchase().getTotal() + totalVariation - entity.getTotalCost());
-		purchaseOrderService.save(entity.getPurchase());
-	}
-
-	@Override
 	protected void prepareEntity(PurchaseCost entity) {
-		entity.getPurchase().setTotal(entity.getPurchase().getTotal() + entity.getTotalCost());
-		purchaseOrderService.save(entity.getPurchase());
+		entity.setLocalCost(ProfaceCurrencyExchanger.fromCurrencyToCurrency(entity.getCurrency().getId(), "PEN",
+				entity.getTotalCost()));
 	}
 
 }

@@ -2,7 +2,7 @@ package com.proface.api.services.impl;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.entities.PurchaseTrace;
-import com.proface.api.entities.Supplier;
 import com.proface.api.repositories.PurchaseOrderRepository;
 import com.proface.api.services.IPurchaseDetailService;
 import com.proface.api.services.IPurchaseOrderService;
 import com.proface.api.services.IPurchaseStatusService;
+import com.proface.api.util.ProfaceCurrencyExchanger;
 
 @Service
 public class PurchaseOrderService extends ProfaceService<PurchaseOrderRepository, PurchaseOrder, Integer, String>
@@ -63,11 +63,14 @@ public class PurchaseOrderService extends ProfaceService<PurchaseOrderRepository
 		} else {
 			entity.setNativeId(repositoryEntity.getNativeId());
 		}
+		if (entity.getTraces() != null) {
+			entity.getTraces().forEach(t -> t.setPurchase(entity));
+		}
 	}
 
 	@Override
 	protected String getEntityName() {
-		return Supplier.class.getSimpleName();
+		return PurchaseOrder.class.getSimpleName();
 	}
 
 	@Override
@@ -76,18 +79,24 @@ public class PurchaseOrderService extends ProfaceService<PurchaseOrderRepository
 	}
 
 	@Override
-	protected void prepareEntity(PurchaseOrder purchaseOrder) {
-		if (purchaseOrder.getStatus() != null) {
-			PurchaseTrace trace = new PurchaseTrace();
-			trace.setPurchase(purchaseOrder);
-			trace.setStatus(purchaseOrder.getStatus());
-			trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
-			purchaseOrder.setTraces(Arrays.asList(trace));
-		} else {
-			purchaseOrder.setStatus(purchaseStatusService.findOne("nativeId:CR"));
+	protected void prepareEntity(PurchaseOrder entity) {
+		entity.setLocalTotal(ProfaceCurrencyExchanger.fromCurrencyToCurrency(entity.getCurrency().getId(), "PEN",
+				entity.getTotal()));
+		if (entity.getCreationDate() == null) {
+			entity.setCreationDate(LocalDate.now(ZoneId.systemDefault()));
 		}
-		if (purchaseOrder.getStatus().getNativeId() == "CR" && purchaseOrder.getCreationDate() == null) {
-			purchaseOrder.setCreationDate(LocalDate.now(ZoneId.systemDefault()));
+		if (entity.getStatus() == null) {
+			entity.setStatus(purchaseStatusService.findOne("nativeId:CR"));
+		}
+		if (entity.getTraces() == null) {
+			entity.setTraces(new ArrayList<>());
+		}
+		if (entity.getTraces().isEmpty()) {
+			PurchaseTrace trace = new PurchaseTrace();
+			trace.setStatus(entity.getStatus());
+			trace.setStatusDate(entity.getCreationDate());
+			trace.setPurchase(entity);
+			entity.getTraces().add(trace);
 		}
 	}
 

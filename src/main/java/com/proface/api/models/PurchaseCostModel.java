@@ -23,6 +23,8 @@ public class PurchaseCostModel {
 	@PositiveOrZero(message = ProfaceValidationMessage.POSITIVE)
 	private double totalCost;
 	
+	private double localCost;
+	
 	private CurrencyModel currency;
 	
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)

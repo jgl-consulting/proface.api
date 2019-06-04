@@ -28,6 +28,9 @@ public class PurchaseCost {
 	@Column(name = "total_cost")
 	private double totalCost;
 	
+	@Column(name = "local_cost")
+	private double localCost;
+	
 	@JoinColumn(name = "currency_id", referencedColumnName = "id")
 	@ManyToOne
 	private Currency currency;

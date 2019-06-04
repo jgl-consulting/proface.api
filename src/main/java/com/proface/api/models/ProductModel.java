@@ -31,6 +31,8 @@ public class ProductModel {
 	@PositiveOrZero(message = ProfaceValidationMessage.POSITIVE)
 	private double salePrice;
 	
+	private double localPrice;
+	
 	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private ProductLineRefModel line;

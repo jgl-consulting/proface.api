@@ -36,7 +36,7 @@ public class PurchaseDetailController extends
 
 		super.getService().edit(new PurchaseDetailPK(productId, purchaseId), entity);
 
-		return new ResponseEntity<>(model, HttpStatus.OK);
+		return new ResponseEntity<>(super.getMapper().convertToModel(entity), HttpStatus.OK);
 
 	}
 

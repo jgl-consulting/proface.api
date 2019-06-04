@@ -20,6 +20,8 @@ public class ProductRefModel extends ProfaceRefModel {
 	
 	private double salePrice;
 	
+	private double localPrice;
+	
 	private ProductLineModel line;
 	
 }

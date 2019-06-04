@@ -73,4 +73,12 @@ public class ProfaceValidationHelper<E, NID> {
 		
 	}
 	
+	/**
+	 * Resets values from Parent
+	 * @param entity
+	 */
+	protected void resetEntity(E entity) {
+		
+	}
+	
 }

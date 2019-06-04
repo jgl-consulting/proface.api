@@ -48,6 +48,9 @@ public class PurchaseOrder {
 	@Column(name = "total")
 	private double total;
 	
+	@Column(name = "local_total")
+	private double localTotal;	
+	
 	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseCost> costs;
 

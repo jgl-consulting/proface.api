@@ -32,6 +32,8 @@ public class PurchaseDetailModel {
 
 	private double finalPrice;
 	
+	private double localPrice;
+	
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private ReceptionStatusRefModel status;
 

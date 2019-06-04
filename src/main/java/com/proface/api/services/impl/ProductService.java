@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.proface.api.entities.Product;
 import com.proface.api.repositories.ProductRepository;
 import com.proface.api.services.IProductService;
+import com.proface.api.util.ProfaceCurrencyExchanger;
 
 @Service
 public class ProductService extends ProfaceService<ProductRepository, Product, Integer, String>
@@ -45,5 +46,11 @@ public class ProductService extends ProfaceService<ProductRepository, Product, I
 	protected String getEntityName() {
 		return Product.class.getSimpleName();
 	}
-	
+
+	@Override
+	protected void filterEntity(Product entity) {
+		entity.setLocalPrice(ProfaceCurrencyExchanger.fromCurrencyToCurrency(entity.getCurrency().getId(), "PEN",
+				entity.getSalePrice()));
+	}
+
 }
