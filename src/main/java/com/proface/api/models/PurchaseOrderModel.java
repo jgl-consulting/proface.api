@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import com.proface.api.models.children.PurchaseDetailChModel;
 import com.proface.api.models.references.PurchaseStatusRefModel;
@@ -22,6 +23,7 @@ public class PurchaseOrderModel {
 	private int id;
 
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	@Size(max = 20, message = ProfaceValidationMessage.MAX_SIZE)
 	private String nativeId;
 
 	@PastOrPresent(message = ProfaceValidationMessage.PAST_PRESENT)

@@ -2,6 +2,8 @@ package com.proface.api.models;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import com.proface.api.models.children.SupplierAccountChModel;
 import com.proface.api.models.children.SupplierContactChModel;
 import com.proface.api.models.references.CountryRefModel;
@@ -21,11 +23,14 @@ public class SupplierModel {
 	private int id;
 	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	@Size(max = 100, message = ProfaceValidationMessage.MAX_SIZE)
 	private String name;
 	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	@Size(max = 20, message = ProfaceValidationMessage.MAX_SIZE)
 	private String nativeId;
-	
+
+	@Size(max = 255, message = ProfaceValidationMessage.MAX_SIZE)
 	private String address;
 	
 	@Valid

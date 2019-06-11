@@ -23,4 +23,8 @@ public abstract class ProfaceValidationMessage {
 	
 	public final static String FUTURE_PRESENT = "El campo %s de la entidad %s debe ser una fecha mayor o igual al día actual.";
 	
+	public final static String MIN_SIZE = "El campo %s de la entidad %s es muy corto.";
+	
+	public final static String MAX_SIZE = "El campo %s de la entidad %s es muy grande.";
+	
 }

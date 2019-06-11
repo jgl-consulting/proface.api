@@ -2,6 +2,7 @@ package com.proface.api.models;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import com.proface.api.models.references.ProductRefModel;
 import com.proface.api.models.references.PurchaseOrderRefModel;
@@ -18,7 +19,8 @@ public class PurchaseDetailModel {
 
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private ProductRefModel product;
-	
+
+	@Size(max = 20, message = ProfaceValidationMessage.MAX_SIZE)
 	private String nativeId;
 
 	@Positive(message = ProfaceValidationMessage.POSITIVE)

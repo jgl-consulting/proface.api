@@ -8,6 +8,7 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import com.proface.api.models.references.BatchTypeRefModel;
 import com.proface.api.models.references.PurchaseOrderRefModel;
@@ -23,6 +24,7 @@ public class BatchModel {
 	private int id;
 
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	@Size(max = 20, message = ProfaceValidationMessage.MAX_SIZE)
 	private String nativeId;
 
 	@PastOrPresent(message = ProfaceValidationMessage.PAST_PRESENT)

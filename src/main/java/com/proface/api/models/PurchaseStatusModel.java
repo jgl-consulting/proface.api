@@ -1,6 +1,7 @@
 package com.proface.api.models;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.proface.api.util.ProfaceValidationMessage;
 
@@ -14,13 +15,17 @@ public class PurchaseStatusModel {
 	private int id;
 	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	@Size(max = 2, message = ProfaceValidationMessage.MAX_SIZE)
 	private String nativeId;
 	
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
+	@Size(max = 100, message = ProfaceValidationMessage.MAX_SIZE)
 	private String description;
-	
+
+	@Size(max = 20, message = ProfaceValidationMessage.MAX_SIZE)
 	private String color;
-	
+
+	@Size(max = 20, message = ProfaceValidationMessage.MAX_SIZE)
 	private String icon;
 	
 }
