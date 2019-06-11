@@ -73,7 +73,7 @@ public class PurchaseOrderService extends ProfaceService<PurchaseOrderRepository
 		} else {
 			entity.setNativeId(repositoryEntity.getNativeId());
 		}
-		if (repositoryEntity.getStatus().getNativeId() != entity.getStatus().getNativeId()) {
+		if (!repositoryEntity.getStatus().getNativeId().equalsIgnoreCase(entity.getStatus().getNativeId())) {
 			PurchaseTrace trace = new PurchaseTrace();
 			trace.setStatus(entity.getStatus());
 			trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
