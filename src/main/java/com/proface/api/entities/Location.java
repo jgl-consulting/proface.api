@@ -14,19 +14,22 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "product_line")
+@Table(name = "location")
 @Data
-public class ProductLine {
+public class Location {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "native_id")
+	private String nativeId;
 
-	@OneToMany(mappedBy = "line", fetch = FetchType.LAZY)
-	private List<Product> products;
-	
+	@Column(name = "description")
+	private String description;
+
+	@OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+	private List<Unit> units;
+
 }

@@ -33,5 +33,13 @@ security:
     scope-read: read
     scope-write: write
     resource-ids: ${PROFACE_RESOURCE_IDS}
-        
-        
+logging:
+  file: logs/ProfaceLog.log
+  level:
+    root: INFO
+    com:
+      proface:
+        api: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %p[%t] %c{0}.%M : %m%n%ex"
+    file: "%d{yyyy-MM-dd HH:mm:ss} %p[%t] %c{0}.%M : %m%n%ex"

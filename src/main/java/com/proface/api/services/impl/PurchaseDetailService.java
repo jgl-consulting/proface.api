@@ -8,6 +8,7 @@ import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.repositories.PurchaseDetailRepository;
 import com.proface.api.services.IPurchaseDetailService;
 import com.proface.api.services.IPurchaseOrderService;
+import com.proface.api.services.IReceptionStatusService;
 import com.proface.api.util.ProfaceCurrencyExchanger;
 
 @Service
@@ -17,6 +18,9 @@ public class PurchaseDetailService
 
 	@Autowired
 	private IPurchaseOrderService purchaseOrderService;
+	
+	@Autowired
+	private IReceptionStatusService receptionStatusService;
 
 	@Override
 	public void save(PurchaseDetail entity) {
@@ -38,12 +42,22 @@ public class PurchaseDetailService
 
 	@Override
 	protected void prepareEntity(PurchaseDetail entity) {
-		entity.setPurchasePrice(entity.getQuantity() * entity.getUnitPrice());
-		entity.setFinalPrice(entity.getPurchasePrice() - entity.getDisscount());
-		entity.setLocalPrice(ProfaceCurrencyExchanger.fromCurrencyToCurrency(entity.getPurchase().getCurrency().getId(),
-				"PEN", entity.getFinalPrice()));
-		entity.getPurchase().setTotal(entity.getPurchase().getTotal() + entity.getFinalPrice());
-		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
+		if(entity.getStatus() == null) {
+			entity.setStatus(receptionStatusService.findOne("nativeId:I"));
+		}
+		if (entity.getPurchase() != null) {
+			if (entity.getPurchase().getStatus() != null) {
+				if (!entity.getPurchase().getStatus().getNativeId().equals("CR")) {
+					entity.setPurchasePrice(entity.getQuantity() * entity.getUnitPrice());
+					entity.setFinalPrice(entity.getPurchasePrice() - entity.getDisscount());
+					entity.setLocalPrice(ProfaceCurrencyExchanger.fromCurrencyToCurrency(
+							entity.getPurchase().getCurrency().getId(), "PEN", entity.getFinalPrice()));
+				}
+			}
+			entity.getPurchase().setTotal(entity.getPurchase().getTotal() + entity.getFinalPrice());
+			entity.getPurchase().setDetails(null);
+			purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
+		}
 	}
 
 	@Override

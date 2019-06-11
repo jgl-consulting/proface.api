@@ -28,6 +28,8 @@ public class PurchaseOrderRefModel extends ProfaceRefModel {
 	
 	private double localTotal;
 	
+	private double localCost;
+	
 	private List<PurchaseTraceModel> traces;
 	
 }

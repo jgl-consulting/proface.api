@@ -3,7 +3,6 @@ package com.proface.api.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +28,7 @@ public class PurchaseOrder {
 
 	@Column(name = "native_id")
 	private String nativeId;
-	
+
 	@Column(name = "creation_date")
 	private LocalDate creationDate;
 
@@ -40,17 +39,20 @@ public class PurchaseOrder {
 	@JoinColumn(name = "supplier_id", referencedColumnName = "id")
 	@ManyToOne
 	private Supplier supplier;
-	
+
 	@JoinColumn(name = "currency_id", referencedColumnName = "id")
 	@ManyToOne
 	private Currency currency;
 
 	@Column(name = "total")
 	private double total;
-	
+
 	@Column(name = "local_total")
-	private double localTotal;	
-	
+	private double localTotal;
+
+	@Column(name = "localCost")
+	private double localCost;
+
 	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseCost> costs;
 
@@ -59,7 +61,10 @@ public class PurchaseOrder {
 
 	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseInvoice> invoices;
-	
-	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+
+	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<PurchaseTrace> traces;
+
+	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
+	private List<Batch> batches;
 }

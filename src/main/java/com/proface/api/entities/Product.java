@@ -34,6 +34,12 @@ public class Product {
 	@Column(name = "native_id")
 	private String nativeId;
 
+	@Column(name = "total_stock")
+	private int totalStock;
+
+	@Column(name = "avaliable_stock")
+	private int avaliableStock;
+	
 	@JoinColumn(name = "currency_id", referencedColumnName = "id")
 	@ManyToOne
 	private Currency currency;
@@ -47,7 +53,7 @@ public class Product {
 	@JoinColumn(name = "product_line_id", referencedColumnName = "id")
 	@ManyToOne
 	private ProductLine line;
-
+	
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	private List<PurchaseDetail> details;
 

@@ -4,12 +4,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.proface.api.entities.PurchaseOrder;
+import com.proface.api.entities.Unit;
 
 @Repository
-public interface PurchaseOrderRepository
-		extends PagingAndSortingRepository<PurchaseOrder, Integer>, JpaSpecificationExecutor<PurchaseOrder> {
+public interface UnitRepository extends PagingAndSortingRepository<Unit, Integer>, JpaSpecificationExecutor<Unit> {
 
 	boolean existsByNativeId(String nativeId);
-
 }

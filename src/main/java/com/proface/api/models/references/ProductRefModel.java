@@ -22,6 +22,10 @@ public class ProductRefModel extends ProfaceRefModel {
 	
 	private double localPrice;
 	
+	private int totalStock;
+	
+	private int avaliableStock;
+	
 	private ProductLineModel line;
 	
 }

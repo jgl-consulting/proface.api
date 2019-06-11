@@ -1,32 +1,34 @@
 package com.proface.api.entities;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "product_line")
+@Table(name = "unit_status")
 @Data
-public class ProductLine {
+public class UnitStatus {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name = "native_id")
+	private String nativeId;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "description")
+	private String description;
 
-	@OneToMany(mappedBy = "line", fetch = FetchType.LAZY)
-	private List<Product> products;
+	@Column(name = "color")
+	private String color;
+	
+	@Column(name = "icon")
+	private String icon;
 	
 }

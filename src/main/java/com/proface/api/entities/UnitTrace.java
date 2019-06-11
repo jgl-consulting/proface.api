@@ -1,32 +1,37 @@
 package com.proface.api.entities;
 
-import java.util.List;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "product_line")
+@Table(name = "unit_trace")
 @Data
-public class ProductLine {
+public class UnitTrace {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "name")
-	private String name;
-
-	@OneToMany(mappedBy = "line", fetch = FetchType.LAZY)
-	private List<Product> products;
+	@Column(name = "status_date")
+	private LocalDate statusDate;
+	
+	@JoinColumn(name = "unit_id")
+	@ManyToOne
+	private Unit unit;
+	
+	@JoinColumn(name = "status_id")
+	@ManyToOne
+	private UnitStatus status;
 	
 }

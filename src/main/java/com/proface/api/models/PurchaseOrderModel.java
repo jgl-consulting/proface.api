@@ -20,31 +20,35 @@ import lombok.NoArgsConstructor;
 public class PurchaseOrderModel {
 
 	private int id;
-	
+
 	@NotBlank(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private String nativeId;
-	
+
 	@PastOrPresent(message = ProfaceValidationMessage.PAST_PRESENT)
 	private LocalDate creationDate;
-		
+
 	@Valid
 	private SupplierRefModel supplier;
-	
+
 	private CurrencyModel currency;
-	
+
 	private double total;
-	
+
 	private double localTotal;
-	
+
+	private double localCost;
+
 	@Valid
 	private PurchaseStatusRefModel status;
-	
+
 	private List<@Valid PurchaseDetailChModel> details;
-	
+
 	private List<PurchaseCostModel> costs;
 
 	private List<PurchaseInvoiceModel> invoices;
-	
-	private List<PurchaseTraceModel> traces;	
+
+	private List<PurchaseTraceModel> traces;
+
+	private List<BatchModel> batches;
 	
 }
