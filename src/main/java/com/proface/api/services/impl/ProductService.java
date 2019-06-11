@@ -49,8 +49,10 @@ public class ProductService extends ProfaceService<ProductRepository, Product, I
 
 	@Override
 	protected void filterEntity(Product entity) {
-		entity.setLocalPrice(Math.round((ProfaceCurrencyExchanger.fromCurrencyToCurrency(entity.getCurrency().getId(),
-				"PEN", entity.getSalePrice())) * 100) / 100d);
+		if (entity.getCurrency() != null) {
+			entity.setLocalPrice(Math.round((ProfaceCurrencyExchanger
+					.fromCurrencyToCurrency(entity.getCurrency().getId(), "PEN", entity.getSalePrice())) * 100) / 100d);
+		}
 	}
 
 }
