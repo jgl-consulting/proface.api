@@ -1,7 +1,5 @@
 package com.proface.api.models;
 
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -46,7 +44,5 @@ public class ProductModel {
 	@Valid
 	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private ProductLineRefModel line;
-	
-	private List<UnitModel> units;
 	
 }

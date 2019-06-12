@@ -2,7 +2,6 @@ package com.proface.api.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +44,7 @@ public class Unit {
 	@JoinColumn(name = "status_id")
 	private UnitStatus status;
 
-	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "unit", fetch = FetchType.LAZY)
 	private List<UnitTrace> traces;
 
 }

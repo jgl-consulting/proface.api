@@ -2,7 +2,6 @@ package com.proface.api.services.impl;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import com.proface.api.repositories.UnitRepository;
 import com.proface.api.services.IProductService;
 import com.proface.api.services.IUnitService;
 import com.proface.api.services.IUnitStatusService;
+import com.proface.api.services.IUnitTraceService;
 
 @Service
 public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, String> implements IUnitService {
@@ -23,10 +23,24 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 	@Autowired
 	private IUnitStatusService unitStatusService;
 
+	@Autowired
+	private IUnitTraceService unitTraceService;
+
 	@Override
 	public void save(Unit entity) {
 		entity.setId(0);
 		super.save(entity);
+		if (entity.getTraces() == null) {
+			UnitTrace trace = new UnitTrace();
+			trace.setStatus(entity.getStatus());
+			if (entity.getBatch() != null) {
+				trace.setStatusDate(entity.getBatch().getEntryDate());
+			} else {
+				trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
+			}
+			trace.setUnit(entity);
+			unitTraceService.save(trace);
+		}
 	}
 
 	@Override
@@ -56,8 +70,14 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 		} else {
 			entity.setNativeId(repositoryEntity.getNativeId());
 		}
-		if (entity.getTraces() != null) {
-			entity.getTraces().forEach(t -> t.setUnit(entity));
+		if (entity.getStatus() != null) {
+			if (repositoryEntity.getStatus().getNativeId().equalsIgnoreCase(entity.getStatus().getNativeId())) {
+				UnitTrace trace = new UnitTrace();
+				trace.setStatus(entity.getStatus());
+				trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
+				trace.setUnit(entity);
+				unitTraceService.save(trace);
+			}
 		}
 	}
 
@@ -65,16 +85,6 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 	protected void prepareEntity(Unit entity) {
 		if (entity.getStatus() == null) {
 			entity.setStatus(unitStatusService.findOne("nativeId:D"));
-		}
-		if (entity.getTraces() == null) {
-			entity.setTraces(new ArrayList<>());
-		}
-		if (entity.getTraces().isEmpty()) {
-			UnitTrace trace = new UnitTrace();
-			trace.setStatus(entity.getStatus());
-			trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
-			trace.setUnit(entity);
-			entity.getTraces().add(trace);
 		}
 		switch (entity.getStatus().getNativeId()) {
 		case "D":
