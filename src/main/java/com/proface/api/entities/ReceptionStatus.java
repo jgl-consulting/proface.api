@@ -34,7 +34,10 @@ public class ReceptionStatus {
 	
 	@Column(name = "icon")
 	private String icon;
-
+	
+	@Column(name = "status_order")
+	private int order;
+	
 	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
 	private List<PurchaseDetail> purchaseDetails;
 

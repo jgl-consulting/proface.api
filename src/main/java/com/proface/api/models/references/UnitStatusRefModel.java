@@ -15,4 +15,6 @@ public class UnitStatusRefModel extends ProfaceRefModel {
 
 	private String icon;
 	
+	private int order;
+	
 }

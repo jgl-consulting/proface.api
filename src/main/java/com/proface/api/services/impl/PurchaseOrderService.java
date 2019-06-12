@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.proface.api.entities.PurchaseDetailPK;
 import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.entities.PurchaseTrace;
+import com.proface.api.exceptions.customs.ProfaceInvalidStatusException;
 import com.proface.api.repositories.PurchaseOrderRepository;
 import com.proface.api.services.IPurchaseDetailService;
 import com.proface.api.services.IPurchaseOrderService;
@@ -74,6 +75,11 @@ public class PurchaseOrderService extends ProfaceService<PurchaseOrderRepository
 			entity.setNativeId(repositoryEntity.getNativeId());
 		}
 		if (entity.getStatus() != null) {
+			if (entity.getStatus().getOrder() < repositoryEntity.getStatus().getOrder()) {
+				throw new ProfaceInvalidStatusException(
+						String.format("No se puede actualizar del estado %s al estado %s",
+								repositoryEntity.getStatus().getDescription(), entity.getStatus().getDescription()));
+			}
 			if (!repositoryEntity.getStatus().getNativeId().equalsIgnoreCase(entity.getStatus().getNativeId())) {
 				PurchaseTrace trace = new PurchaseTrace();
 				trace.setStatus(entity.getStatus());

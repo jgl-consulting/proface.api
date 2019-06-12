@@ -15,4 +15,6 @@ public class ReceptionStatusRefModel extends ProfaceRefModel {
 	
 	private String icon;
 	
+	private int order;
+	
 }

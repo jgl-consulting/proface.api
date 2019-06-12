@@ -31,4 +31,7 @@ public class UnitStatus {
 	@Column(name = "icon")
 	private String icon;
 	
+	@Column(name = "status_order")
+	private int order;
+	
 }

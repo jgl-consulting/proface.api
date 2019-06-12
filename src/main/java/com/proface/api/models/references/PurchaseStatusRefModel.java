@@ -15,4 +15,6 @@ public class PurchaseStatusRefModel extends ProfaceRefModel {
 	
 	private String icon;
 	
+	private int order;
+	
 }

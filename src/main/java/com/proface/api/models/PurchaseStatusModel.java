@@ -1,6 +1,7 @@
 package com.proface.api.models;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.proface.api.util.ProfaceValidationMessage;
@@ -27,5 +28,8 @@ public class PurchaseStatusModel {
 
 	@Size(max = 20, message = ProfaceValidationMessage.MAX_SIZE)
 	private String icon;
+	
+	@Positive(message = ProfaceValidationMessage.POSITIVE)
+	private int order;
 	
 }

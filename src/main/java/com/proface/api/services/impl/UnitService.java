@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.Unit;
 import com.proface.api.entities.UnitTrace;
+import com.proface.api.exceptions.customs.ProfaceInvalidStatusException;
 import com.proface.api.repositories.UnitRepository;
 import com.proface.api.services.IProductService;
 import com.proface.api.services.IUnitService;
@@ -71,6 +72,11 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 			entity.setNativeId(repositoryEntity.getNativeId());
 		}
 		if (entity.getStatus() != null) {
+			if (entity.getStatus().getOrder() < repositoryEntity.getStatus().getOrder()) {
+				throw new ProfaceInvalidStatusException(
+						String.format("No se puede actualizar del estado %s al estado %s",
+								repositoryEntity.getStatus().getDescription(), entity.getStatus().getDescription()));
+			}
 			if (repositoryEntity.getStatus().getNativeId().equalsIgnoreCase(entity.getStatus().getNativeId())) {
 				UnitTrace trace = new UnitTrace();
 				trace.setStatus(entity.getStatus());

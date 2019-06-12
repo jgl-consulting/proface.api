@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.PurchaseDetail;
 import com.proface.api.entities.PurchaseDetailPK;
+import com.proface.api.exceptions.customs.ProfaceInvalidStatusException;
 import com.proface.api.repositories.PurchaseDetailRepository;
 import com.proface.api.services.IPurchaseDetailService;
 import com.proface.api.services.IPurchaseOrderService;
@@ -18,7 +19,7 @@ public class PurchaseDetailService
 
 	@Autowired
 	private IPurchaseOrderService purchaseOrderService;
-	
+
 	@Autowired
 	private IReceptionStatusService receptionStatusService;
 
@@ -42,7 +43,7 @@ public class PurchaseDetailService
 
 	@Override
 	protected void prepareEntity(PurchaseDetail entity) {
-		if(entity.getStatus() == null) {
+		if (entity.getStatus() == null) {
 			entity.setStatus(receptionStatusService.findOne("nativeId:I"));
 		}
 		if (entity.getPurchase() != null) {
@@ -73,6 +74,13 @@ public class PurchaseDetailService
 		double totalVariation = entity.getFinalPrice() - repositoryEntity.getFinalPrice();
 		entity.getPurchase()
 				.setTotal(repositoryEntity.getPurchase().getTotal() + totalVariation - entity.getFinalPrice());
+		if (entity.getStatus() != null) {
+			if (entity.getStatus().getOrder() < repositoryEntity.getStatus().getOrder()) {
+				throw new ProfaceInvalidStatusException(
+						String.format("No se puede actualizar del estado %s al estado %s",
+								repositoryEntity.getStatus().getDescription(), entity.getStatus().getDescription()));
+			}
+		}
 		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
 	}
 
