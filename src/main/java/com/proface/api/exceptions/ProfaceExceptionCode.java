@@ -27,6 +27,10 @@ public enum ProfaceExceptionCode {
 	 */
 	SQL_VALIDATION_ERROR, 
 	/**
+	 * Exception Code for Errors in Document Handling
+	 */
+	DOCUMENT_ERROR,
+	/**
 	 * Exception Code for Errors uncontrolled
 	 */
 	GENERAL_ERROR

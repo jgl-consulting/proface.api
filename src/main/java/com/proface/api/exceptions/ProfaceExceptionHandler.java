@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.itextpdf.text.DocumentException;
 import com.proface.api.exceptions.customs.ProfaceDuplicatedIdException;
 import com.proface.api.exceptions.customs.ProfaceNotExistingException;
 
@@ -26,8 +27,8 @@ import com.proface.api.exceptions.customs.ProfaceNotExistingException;
 public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
-	 * Handles Validation Errors in a Model
-	 * Level:	Controller
+	 * Handles Validation Errors in a Model Level: Controller
+	 * 
 	 * @return 400
 	 */
 	@Override
@@ -39,8 +40,8 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handles Duplication Errors in an Entity
-	 * Level: 	Service
+	 * Handles Duplication Errors in an Entity Level: Service
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return 400
@@ -54,8 +55,8 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handles Not Existing Entity Errors
-	 * Level:	Service
+	 * Handles Not Existing Entity Errors Level: Service
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return 404
@@ -69,8 +70,8 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handles SQL Errors
-	 * Level:	Repository
+	 * Handles SQL Errors Level: Repository
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return 500
@@ -83,8 +84,8 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handles Constraint Errors
-	 * Level:	Repository
+	 * Handles Constraint Errors Level: Repository
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return 500
@@ -97,8 +98,8 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handles SQL Validation Errors
-	 * Level:	Repository
+	 * Handles SQL Validation Errors Level: Repository
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return 500
@@ -111,9 +112,17 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 				new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
 	}
 
+	@ExceptionHandler(value = { DocumentException.class })
+	public ResponseEntity<?> handleDocumentException(DocumentException ex, WebRequest request) {
+		return handleExceptionInternal(ex,
+				profaceEntity(ex, ProfaceExceptionCode.DOCUMENT_ERROR,
+						"Ha ocurrido un error en la validación de base de datos."),
+				new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+
 	/**
-	 * Handles Uncontrolled Errors
-	 * Level:	Any
+	 * Handles Uncontrolled Errors Level: Any
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return 500
@@ -127,6 +136,7 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * Returns ProfaceExceptionEntity from Exception
+	 * 
 	 * @param ex
 	 * @param code
 	 * @param message
@@ -138,6 +148,7 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * Returns ProfaceExceptionEntity from SQLException
+	 * 
 	 * @param ex
 	 * @param code
 	 * @param message
@@ -151,6 +162,7 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * Returns ProfaceExceptionEntity from RuntimeException
+	 * 
 	 * @param ex
 	 * @param code
 	 * @param message
@@ -162,6 +174,7 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * Returns ProfaceExceptionEntity from MethodArgumentNotValidException
+	 * 
 	 * @param ex
 	 * @param code
 	 * @param message
@@ -181,6 +194,7 @@ public class ProfaceExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * Creates and returns ProfaceExceptionEntity from ProfaceSingleException
+	 * 
 	 * @param code
 	 * @param message
 	 * @param ex
