@@ -20,6 +20,16 @@ public class ProfaceLogger {
 	public void logControllerCalling(JoinPoint point) {
 		log("CONTROLLER", "Calling", point.getSignature().toString());
 	}
+	
+	@Before("execution(public * com.proface.api.controllers.ProfaceController.*(..)) && args(filter,..)")
+	public void logFilterControllerCalling(JoinPoint point, String filter) {
+		log("CONTROLLER", "Filter", filter);
+	}
+
+	@Before("execution(public * com.proface.api.controllers.ProfaceController.*(..)) && args(id,..)")
+	public void logIdControllerCalling(JoinPoint point, Integer id) {
+		log("CONTROLLER", "ID", String.valueOf(id));
+	}
 
 	@Before("execution(public * com.proface.api.services.impl.ProfaceService.*(..))")
 	public void logServiceCalling(JoinPoint point) {

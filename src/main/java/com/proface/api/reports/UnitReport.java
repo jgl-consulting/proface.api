@@ -31,12 +31,12 @@ public class UnitReport extends ProfaceReport<Unit> {
 
 			cell = new PdfPCell(new Phrase(e.getNativeId()));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			table.addCell(cell);
 
 			cell = new PdfPCell(new Phrase(e.getProduct() != null ? e.getProduct().getName() : "Sin producto"));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			table.addCell(cell);
 
 			cell = new PdfPCell(
@@ -48,13 +48,13 @@ public class UnitReport extends ProfaceReport<Unit> {
 			cell = new PdfPCell(
 					new Phrase(e.getBatch() != null ? formatLocalDate(e.getBatch().getEntryDate()) : "Sin fecha"));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			table.addCell(cell);
 
 			cell = new PdfPCell(
 					new Phrase(e.getBatch() != null ? formatLocalDate(e.getBatch().getExpirationDate()) : "Sin fecha"));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			table.addCell(cell);
 
 			cell = new PdfPCell(new Phrase(e.getBatch() != null ? e.getBatch().getNativeId() : "Sin empaque"));

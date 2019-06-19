@@ -29,7 +29,7 @@ public class SupplierReport extends ProfaceReport<Supplier> {
 
 			cell = new PdfPCell(new Phrase(e.getNativeId()));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			table.addCell(cell);
 
 			cell = new PdfPCell(new Phrase(e.getName()));

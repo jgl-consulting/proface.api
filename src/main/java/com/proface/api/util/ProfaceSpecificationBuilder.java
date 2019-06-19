@@ -17,7 +17,7 @@ public class ProfaceSpecificationBuilder<E> {
 	{
 		ProfaceEntityBuilder<E> builder = new ProfaceEntityBuilder<>();
 		Matcher matcher = Pattern.compile("(\\W?\\w.+?)(" + Joiner.on("|").join(ProfaceSearchOperation.SIMPLE_OPERATION_SET)
-				+ ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),").matcher(search + ",");
+				+ ")(\\p{Punct}?)(.+?)(\\p{Punct}?),").matcher(search + ",");
 		while (matcher.find()) {
 			builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
 		}

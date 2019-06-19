@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,14 +23,14 @@ public class UnitController extends ProfaceController<Integer, Unit, UnitModel, 
 	@Autowired
 	private UnitReport reportGenerator;	
 	
-	@GetMapping(value = "reports", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<?> unitReport() {
+	@Override
+	public ResponseEntity<?> getReport(String filter) {
 
-		List<Unit> units = super.getService().findAll();
+		List<Unit> units = super.getService().findAll(filter);
 
-		ByteArrayInputStream stream = reportGenerator.generateProductReport(units);
+		ByteArrayInputStream stream = reportGenerator.generateReport(units);
 
-		return ResponseEntity.ok().header("Content-Disposition", "inline; filename=unit_report.pdf")
+		return ResponseEntity.ok().header("Content-Disposition", "inline; filename=units_report.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(stream));
 
 	}

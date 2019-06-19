@@ -18,7 +18,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class ProfaceReport<E> {
 
-	public ByteArrayInputStream generateProductReport(List<E> entities) {
+	public ByteArrayInputStream generateReport(List<E> entities) {
 
 		Document document = new Document(PageSize.A3.rotate());
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -31,7 +31,7 @@ public class ProfaceReport<E> {
 			
 			Font font = FontFactory.getFont(FontFactory.COURIER_BOLD, 16);
 			Chunk chunk = new Chunk(getTableName(), font);
-			
+						
 			/**
 			 * Table
 			 */
@@ -63,9 +63,10 @@ public class ProfaceReport<E> {
 			 */
 			fillCellsValues(entities, table);
 			
-			PdfWriter.getInstance(document, out);
+			PdfWriter.getInstance(document, out).setInitialLeading(20);
             document.open();
             document.addTitle(getTitle());
+            document.addAuthor("Proface");
             document.add(chunk);
             document.add(table);
             
@@ -80,6 +81,25 @@ public class ProfaceReport<E> {
         return new ByteArrayInputStream(out.toByteArray());
 	}
 
+	public ByteArrayInputStream generateReport(E entity) {
+		Document document = new Document(PageSize.A3.rotate());
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try {
+			PdfWriter.getInstance(document, out).setInitialLeading(20);
+            document.open();
+            document.addTitle(getTitle());
+            document.addAuthor("Proface");
+		} catch (DocumentException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			if (document != null && document.isOpen()) {
+				document.close();
+			}
+		}
+
+        return new ByteArrayInputStream(out.toByteArray());
+	}
+	
 	protected String getTitle() {
 		return "Entidades";
 	}

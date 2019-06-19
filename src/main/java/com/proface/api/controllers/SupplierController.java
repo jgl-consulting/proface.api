@@ -26,14 +26,14 @@ public class SupplierController
 	@Autowired
 	private SupplierReport reportGenerator;
 	
-	@GetMapping(value = "reports", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<?> supplierReport() {
+	@Override
+	public ResponseEntity<?> getReport(String filter) {
 
-		List<Supplier> suppliers = super.getService().findAll();
+		List<Supplier> suppliers = super.getService().findAll(filter);
 
-		ByteArrayInputStream stream = reportGenerator.generateProductReport(suppliers);
+		ByteArrayInputStream stream = reportGenerator.generateReport(suppliers);
 
-		return ResponseEntity.ok().header("Content-Disposition", "inline; filename=supplier_report.pdf")
+		return ResponseEntity.ok().header("Content-Disposition", "inline; filename=suppliers_report.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(stream));
 
 	}

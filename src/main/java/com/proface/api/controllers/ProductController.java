@@ -25,14 +25,14 @@ public class ProductController
 	@Autowired
 	private ProductReport reportGenerator;
 	
-	@GetMapping(value = "reports", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<?> productReport() {
+	@Override
+	public ResponseEntity<?> getReport(String filter) {
 
-		List<Product> products = super.getService().findAll();
+		List<Product> products = super.getService().findAll(filter);
 
-		ByteArrayInputStream stream = reportGenerator.generateProductReport(products);
+		ByteArrayInputStream stream = reportGenerator.generateReport(products);
 
-		return ResponseEntity.ok().header("Content-Disposition", "inline; filename=product_report.pdf")
+		return ResponseEntity.ok().header("Content-Disposition", "inline; filename=products_report.pdf")
 				.contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(stream));
 
 	}
