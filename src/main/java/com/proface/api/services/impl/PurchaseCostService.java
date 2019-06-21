@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.PurchaseCost;
+import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.repositories.PurchaseCostRepository;
 import com.proface.api.services.IPurchaseCostService;
 import com.proface.api.services.IPurchaseOrderService;
@@ -37,8 +38,11 @@ public class PurchaseCostService extends ProfaceService<PurchaseCostRepository, 
 	protected void prepareEntity(PurchaseCost entity) {
 		entity.setLocalCost(ProfaceCurrencyExchanger.fromCurrencyToCurrency(entity.getCurrency().getId(), "PEN",
 				entity.getTotalCost()));
-		entity.getPurchase().setLocalCost(entity.getPurchase().getLocalCost() + entity.getLocalCost());
-		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
+		if (entity.getPurchase() != null) {
+			PurchaseOrder purchase = purchaseOrderService.findOne(entity.getPurchase().getId());
+			purchase.setLocalCost(purchase.getLocalCost() + entity.getLocalCost());
+			purchaseOrderService.edit(purchase.getId(), purchase);
+		}
 	}
 
 	@Override
@@ -51,8 +55,11 @@ public class PurchaseCostService extends ProfaceService<PurchaseCostRepository, 
 
 	@Override
 	protected void resetEntity(PurchaseCost entity) {
-		entity.getPurchase().setLocalCost(entity.getPurchase().getLocalCost() - entity.getLocalCost());
-		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
+		if (entity.getPurchase() != null) {
+			PurchaseOrder purchase = purchaseOrderService.findOne(entity.getPurchase().getId());
+			purchase.setLocalCost(purchase.getLocalCost() - entity.getLocalCost());
+			purchaseOrderService.edit(purchase.getId(), purchase);
+		}
 	}
 
 }

@@ -80,7 +80,7 @@ public class PurchaseOrderService extends ProfaceService<PurchaseOrderRepository
 						String.format("No se puede actualizar del estado %s al estado %s",
 								repositoryEntity.getStatus().getDescription(), entity.getStatus().getDescription()));
 			}
-			if (!repositoryEntity.getStatus().getNativeId().equalsIgnoreCase(entity.getStatus().getNativeId())) {
+			if (repositoryEntity.getStatus().getId() != entity.getStatus().getId()) {
 				PurchaseTrace trace = new PurchaseTrace();
 				trace.setStatus(entity.getStatus());
 				trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));

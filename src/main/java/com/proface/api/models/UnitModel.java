@@ -37,8 +37,6 @@ public class UnitModel {
 	@Valid
 	private BatchRefModel batch;
 
-	@NotNull
-	@Valid
 	private UnitStatusRefModel status;
 	
 	private List<UnitTraceModel> traces;

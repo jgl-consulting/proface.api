@@ -6,9 +6,10 @@ import java.time.ZoneId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proface.api.entities.Product;
 import com.proface.api.entities.Unit;
+import com.proface.api.entities.UnitStatus;
 import com.proface.api.entities.UnitTrace;
-import com.proface.api.exceptions.customs.ProfaceInvalidStatusException;
 import com.proface.api.repositories.UnitRepository;
 import com.proface.api.services.IProductService;
 import com.proface.api.services.IUnitService;
@@ -31,6 +32,12 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 	public void save(Unit entity) {
 		entity.setId(0);
 		super.save(entity);
+		if (entity.getProduct() != null) {
+			Product product = productService.findOne(entity.getProduct().getId());
+			product.setTotalStock(product.getTotalStock() + 1);
+			product.setAvaliableStock(product.getAvaliableStock() + 1);
+			productService.edit(product.getId(), product);
+		}
 		if (entity.getTraces() == null) {
 			UnitTrace trace = new UnitTrace();
 			trace.setStatus(entity.getStatus());
@@ -72,17 +79,37 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 			entity.setNativeId(repositoryEntity.getNativeId());
 		}
 		if (entity.getStatus() != null) {
-			if (entity.getStatus().getOrder() < repositoryEntity.getStatus().getOrder()) {
-				throw new ProfaceInvalidStatusException(
-						String.format("No se puede actualizar del estado %s al estado %s",
-								repositoryEntity.getStatus().getDescription(), entity.getStatus().getDescription()));
-			}
-			if (repositoryEntity.getStatus().getNativeId().equalsIgnoreCase(entity.getStatus().getNativeId())) {
+			if (repositoryEntity.getStatus().getId() == entity.getStatus().getId()) {
 				UnitTrace trace = new UnitTrace();
 				trace.setStatus(entity.getStatus());
 				trace.setStatusDate(LocalDate.now(ZoneId.systemDefault()));
 				trace.setUnit(entity);
 				unitTraceService.save(trace);
+			}
+		}
+		if (entity.getProduct() != null) {
+			if (repositoryEntity.getProduct().getId() != entity.getProduct().getId()) {
+				Product product = repositoryEntity.getProduct();
+				if (repositoryEntity.getStatus().getNativeId().equalsIgnoreCase("D")) {
+					product.setAvaliableStock(product.getAvaliableStock() - 1);					
+				}
+				product.setTotalStock(product.getTotalStock() - 1);
+				productService.edit(product.getId(), product);
+				product = productService.findOne(entity.getProduct().getId());				
+				product.setTotalStock(product.getTotalStock() + 1);
+				switch (entity.getStatus().getNativeId()) {
+				case "D":
+					product.setAvaliableStock(product.getAvaliableStock() + 1);
+					break;
+				case "R":
+					product.setTotalStock(product.getTotalStock() - 1);
+					break;
+				}
+				productService.edit(product.getId(), product);
+			} else {
+				Product product = productService.findOne(entity.getProduct().getId());
+				editProductStockByStatus(product, entity.getStatus(), repositoryEntity.getStatus());
+				productService.edit(product.getId(), product);
 			}
 		}
 	}
@@ -92,19 +119,6 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 		if (entity.getStatus() == null) {
 			entity.setStatus(unitStatusService.findOne("nativeId:D"));
 		}
-		switch (entity.getStatus().getNativeId()) {
-		case "D":
-			entity.getProduct().setTotalStock(entity.getProduct().getTotalStock() + 1);
-			entity.getProduct().setAvaliableStock(entity.getProduct().getAvaliableStock() + 1);
-			break;
-		case "S":
-			entity.getProduct().setAvaliableStock(entity.getProduct().getAvaliableStock() - 1);
-			break;
-		case "R":
-			entity.getProduct().setTotalStock(entity.getProduct().getTotalStock() - 1);
-			break;
-		}
-		productService.edit(entity.getProduct().getId(), entity.getProduct());
 	}
 
 	@Override
@@ -113,12 +127,44 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 			switch (entity.getStatus().getNativeId()) {
 			case "D":
 				entity.getProduct().setTotalStock(entity.getProduct().getTotalStock() - 1);
+				entity.getProduct().setAvaliableStock(entity.getProduct().getAvaliableStock() - 1);
 				break;
 			case "S":
-				entity.getProduct().setAvaliableStock(entity.getProduct().getAvaliableStock() + 1);
+				entity.getProduct().setTotalStock(entity.getProduct().getTotalStock() - 1);
 				break;
+			case "R":
+				return;
 			}
 			productService.edit(entity.getProduct().getId(), entity.getProduct());
+		}
+	}
+
+	private void editProductStockByStatus(Product product, UnitStatus newStatus, UnitStatus oldStatus) {
+		int avaliableStock = product.getAvaliableStock();
+		int totalStock = product.getTotalStock();
+		switch (oldStatus.getNativeId()) {
+		case "D":
+			if (newStatus.getNativeId().equalsIgnoreCase("R")) {
+				product.setTotalStock(totalStock - 1);
+			}
+			product.setAvaliableStock(avaliableStock - 1);
+			break;
+		case "S":
+			switch (newStatus.getNativeId()) {
+			case "D":
+				product.setAvaliableStock(avaliableStock + 1);
+				break;
+			case "R":
+				product.setTotalStock(totalStock - 1);
+				break;
+			}
+			break;
+		case "R":
+			if (newStatus.getNativeId().equalsIgnoreCase("D")) {
+				product.setAvaliableStock(avaliableStock + 1);
+			}
+			product.setTotalStock(totalStock + 1);
+			break;
 		}
 	}
 

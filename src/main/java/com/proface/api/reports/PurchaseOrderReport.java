@@ -1,6 +1,5 @@
 package com.proface.api.reports;
 
-import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.proface.api.entities.PurchaseDetail;
 import com.proface.api.entities.PurchaseDetailPK;
+import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.exceptions.customs.ProfaceInvalidStatusException;
 import com.proface.api.repositories.PurchaseDetailRepository;
 import com.proface.api.services.IPurchaseDetailService;
@@ -55,9 +56,10 @@ public class PurchaseDetailService
 							entity.getPurchase().getCurrency().getId(), "PEN", entity.getFinalPrice()));
 				}
 			}
-			entity.getPurchase().setTotal(entity.getPurchase().getTotal() + entity.getFinalPrice());
-			entity.getPurchase().setDetails(null);
-			purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
+			PurchaseOrder purchase = purchaseOrderService.findOne(entity.getPurchase().getId());
+			purchase.setTotal(purchase.getTotal() + entity.getFinalPrice());
+			purchase.setDetails(null);
+			purchaseOrderService.edit(purchase.getId(), purchase);
 		}
 	}
 
@@ -72,22 +74,27 @@ public class PurchaseDetailService
 	@Override
 	protected void compareEntity(PurchaseDetail entity, PurchaseDetail repositoryEntity) {
 		double totalVariation = entity.getFinalPrice() - repositoryEntity.getFinalPrice();
-		entity.getPurchase()
-				.setTotal(repositoryEntity.getPurchase().getTotal() + totalVariation - entity.getFinalPrice());
-		if (entity.getStatus() != null) {
-			if (entity.getStatus().getOrder() < repositoryEntity.getStatus().getOrder()) {
-				throw new ProfaceInvalidStatusException(
-						String.format("No se puede actualizar del estado %s al estado %s",
-								repositoryEntity.getStatus().getDescription(), entity.getStatus().getDescription()));
+		if (entity.getPurchase() != null) {
+			PurchaseOrder purchase = purchaseOrderService.findOne(entity.getPurchase().getId());
+			purchase.setTotal(repositoryEntity.getPurchase().getTotal() + totalVariation - entity.getFinalPrice());
+			if (entity.getStatus() != null) {
+				if (entity.getStatus().getOrder() < repositoryEntity.getStatus().getOrder()) {
+					throw new ProfaceInvalidStatusException(String.format(
+							"No se puede actualizar del estado %s al estado %s",
+							repositoryEntity.getStatus().getDescription(), entity.getStatus().getDescription()));
+				}
 			}
+			purchaseOrderService.edit(purchase.getId(), purchase);
 		}
-		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
 	}
 
 	@Override
 	protected void resetEntity(PurchaseDetail entity) {
-		entity.getPurchase().setTotal(entity.getPurchase().getTotal() - entity.getFinalPrice());
-		purchaseOrderService.edit(entity.getPurchase().getId(), entity.getPurchase());
+		if (entity.getPurchase() != null) {
+			PurchaseOrder purchase = purchaseOrderService.findOne(entity.getPurchase().getId());
+			purchase.setTotal(purchase.getTotal() - entity.getFinalPrice());
+			purchaseOrderService.edit(purchase.getId(), purchase);
+		}
 	}
 
 }

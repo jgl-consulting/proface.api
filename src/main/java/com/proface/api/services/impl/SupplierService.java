@@ -1,10 +1,13 @@
 package com.proface.api.services.impl;
 
+import com.proface.api.entities.Country;
 import com.proface.api.entities.PurchaseOrder;
 import com.proface.api.entities.Supplier;
+import com.proface.api.entities.SupplierType;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,18 +63,24 @@ public class SupplierService extends ProfaceService<SupplierRepository, Supplier
 
 	@Override
 	protected void prepareEntity(Supplier entity) {
-		entity.setType(entity.getCountry() != null && entity.getCountry().getName() == "Peru"
-				? supplierTypeService.findOne("name:Nacional")
-				: supplierTypeService.findOne("name:Internacional"));
+		entity.setType(getTypeByCountry(entity.getCountry()));
 	}
 
 	@Override
 	protected void filterEntity(Supplier supplier) {
-		if (supplier.getPurchases() != null && supplier.getPurchases().size() > 0) {
-			supplier.setPurchases(
-					Arrays.asList(supplier.getPurchases().stream().filter(p -> Objects.nonNull(p.getCreationDate()))
-							.max(Comparator.comparing(PurchaseOrder::getCreationDate)).orElse(null)));
-		}
+		supplier.setPurchases(extractOnePurchaseOrder(supplier.getPurchases()));
+	}
+
+	private List<PurchaseOrder> extractOnePurchaseOrder(List<PurchaseOrder> purchases) {
+		return purchases != null && purchases.size() > 0
+				? Arrays.asList(purchases.stream().filter(p -> Objects.nonNull(p.getCreationDate()))
+						.max(Comparator.comparing(PurchaseOrder::getCreationDate)).orElse(null))
+				: null;
+	}
+
+	private SupplierType getTypeByCountry(Country country) {
+		return country != null && country.getIso() == "PE" ? supplierTypeService.findOne("name:Nacional")
+				: supplierTypeService.findOne("name:Internacional");
 	}
 
 }
