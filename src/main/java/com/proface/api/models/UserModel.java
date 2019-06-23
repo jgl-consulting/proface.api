@@ -7,6 +7,8 @@ import com.proface.api.util.ProfaceValidationMessage;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class UserModel {
@@ -17,5 +19,7 @@ public class UserModel {
 
     @Email(message = ProfaceValidationMessage.EMAIL)
     private String email;
+
+    private List<RoleModel> roles;
 
 }
