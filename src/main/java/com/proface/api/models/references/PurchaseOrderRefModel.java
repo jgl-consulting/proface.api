@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.proface.api.models.CurrencyModel;
-import com.proface.api.models.PurchaseStatusModel;
 import com.proface.api.models.PurchaseTraceModel;
 
 import lombok.Getter;
@@ -18,7 +17,7 @@ public class PurchaseOrderRefModel extends ProfaceRefModel {
 		
 	private LocalDate creationDate;
 	
-	private PurchaseStatusModel status;
+	private PurchaseStatusRefModel status;
 	
 	private SupplierRefModel supplier;
 	
