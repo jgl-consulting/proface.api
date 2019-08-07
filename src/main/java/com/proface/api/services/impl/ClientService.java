@@ -17,7 +17,7 @@ public class ClientService extends ProfaceService<ClientRepository, Client, Inte
 
 	@Override
 	public void edit(Integer id, Client entity) {
-		entity.setId(0);
+		entity.setId(id);
 		super.edit(id, entity);
 	}
 
