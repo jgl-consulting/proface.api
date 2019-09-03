@@ -34,7 +34,8 @@ public class OAuthController {
 		Function<User, ResponseEntity<?>> mapToResponse = (u) -> ResponseEntity
 				.of(singletonMap("user", userMapper.convertToModel(u)));
 
-		return user.map(mapToResponse).orElse(ResponseEntity.badRequest().build());
+		return user.map(mapToResponse)
+				.orElse(ResponseEntity.badRequest().build());
 	}
 
 	private Optional<Map<String, ?>> singletonMap(String key, Object value) {
