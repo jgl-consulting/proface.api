@@ -33,7 +33,6 @@ public class SaleOrderModel {
 	private double localTotal;
 
 	@Valid
-	@NotNull(message = ProfaceValidationMessage.NOT_NULL_BLANK)
 	private SaleStatusRefModel status;
 
 	@Valid

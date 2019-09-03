@@ -4,6 +4,9 @@ import com.proface.api.entities.User;
 import com.proface.api.repositories.UserRepository;
 import com.proface.api.security.ProfaceUser;
 import com.proface.api.services.IUserService;
+import com.proface.api.util.ProfaceConverter;
+import com.proface.api.util.ProfaceSpecificationBuilder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +24,12 @@ public class UserService implements IUserService, UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ProfaceConverter<User> converter;
+	
+	@Autowired
+	private ProfaceSpecificationBuilder<User> builder;
 
 	@Override
 	public boolean existsByUsername(String username) {
@@ -43,6 +52,19 @@ public class UserService implements IUserService, UserDetailsService {
 		UserDetails userDetails = new ProfaceUser(user.getFirstName(), user.getLastName(), user.getUsername(),
 				user.getPassword(), authorities);
 		return userDetails;
+	}
+
+	@Override
+	public List<User> findAll(String search) {
+		List<User> list = converter.iterableToList(userRepository.findAll(builder.getSpecification(search)));
+		list.forEach(e -> e.setRoles(null));
+		return list;
+	}
+
+	@Override
+	public User findOne(Long id) {
+		Optional<User> entity = userRepository.findById(id);
+		return entity.orElse(null);
 	}
 
 }

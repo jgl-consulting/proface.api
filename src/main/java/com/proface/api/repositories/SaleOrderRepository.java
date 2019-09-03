@@ -10,4 +10,6 @@ import com.proface.api.entities.SaleOrder;
 public interface SaleOrderRepository
 		extends PagingAndSortingRepository<SaleOrder, Integer>, JpaSpecificationExecutor<SaleOrder> {
 
+	boolean existsByNativeId(String nativeId);
+	
 }

@@ -23,7 +23,7 @@ public class SaleDetailPK implements Serializable {
 		
 	}
 
-	public SaleDetailPK(int saleId, int productId) {
+	public SaleDetailPK(int productId, int saleId) {
 		super();
 		this.saleId = saleId;
 		this.productId = productId;
