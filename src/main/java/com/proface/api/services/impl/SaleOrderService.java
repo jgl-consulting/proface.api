@@ -110,5 +110,12 @@ public class SaleOrderService extends ProfaceService<SaleOrderRepository, SaleOr
 			entity.setStatus(saleStatusService.findOne("nativeId:CR"));
 		}
 	}
+	
+	@Override
+	protected void resetEntity(SaleOrder entity) {
+		if (entity.getDetails() != null || !entity.getDetails().isEmpty()) {
+			entity.getDetails().forEach(u -> saleDetailService.delete(u.getId()));
+		}
+	}
 
 }

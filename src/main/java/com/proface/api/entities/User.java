@@ -3,7 +3,6 @@ package com.proface.api.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Where;
 import org.hibernate.annotations.WhereJoinTable;
 
 import javax.persistence.Entity;

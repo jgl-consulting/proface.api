@@ -142,6 +142,7 @@ public class UnitService extends ProfaceService<UnitRepository, Unit, Integer, S
 	private void editProductStockByStatus(Product product, UnitStatus newStatus, UnitStatus oldStatus) {
 		int avaliableStock = product.getAvaliableStock();
 		int totalStock = product.getTotalStock();
+		oldStatus = unitStatusService.findOne(oldStatus.getId());
 		switch (oldStatus.getNativeId()) {
 		case "D":
 			if (newStatus.getNativeId().equalsIgnoreCase("R")) {
